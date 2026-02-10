@@ -1,4 +1,5 @@
 import { useState, useEffect, useRef, createContext, useContext } from "react";
+import { motion, useInView, useAnimation } from "framer-motion";
 import {
   Sparkles, Brain, Target, PenTool, BarChart3, MessageSquare,
   Mail, Linkedin, MapPin, ArrowUpRight, ArrowLeft,
