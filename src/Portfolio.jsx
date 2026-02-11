@@ -500,6 +500,17 @@ const Nav = ({ onHome }) => {
 const ProjectCard = ({ project, onDeepDive }) => {
   const { C } = useTheme();
   const [expanded, setExpanded] = useState(false);
+
+  // Parse **bold** markers into spans
+  const renderText = (text) => {
+    const parts = text.split(/\*\*(.*?)\*\*/g);
+    return parts.map((part, idx) =>
+      idx % 2 === 1
+        ? <strong key={idx} style={{ color:C.text, fontWeight:600 }}>{part}</strong>
+        : <span key={idx}>{part}</span>
+    );
+  };
+
   return (
     <div className="rounded-xl border transition-all duration-300"
       style={{ backgroundColor:C.bg, borderColor:expanded?C.accent:C.border, boxShadow:expanded?`0 4px 16px ${C.accentGlow}`:"none" }}>
@@ -514,8 +525,8 @@ const ProjectCard = ({ project, onDeepDive }) => {
       <div className="overflow-hidden transition-all duration-300" style={{ maxHeight:expanded?"300px":"0" }}>
         <div className="px-5 pb-5 pt-0">
           <div className="border-t pt-4 mb-3" style={{ borderColor:C.border }}>
-            <p className="text-xs leading-relaxed mb-2" style={{ color:C.textSec }}><strong style={{ color:C.text }}>Problem:</strong> {project.problem.substring(0,150)}...</p>
-            <p className="text-xs leading-relaxed" style={{ color:C.textSec }}><strong style={{ color:C.text }}>Result:</strong> {project.results.substring(0,150)}...</p>
+            <p className="text-xs leading-relaxed mb-2" style={{ color:C.textSec }}><strong style={{ color:C.text }}>Problem:</strong> {renderText(project.problem.substring(0,150)+"...")}</p>
+            <p className="text-xs leading-relaxed" style={{ color:C.textSec }}><strong style={{ color:C.text }}>Result:</strong> {renderText(project.results.substring(0,150)+"...")}</p>
           </div>
           <button onClick={e=>{e.stopPropagation();onDeepDive(project.id);}}
             className="flex items-center gap-1.5 text-xs font-medium cursor-pointer transition-opacity"
