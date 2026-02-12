@@ -571,7 +571,7 @@ export default function Portfolio() {
 
       {/* HERO */}
       <header className="pt-28 pb-16 px-6">
-        <div className="max-w-[800px] mx-auto">
+        <div className="max-w-[1000px] mx-auto">
           <Reveal>
             <div className="flex items-center gap-5 mb-8">
               <img src="/profile.jpg" alt="Tonishqa Kaplish" className="w-20 h-20 md:w-24 md:h-24 rounded-full object-cover border-2 shadow-md"
@@ -730,7 +730,7 @@ export default function Portfolio() {
 
       {/* CONTACT */}
       <section id="contact" className="py-12 px-6">
-        <div className="max-w-[800px] mx-auto">
+        <div className="max-w-[1000px] mx-auto">
           <Reveal><SectionHeader title="Let's Connect" /></Reveal>
           <Reveal delay={100}>
             <div className="rounded-xl border p-6 md:p-8" style={{ backgroundColor:C.surface, borderColor:C.border }}>
