@@ -511,10 +511,10 @@ const BuiltWithAI = () => {
               <h3 className="text-lg font-semibold" style={{ fontFamily:"'IBM Plex Serif',Georgia,serif", color:C.text }}>This portfolio wrote itself</h3>
             </div>
             <p className="text-sm leading-relaxed mb-4" style={{ color:C.textSec }}>
-              Well, almost. I built this entire site using <strong style={{ color:C.text }}>Claude Opus 4.6</strong> and <strong style={{ color:C.text }}>Cursor IDE</strong>. No manual coding, no templates, no drag-and-drop builders.
+              Well, almost. I built this entire site using <strong style={{ color:C.text }}>Claude Opus 4.6</strong> via <strong style={{ color:C.text }}>Claude Code</strong> and <strong style={{ color:C.text }}>Cursor IDE</strong>. No manual coding, no templates, no drag-and-drop builders.
             </p>
             <p className="text-sm leading-relaxed mb-5" style={{ color:C.textSec }}>
-              Every component, interaction, and design decision was generated through structured prompts. I directed the architecture, the copy, the design system, and the interaction patterns. The AI handled the code. It's how I think about tools: learn the logic, direct the output, ship the thing.
+              Every component, interaction, and design decision was generated through structured prompts. I directed the architecture, the copy, the design system, and the interaction patterns. Claude Code handled the code execution and file operations. It's how I think about tools: learn the logic, direct the output, ship the thing.
             </p>
             <div className="rounded-lg border p-4 mb-4" style={{ backgroundColor:C.surface, borderColor:C.border }}>
               <p className="text-xs font-semibold mb-2" style={{ color:C.text }}>The stack:</p>
@@ -524,7 +524,7 @@ const BuiltWithAI = () => {
                 ))}
               </div>
             </div>
-            <p className="text-xs" style={{ color:C.muted, fontFamily:"'IBM Plex Mono',monospace" }}>February 2026 · Model: Claude Opus 4.6 · IDE: Cursor</p>
+            <p className="text-xs" style={{ color:C.muted, fontFamily:"'IBM Plex Mono',monospace" }}>February 2026 · Claude Opus 4.6 via Claude Code · IDE: Cursor</p>
           </div>
         </div>
       )}
@@ -981,10 +981,10 @@ export default function Portfolio() {
           <Reveal delay={100}>
             <div className="rounded-xl border p-6" style={{ backgroundColor:C.surface, borderColor:C.border }}>
               <p className="text-sm leading-relaxed mb-4" style={{ color:C.textSec }}>
-                This portfolio was designed and built entirely through AI-assisted development using <strong style={{ color:C.text }}>Claude Opus 4.6</strong> and <strong style={{ color:C.text }}>Cursor IDE</strong>. No templates. No drag-and-drop builders. No manual coding.
+                This portfolio was designed and built entirely through AI-assisted development using <strong style={{ color:C.text }}>Claude Opus 4.6</strong> via <strong style={{ color:C.text }}>Claude Code</strong> and <strong style={{ color:C.text }}>Cursor IDE</strong>. No templates. No drag-and-drop builders. No manual coding.
               </p>
               <p className="text-sm leading-relaxed mb-4" style={{ color:C.textSec }}>
-                I directed the architecture, content structure, design system, and interaction patterns through structured prompts. The AI generated the code. Every section, component, and animation was orchestrated through an iterative prompt-and-refine workflow that mirrors how I think about AI in marketing: define the system, direct the output, iterate until it's right.
+                I directed the architecture, content structure, design system, and interaction patterns through structured prompts. Claude Code executed the file operations, edits, and git commits autonomously. Every section, component, and animation was orchestrated through an iterative prompt-and-refine workflow that mirrors how I think about AI in marketing: define the system, direct the output, iterate until it's right.
               </p>
               <p className="text-sm leading-relaxed mb-5" style={{ color:C.textSec }}>
                 This isn't just a portfolio. It's a demonstration of AI workflow fluency. The same approach I used to build this site is the approach I use to build marketing systems: understand the tools deeply enough to direct them with precision.
@@ -993,6 +993,7 @@ export default function Portfolio() {
                 {[
                   {label:"Stack", value:"React 18 + Vite + Tailwind CSS v4"},
                   {label:"AI Model", value:"Claude Opus 4.6 (Anthropic)"},
+                  {label:"AI Agent", value:"Claude Code CLI"},
                   {label:"IDE", value:"Cursor"},
                   {label:"Architecture", value:"Single-file, zero build complexity"},
                   {label:"Design System", value:"Custom warm palette + dark mode"},
@@ -1014,7 +1015,7 @@ export default function Portfolio() {
       <footer className="py-8 px-6" style={{ borderTop:`1px solid ${C.border}` }}>
         <div className="max-w-[800px] mx-auto flex flex-col sm:flex-row items-center justify-between gap-3 text-xs" style={{ color:C.muted }}>
           <span>&copy; 2026 Tonishqa Kaplish</span>
-          <span className="flex items-center gap-1.5"><Sparkles size={10} style={{ color:C.accent }}/> Built with Claude Opus 4.6 + Cursor</span>
+          <span className="flex items-center gap-1.5"><Sparkles size={10} style={{ color:C.accent }}/> Built with Claude Code + Cursor</span>
         </div>
       </footer>
     </>
