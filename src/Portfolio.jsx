@@ -314,8 +314,59 @@ const timeline = [
    DATA: EDUCATION
    ═══════════════════════════════════════════════ */
 const education = [
-  { degree:"M.S. Communication: Digital Media", school:"University of Washington", period:"2022 – 2024", note:"Seattle, WA" },
-  { degree:"B.A. Media Studies & English Literature", school:"Christ University", period:"2018 – 2021", note:"Bangalore, India" },
+  {
+    degree:"M.S. Communication: Digital Media, Marketing",
+    school:"University of Washington",
+    period:"Sep 2023 – Mar 2025",
+    location:"Seattle, WA",
+    gpa:"4.0",
+    courses:"User Research, UX Design, Content Strategy for the Web, Digital Marketing and Branding, Qualitative Research for Social Media Marketing, Conversational AI, Media Entrepreneurship"
+  },
+  {
+    degree:"Post Graduate Diploma in Public Relations, Advertising, and Applied Communication",
+    school:"Panjab University, Chandigarh",
+    period:"Sep 2022",
+    location:"Chandigarh, India",
+    gpa:"4.0",
+    highlights:"Secured the highest score on the aptitude test during the admissions cycle. Editing team for first-ever department newsletter.",
+    courses:"Communication Theory, Digital Advertising and Public Relations, Market Research"
+  },
+  {
+    degree:"B.A. Honours in English Literature (British and Commonwealth)",
+    school:"Panjab University, Chandigarh",
+    period:"2019 – 2022",
+    location:"Chandigarh, India",
+    gpa:"82% (First Division) | Honours: 76.2% | GPA 3.79 (WES ICAP)",
+    activities:"Declamation Society"
+  },
+];
+
+/* ═══════════════════════════════════════════════
+   DATA: CERTIFICATIONS
+   ═══════════════════════════════════════════════ */
+const certifications = [
+  { title:"Communicative English", issuer:"Panjab University", date:"Sep 2020" },
+  { title:"Spanish Language Course", issuer:"Instituto Cervantes, New Delhi", date:"Jun 2022" },
+];
+
+/* ═══════════════════════════════════════════════
+   DATA: REFERENCES
+   ═══════════════════════════════════════════════ */
+const references = [
+  {
+    name:"Susan Lawson-Dawson",
+    title:"Word Wrangler",
+    relationship:"Mentor at DrFirst",
+    date:"August 14, 2024",
+    quote:"I had the pleasure of mentoring Tonishqa during her internship at DrFirst. What really stood out to me was her attitude. She was always eager to learn, open to feedback, and ready to tackle any challenge we threw her way. My work with Tonishqa centered on a competitive intelligence (CI) project. She dove in with enthusiasm, helping to audit the many places where CI currently 'lives' and develop an in-depth survey to send to internal stakeholders to align our competitive intelligence to better suit individual users' needs. Tonishqa also worked on several other projects, including an exciting generative AI project that I'm already finding useful! She proved herself as a solid multitasker, approaching each project with the same level of enthusiasm and commitment. If you're looking for someone who's smart, adaptable, and genuinely passionate about what they do, I highly recommend Tonishqa. Despite her short time with DrFirst, she made contributions that are already having a meaningful impact for our PR/Comms/Marketing teams."
+  },
+  {
+    name:"Michelle Taylor",
+    title:"Brand & Communications Executive | Founder, Taylor+Scale Healthcare & Senior Living",
+    relationship:"Senior colleague at DrFirst",
+    date:"August 13, 2024",
+    quote:"My team had the pleasure of working with Tonishqa during her internship with DrFirst. She came in and hit the ground running. In three short months she took on crisis communications planning, ML/AI comms model training, and several other important projects. I found Tonishqa to exemplify our core values of being DDS - dedicated, driven, and smart in all that she did. She was self-directed, curious, emotionally intelligent, and carried herself with remarkable poise and professionalism."
+  },
 ];
 
 
@@ -754,21 +805,84 @@ export default function Portfolio() {
       <section id="education" className="py-12 px-6">
         <div className="max-w-[800px] mx-auto">
           <Reveal><SectionHeader title="Education" /></Reveal>
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+          <div className="space-y-4">
             {education.map((ed,i)=>(
               <Reveal key={i} delay={i*100}>
                 <div className="rounded-lg border px-5 py-4" style={{ backgroundColor:C.surface, borderColor:C.border }}>
                   <div className="flex items-start gap-3">
                     <GraduationCap size={18} style={{ color:C.accent }} className="mt-0.5 shrink-0" />
-                    <div>
+                    <div className="flex-1">
                       <h3 className="text-sm font-semibold mb-0.5" style={{ fontFamily:"'IBM Plex Serif',Georgia,serif", color:C.text }}>{ed.degree}</h3>
-                      <p className="text-sm" style={{ color:C.textSec }}>{ed.school}</p>
-                      <div className="flex items-center gap-2 mt-1">
-                        <span className="text-xs" style={{ fontFamily:"'IBM Plex Mono',monospace", color:C.muted }}>{ed.period}</span>
-                        {ed.note && <span className="text-xs" style={{ color:C.muted }}>· {ed.note}</span>}
+                      <p className="text-sm mb-1" style={{ color:C.textSec }}>{ed.school}</p>
+                      <div className="flex flex-wrap items-center gap-2 text-xs mb-2" style={{ color:C.muted }}>
+                        <span style={{ fontFamily:"'IBM Plex Mono',monospace" }}>{ed.period}</span>
+                        {ed.location && <><span>·</span><span>{ed.location}</span></>}
+                        {ed.gpa && <><span>·</span><span className="font-medium" style={{ color:C.accent }}>GPA: {ed.gpa}</span></>}
                       </div>
+                      {ed.courses && (
+                        <p className="text-xs leading-relaxed mb-2" style={{ color:C.muted }}>
+                          <strong style={{ color:C.textSec }}>Courses:</strong> {ed.courses}
+                        </p>
+                      )}
+                      {ed.highlights && (
+                        <p className="text-xs leading-relaxed" style={{ color:C.muted }}>
+                          <strong style={{ color:C.textSec }}>Highlights:</strong> {ed.highlights}
+                        </p>
+                      )}
+                      {ed.activities && (
+                        <p className="text-xs leading-relaxed" style={{ color:C.muted }}>
+                          <strong style={{ color:C.textSec }}>Activities:</strong> {ed.activities}
+                        </p>
+                      )}
                     </div>
                   </div>
+                </div>
+              </Reveal>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* CERTIFICATIONS */}
+      <section id="certifications" className="py-12 px-6">
+        <div className="max-w-[800px] mx-auto">
+          <Reveal><SectionHeader title="Certifications" /></Reveal>
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+            {certifications.map((cert,i)=>(
+              <Reveal key={i} delay={i*100}>
+                <div className="rounded-lg border px-5 py-3.5 flex items-start gap-3" style={{ backgroundColor:C.surface, borderColor:C.border }}>
+                  <Award size={16} style={{ color:C.accent }} className="mt-0.5 shrink-0" />
+                  <div>
+                    <h3 className="text-sm font-semibold mb-0.5" style={{ color:C.text }}>{cert.title}</h3>
+                    <p className="text-xs" style={{ color:C.textSec }}>{cert.issuer}</p>
+                    <p className="text-xs mt-1" style={{ fontFamily:"'IBM Plex Mono',monospace", color:C.muted }}>{cert.date}</p>
+                  </div>
+                </div>
+              </Reveal>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* REFERENCES */}
+      <section id="references" className="py-12 px-6">
+        <div className="max-w-[800px] mx-auto">
+          <Reveal><SectionHeader title="References" subtitle="What colleagues say about working with me." /></Reveal>
+          <div className="space-y-4">
+            {references.map((ref,i)=>(
+              <Reveal key={i} delay={i*100}>
+                <div className="rounded-lg border px-6 py-5" style={{ backgroundColor:C.surface, borderColor:C.border }}>
+                  <div className="flex items-start gap-3 mb-3">
+                    <Users size={18} style={{ color:C.accent }} className="mt-0.5 shrink-0" />
+                    <div>
+                      <h3 className="text-sm font-semibold" style={{ color:C.text }}>{ref.name}</h3>
+                      <p className="text-xs" style={{ color:C.textSec }}>{ref.title}</p>
+                      <p className="text-xs mt-0.5" style={{ color:C.muted }}>{ref.relationship} · {ref.date}</p>
+                    </div>
+                  </div>
+                  <p className="text-xs leading-relaxed pl-8" style={{ color:C.textSec, fontStyle:"italic" }}>
+                    "{ref.quote}"
+                  </p>
                 </div>
               </Reveal>
             ))}
