@@ -1,12 +1,13 @@
 import { useState, useEffect, useRef, createContext, useContext } from "react";
-import { motion, useInView, useAnimation } from "framer-motion";
 import {
   Sparkles, Brain, Target, PenTool, BarChart3, MessageSquare,
   Mail, Linkedin, MapPin, ArrowUpRight, ArrowLeft,
   Layers, Lightbulb, Megaphone, Users, BookOpen,
   CheckCircle2, FileText, ChevronDown, Coffee, Search,
-  Puzzle, Award, X, Wand2, Sun, Moon, Play, Newspaper
+  Puzzle, Award, X, Wand2, Sun, Moon, Play, Newspaper,
+  GraduationCap
 } from "lucide-react";
+
 
 /* ═══════════════════════════════════════════════
    THEME SYSTEM
@@ -28,8 +29,10 @@ const darkColors = {
   metricBg: "#2A2218", metricBorder: "#3D3225",
 };
 
+
 const ThemeCtx = createContext();
 const useTheme = () => useContext(ThemeCtx);
+
 
 /* ═══════════════════════════════════════════════
    SHARED COMPONENTS
@@ -50,6 +53,7 @@ const Reveal = ({ children, delay = 0 }) => {
   );
 };
 
+
 const tagPalette = {
   "Go-to-Market": { l: { bg:"#FEF3C7",text:"#92400E",border:"#FDE68A" }, d: { bg:"#3D2E10",text:"#FDE68A",border:"#5C4520" } },
   Marketing: { l: { bg:"#FFF7ED",text:"#9A3412",border:"#FED7AA" }, d: { bg:"#3A2210",text:"#FED7AA",border:"#5C3518" } },
@@ -67,6 +71,7 @@ const tagPalette = {
   "Prompt Engineering": { l: { bg:"#F5F3FF",text:"#6D28D9",border:"#DDD6FE" }, d: { bg:"#1E1536",text:"#DDD6FE",border:"#33245E" } },
   "Social Media": { l: { bg:"#FDF2F8",text:"#9D174D",border:"#FBCFE8" }, d: { bg:"#36101F",text:"#FBCFE8",border:"#5E1A38" } },
   SEO: { l: { bg:"#F0FDF4",text:"#166534",border:"#BBF7D0" }, d: { bg:"#0D2E18",text:"#BBF7D0",border:"#1A4D2A" } },
+  "Technical SEO": { l: { bg:"#F0FDF4",text:"#166534",border:"#BBF7D0" }, d: { bg:"#0D2E18",text:"#BBF7D0",border:"#1A4D2A" } },
   "Sales Enablement": { l: { bg:"#FEF3C7",text:"#78350F",border:"#FDE68A" }, d: { bg:"#3D2E10",text:"#FDE68A",border:"#5C4520" } },
   Accessibility: { l: { bg:"#DBEAFE",text:"#1E40AF",border:"#93C5FD" }, d: { bg:"#101D36",text:"#93C5FD",border:"#1A335E" } },
   "Data Viz": { l: { bg:"#FEE2E2",text:"#991B1B",border:"#FECACA" }, d: { bg:"#361010",text:"#FECACA",border:"#5E1A1A" } },
@@ -74,7 +79,9 @@ const tagPalette = {
   GPT: { l: { bg:"#F5F3FF",text:"#6D28D9",border:"#DDD6FE" }, d: { bg:"#1E1536",text:"#DDD6FE",border:"#33245E" } },
   "Voice of Customer": { l: { bg:"#FEF3C7",text:"#78350F",border:"#FDE68A" }, d: { bg:"#3D2E10",text:"#FDE68A",border:"#5C4520" } },
   Automation: { l: { bg:"#EEF2FF",text:"#3730A3",border:"#C7D2FE" }, d: { bg:"#161936",text:"#C7D2FE",border:"#272D5E" } },
+  "Lead Generation": { l: { bg:"#FEF3C7",text:"#92400E",border:"#FDE68A" }, d: { bg:"#3D2E10",text:"#FDE68A",border:"#5C4520" } },
 };
+
 
 const Tag = ({ label }) => {
   const { dark } = useTheme();
@@ -82,6 +89,7 @@ const Tag = ({ label }) => {
   const c = entry ? (dark ? entry.d : entry.l) : (dark ? { bg:"#2B261F",text:"#B5AFA6",border:"#3A342B" } : { bg:"#F7F5F2",text:"#6B6058",border:"#E8E4DE" });
   return <span className="inline-block text-[11px] font-medium px-2 py-0.5 rounded border" style={{ backgroundColor:c.bg, color:c.text, borderColor:c.border }}>{label}</span>;
 };
+
 
 const SectionHeader = ({ title, subtitle }) => {
   const { C } = useTheme();
@@ -93,6 +101,7 @@ const SectionHeader = ({ title, subtitle }) => {
     </div>
   );
 };
+
 
 const Callout = ({ icon:Icon, title, children }) => {
   const { C } = useTheme();
@@ -110,6 +119,7 @@ const Callout = ({ icon:Icon, title, children }) => {
   );
 };
 
+
 const MetricCard = ({ value, label }) => {
   const { C } = useTheme();
   return (
@@ -120,65 +130,68 @@ const MetricCard = ({ value, label }) => {
   );
 };
 
+
 /* ═══════════════════════════════════════════════
-   DATA: CORE PROJECTS
+   DATA: CORE PROJECTS (reordered per request)
+   Sequence: Valur, YuziCare, D Center, DrFirst,
+   Braxton, Tizana, then school-level projects
    ═══════════════════════════════════════════════ */
 const projects = [
   {
     id:"valur", title:"Building Marketing from Zero at Valur",
-    tags:["Go-to-Market","Fintech","Sales Enablement","Analytics"],
-    oneLiner:"First marketing hire. Built the entire function from scratch: campaigns, positioning, pipeline.",
+    tags:["Go-to-Market","Fintech","Lead Generation","Analytics","Voice of Customer"],
+    oneLiner:"First marketing hire. Built the entire function from scratch: campaigns, positioning, pipeline, and an AI-powered voice-of-customer program.",
     image:"/images/valur.png", imageAlt:"Valur logo",
     caseStudyUrl:"https://thundering-lake-b4e.notion.site/Valur-Marketing-GTM-Case-Study-2b57738ae7a18048b9dec60849e268b9", caseStudyLabel:"View full case study",
     metrics:[{v:"54.84%",l:"Email open rate"},{v:"4.71%",l:"Click-through rate"},{v:"2x",l:"Partner calls in 1 week"},{v:"3x",l:"Second-round calls"}],
     problem:"Valur makes tax optimization tools accessible to everyday Americans. When I joined as the **first marketing hire**, there was **no marketing function at all**: no campaigns, no content engine, no lead nurture sequences, no positioning documents, no partner outreach playbook. The sales team was closing deals without any top-of-funnel support. Everything had to be designed, built, and shipped from scratch while the company was actively selling.",
-    research:"I sat in on sales calls and analyzed dozens of transcripts to understand how prospects actually talked about tax planning: the words they used, the objections they raised, and where they got stuck. I mapped the competitive landscape and built a **GPT-powered voice-of-customer program** that systematically extracted buyer objections, language patterns, and decision-stage signals from call transcripts, grounding all messaging in **real buyer language, not internal assumptions**.",
-    solution:"I designed and launched the full marketing stack: **multi-touch email campaigns**, a content calendar aligned to the buyer journey, partner outreach sequences, and positioning frameworks for each core product (CRTs, DAFs, GRATs). I built a **GPT-powered sales enablement toolkit** for on-brand, objection-specific content and an **AI-assisted VOC pipeline** that ran continuously, processing new transcripts and updating buyer sentiment insights. I also worked with the CEO to sharpen brand positioning across all touchpoints.",
-    results:"First email campaign hit **54.84% open rate and 4.71% CTR**, roughly 3x industry benchmarks for fintech. Partner outreach **doubled discovery calls from 6 to 13 per week** and **tripled second-round calls from 1 to 7** within one week. Multiple campaigns directly contributed to closed deals. The VOC program became core to marketing-sales alignment, and the enablement toolkit **reduced time-to-content by ~40%**."
+    research:"I sat in on sales calls and analyzed dozens of transcripts to understand how prospects actually talked about tax planning: the words they used, the objections they raised, and where they got stuck. I mapped the competitive landscape and built a **voice-of-customer program** powered by Google Gemini and integrated across the marketing stack. The system systematically extracted buyer objections, language patterns, and decision-stage signals from call transcripts, grounding all messaging in **real buyer language, not internal assumptions**.",
+    solution:"I designed and launched the full marketing stack: **multi-touch email campaigns**, a content calendar aligned to the buyer journey, partner outreach sequences, and positioning frameworks for each core product (CRTs, DAFs, GRATs). I built an **AI-assisted VOC pipeline** using Gemini that ran continuously, processing new transcripts and updating buyer sentiment insights. I also developed **lead magnets** including educational guides and downloadable resources designed to capture and nurture top-of-funnel leads, and worked with the CEO to sharpen brand positioning across all touchpoints.",
+    results:"First email campaign hit **54.84% open rate and 4.71% CTR**, roughly 3x industry benchmarks for fintech. Partner outreach **doubled discovery calls from 6 to 13 per week** and **tripled second-round calls from 1 to 7** within one week. Multiple campaigns directly contributed to closed deals. The VOC program became core to marketing-sales alignment, and lead magnets contributed to a growing top-of-funnel pipeline."
   },
   {
-    id:"yuzi", title:"GTM Strategy for AI-Powered Maternal Care",
+    id:"yuzi", title:"Early-Stage GTM Support for AI-Powered Maternal Care",
     tags:["Go-to-Market","Healthtech","User Research","Growth"],
-    oneLiner:"Led go-to-market for a wellness SaaS reimagining postpartum support.",
+    oneLiner:"Supported early go-to-market planning for a postpartum care marketplace. Competitive benchmarking, pricing analysis, and pre-launch research.",
     metrics:[{v:"46%",l:"Cold outreach CTR"},{v:"65%",l:"LinkedIn engagement lift"},{v:"70%",l:"Survey response rate"},{v:"~10%",l:"Early adoption lift"}],
-    problem:"Yuzi Care is an AI-powered maternal care marketplace for postpartum support. The company needed a GTM strategy that would **validate product-market fit**, generate early adoption, and establish brand presence in a category that barely existed. The challenge: the product was in a **sensitive, trust-dependent space**, and the target audience was bombarded with noise from every wellness brand online.",
-    research:"I led customer research that achieved a **70% survey response rate** by designing around empathy rather than feature validation. I mapped the full postpartum care journey, identifying specific gaps where mothers felt unsupported. Qualitative interviews with mothers and providers revealed the core insight: **the biggest pain point wasn't finding providers, it was trusting them**. That insight reshaped the product roadmap.",
-    solution:"I built the launch strategy across three pillars: **provider acquisition, customer acquisition, and brand awareness**. For providers: cold outreach with personalized messaging. For customers: a LinkedIn content strategy positioning Yuzi as a thought leader. I developed core brand messaging, value propositions per segment, and a **growth experimentation framework** to test channels and messaging at low cost before scaling.",
-    results:"Cold outreach hit **46% CTR**. LinkedIn content drove a **65% engagement lift** month-over-month. Early adoption improved by **~10%** after GTM implementation. Most significantly, my customer research **directly reshaped the product roadmap**: founders reprioritized provider verification and trust signals based on the insight that trust, not discovery, was the primary barrier."
+    problem:"YuziCare is an AI-powered postpartum care marketplace. The startup was very early stage and needed foundational GTM research to **validate product-market fit** and establish initial brand presence in a category that barely existed. The challenge: the product operated in a **sensitive, trust-dependent space**, and the target audience was overwhelmed with noise from every wellness brand online.",
+    research:"I conducted customer research that achieved a **70% survey response rate** by designing around empathy rather than feature validation. I mapped the full postpartum care journey, identifying specific gaps where mothers felt unsupported. Qualitative interviews with mothers and providers revealed the core insight: **the biggest pain point wasn't finding providers, it was trusting them**. That insight informed the founding team's product decisions.",
+    solution:"I supported the founding team's launch planning across three areas: **competitive benchmarking and pricing analysis** to inform positioning, **UX and pre-launch strategy research** to shape early product decisions, and **initial channel testing** including cold outreach with personalized messaging and a LinkedIn content strategy positioning YuziCare as a thought leader. I developed core brand messaging and value propositions per segment to support the team's go-to-market planning.",
+    results:"Cold outreach hit **46% CTR**. LinkedIn content drove a **65% engagement lift** month-over-month. Early adoption improved by **~10%** after implementing initial GTM recommendations. Most significantly, the customer research **directly informed the product roadmap**: founders reprioritized provider verification and trust signals based on the insight that trust, not discovery, was the primary barrier."
   },
   {
-    id:"dcenter", title:"Marketing Automation at UW Disability Cultural Center",
-    tags:["Marketing","SEO","Accessibility","Content Strategy"],
-    oneLiner:"Website redesign, accessible newsletters with voice narration, and A/B testing that moved the needle.",
+    id:"dcenter", title:"SEO & Marketing Automation at UW Disability Cultural Center",
+    tags:["Technical SEO","SEO","Accessibility","Content Strategy","Marketing"],
+    oneLiner:"Technical SEO overhaul, accessible newsletters with AI-generated voice narration, and data-driven engagement optimization.",
     image:"/images/dcenter-newsletter.png", imageAlt:"D Center Purple Tuesday newsletter celebrating accessibility",
     metrics:[{v:"38x",l:"Click rate improvement"},{v:"3.8%",l:"Newsletter CTR (from 0.1%)"},{v:"20%",l:"Site engagement increase"}],
     problem:"The Disability Cultural Center at UW had a fragmented digital presence: **two separate website versions** that split the user experience and undermined accessibility. The newsletter had a **0.1% click rate**. No SEO strategy, no content architecture, no data-driven engagement approach. For a center whose mission is inclusion, the digital experience was inadvertently creating barriers.",
-    research:"I ran a comprehensive audit using Google Search Console, Yoast SEO, and Screaming Frog to identify technical gaps. I developed target personas, mapped user journeys, and performed **semantic keyword research with thematic clustering**. I analyzed newsletter engagement data to identify what subject lines, formats, and send times performed best.",
-    solution:"I spearheaded a **full WordPress redesign** unifying both site versions into a single accessible platform with WCAG 2.1 standards. I redesigned the newsletter in Mailchimp with **A/B testing on subject lines and content formats**. I introduced a **voice-narrated newsletter version**, initially for users with visual impairments, which ended up driving engagement across all segments. Built custom event landing pages with HTML/CSS and implemented thematic clustering across all content.",
-    results:"Newsletter click rates jumped from **0.1% to 3.8%, a 38x improvement** driven by A/B testing and the voice-narrated format. The voice narration received overwhelmingly positive feedback and became permanent. The unified website eliminated fragmentation, improved navigation, and **increased site engagement by 20%**. SEO strategy improved search visibility for key disability resource terms."
+    research:"I ran a comprehensive **technical SEO audit** using Google Search Console, Yoast SEO, and Screaming Frog to surface crawl errors, broken links, missing meta descriptions, and indexation issues. I developed target personas, mapped user journeys, and performed **semantic keyword research with thematic clustering** to identify content gaps and opportunities. I analyzed newsletter engagement data across subject lines, formats, and send times to understand what actually drove clicks.",
+    solution:"I spearheaded a **full WordPress redesign** unifying both site versions into a single accessible platform with WCAG 2.1 standards. On the technical SEO side, I implemented **structured data markup, optimized site architecture for crawlability, fixed canonical issues**, and built a thematic content clustering strategy around core disability resource terms. I redesigned the newsletter in Mailchimp with **A/B testing on subject lines and content formats**. I also introduced **AI-generated voice narration** for the newsletter, initially designed to enhance accessibility for users with visual impairments and the center's target audience. Built custom event landing pages with HTML/CSS and implemented on-page SEO across all content.",
+    results:"Newsletter click rates jumped from **0.1% to 3.8%, a 38x improvement** driven by A/B testing and the AI-generated voice narration format. The voice narration received overwhelmingly positive feedback and became permanent, proving that accessibility-first design improves engagement for everyone. The unified website eliminated fragmentation, improved navigation, and **increased site engagement by 20%**. Technical SEO improvements boosted search visibility for key disability resource terms."
   },
   {
     id:"drfirst", title:"Strategic Marketing at DrFirst",
-    tags:["Healthcare AI","Social Media","Branding"],
-    oneLiner:"Social strategy, competitive intel, crisis comms, and a custom GPT. All in one summer.",
+    tags:["Healthcare AI","Social Media","Branding","Prompt Engineering"],
+    oneLiner:"Social strategy, competitive intel, crisis comms, and a custom GPT built on brand guidelines. All in one summer.",
     image:"/images/drfirst-award.jpg", imageAlt:"DrFirst High Five recognition award",
     caseStudyUrl:"https://drive.google.com/drive/folders/1mjJv5jooAuidoDr2lPbA2pQnMY0mgePv?usp=sharing", caseStudyLabel:"View work samples",
     metrics:[{v:"4",l:"Major projects shipped"},{v:"1 week",l:"Time to first recognition"}],
-    problem:"DrFirst specializes in e-prescribing and medication management. During my summer internship, the company needed to **increase brand engagement for iPrescribe**, conduct competitive intelligence, establish crisis preparedness, and maintain brand consistency. Four distinct challenges, addressed simultaneously within a compressed timeline.",
+    problem:"DrFirst specializes in e-prescribing and medication management. During my summer internship, the company needed to **increase brand engagement for iPrescribe**, conduct competitive intelligence, establish crisis preparedness, and maintain brand consistency across teams. Four distinct challenges, addressed simultaneously within a compressed timeline.",
     research:"I analyzed engagement patterns across DrFirst's social channels, benchmarked against competitors, and developed an **in-depth stakeholder survey** aligning CI research with specific user needs across the organization. I evaluated competitors' channels, messaging, USPs, and pricing to identify exploitable gaps. For crisis comms, I researched industry best practices and analyzed recent healthcare tech crises.",
-    solution:"Delivered **four major projects**: (1) Social media content strategy for iPrescribe with content pillars, creative direction, and engagement tactics. (2) **Competitive intelligence audit** with stakeholder-aligned research tied to strategic priorities. (3) Crisis communications plan with a **trigger tree mapping crisis types to response protocols**. (4) A **custom GPT trained on DrFirst's brand guidelines**, enabling any team member to produce on-brand content independently.",
-    results:"Social strategy drove significant engagement increases for iPrescribe. CI work was adopted as an **ongoing strategic planning reference**. The crisis plan gave the team a ready-to-deploy response framework. The custom GPT reduced content review cycles and enabled non-marketing teams to write on-brand materials. Recognized with a **company High Five award within the first week**."
+    solution:"Delivered **four major projects**: (1) Social media content strategy for iPrescribe with content pillars, creative direction, and engagement tactics. (2) **Competitive intelligence audit** with stakeholder-aligned research tied to strategic priorities. (3) Crisis communications plan with a **trigger tree mapping crisis types to response protocols**. (4) A **custom GPT trained on DrFirst's brand guidelines**, positioning documents, and tone specifications. The GPT included compliance language guardrails, a style guide reference layer, and prompt templates for common content types (social posts, blog drafts, emails, press releases), enabling any team member across the organization to produce on-brand, regulatory-aware content independently without waiting for marketing review.",
+    results:"Social strategy drove significant engagement increases for iPrescribe. CI work was adopted as an **ongoing strategic planning reference**. The crisis plan gave the team a ready-to-deploy response framework. The custom GPT **reduced content review cycles** and enabled non-marketing teams, especially sales, to write on-brand product descriptions and objection-handling materials independently. Recognized with a **company High Five award within the first week**."
   },
   {
-    id:"beech", title:"Marketing Consulting for Beecher's Handmade Cheese",
-    tags:["Marketing","Branding","Content Strategy","User Research"],
-    oneLiner:"Full-funnel marketing strategy for an artisanal brand entering new markets.",
-    image:"/images/beechers.png", imageAlt:"Beecher's Handmade Cheese vintage brand logo",
-    metrics:[{v:"7",l:"Integrated strategy components"},{v:"3",l:"Detailed buyer personas"}],
-    problem:"Beecher's Handmade Cheese had a strong local reputation but **limited brand awareness beyond its home market**. They faced challenges differentiating from mass-produced brands, lacked a cohesive cross-channel strategy, had inconsistent messaging, and underutilized digital platforms. They needed a strategy to convey artisanal value to a broader audience without diluting craft identity.",
-    research:"We conducted market analysis of the artisanal cheese industry, evaluated direct competitors and larger brands, and created **three detailed buyer personas** using demographic, psychographic, and behavioral data. We built empathy maps through interviews and surveys to understand pain points, from the overwhelm of choosing at the cheese counter to wanting to feel like a knowledgeable food enthusiast.",
-    solution:"Developed a **seven-component integrated strategy**: (1) Brand positioning around craftsmanship and tradition. (2) Brand voice and messaging framework with maker's journey storytelling. (3) Seasonal and product-specific campaign themes. (4) Creative concepts with mood boards showcasing the cheese-making process. (5) **Channel strategy tailored to audience behavior**. (6) Content strategy for education, engagement, and conversion. (7) Measurement framework with KPIs for every initiative.",
-    results:"Delivered **clear, implementable brand positioning** differentiating Beecher's from both mass-market and competing artisanal brands. Well-defined personas provided a foundation for targeted marketing. Multi-channel plan included draft content ready for refinement. The strategy was presented to stakeholders and received positive feedback as a **viable roadmap for market expansion**."
+    id:"strat-comm", title:"Strategic Communications at Braxton Institute",
+    tags:["Marketing","Content Strategy","Social Media"],
+    oneLiner:"First newsletter, 71.4% open rate, multimedia content engine. Built from nothing.",
+    image:"/images/braxton-stonewall.png", imageAlt:"Stonewall Riots mobile video series created for Braxton Institute",
+    metrics:[{v:"71.4%",l:"Newsletter open rate"},{v:"32.1%",l:"Click-through rate"},{v:"3x",l:"vs. industry avg open rate"}],
+    problem:"The Braxton Institute, a social justice organization, had **no consistent branding, no newsletter, no email marketing, limited multimedia content, and no social media calendar or style guide**. The organization had a powerful mission but wasn't communicating it effectively. Donors and community members weren't being engaged between events. Everything needed to be built from scratch.",
+    research:"Conducted a thorough marketing audit analyzing existing touchpoints, brand consistency, and engagement data. Mapped stakeholder segments, **donors, community members, partner organizations, and board members**, identifying what content each group found most engaging and which channels they preferred.",
+    solution:"Designed and launched the **organization's first-ever newsletter**. Created email campaigns to re-engage lapsed donors. Produced multimedia content including a **Stonewall Riots social media video series**, event highlight content, and video teasers. Established a **structured social media calendar** with mission-tied content pillars. Developed a comprehensive style guide and contributed blog content and editorial ideas.",
+    results:"Inaugural newsletter achieved **71.4% open rate and 32.1% CTR**, dramatically exceeding nonprofit averages of ~25% open and ~3% CTR (roughly **3x industry average**). Email campaigns drove measurable donor re-engagement. Multimedia strategy elevated presence across platforms. The marketing foundation continued to perform after my departure."
   },
   {
     id:"tizana", title:"Product Marketing at Tizana Mexicana",
@@ -190,6 +203,17 @@ const projects = [
     research:"Customer research segmented the audience into three personas: **cultural enthusiasts, ethical shoppers, and local community supporters**. Competitive analysis mapped messaging and pricing of similar brands. I mapped the full decision journey, identifying that the **emotional connection to the artisan's story was the most powerful conversion driver**, but it was buried on the website and absent from social media.",
     solution:"Built a **message house framework** articulating brand values and emotional narratives across channels. Developed the brand narrative centered on artisans' journeys and cultural significance. Produced **artisan interview videos and product journey content**. Executed the holiday **'Unwrap a Legacy' campaign** positioning products as meaningful gifts rooted in Mexican traditions. Created and maintained social media content calendar.",
     results:"**Social media engagement grew 25%**. **Website traffic increased 20%**. Customer feedback consistently cited stronger emotional connection. The storytelling-driven approach elevated market presence, increased visibility, and connected artisan work with people who genuinely valued it."
+  },
+  {
+    id:"beech", title:"Marketing Consulting for Beecher's Handmade Cheese",
+    tags:["Marketing","Branding","Content Strategy","User Research"],
+    oneLiner:"Full-funnel marketing strategy for an artisanal brand entering new markets.",
+    image:"/images/beechers.png", imageAlt:"Beecher's Handmade Cheese vintage brand logo",
+    metrics:[{v:"7",l:"Integrated strategy components"},{v:"3",l:"Detailed buyer personas"}],
+    problem:"Beecher's Handmade Cheese had a strong local reputation but **limited brand awareness beyond its home market**. They faced challenges differentiating from mass-produced brands, lacked a cohesive cross-channel strategy, had inconsistent messaging, and underutilized digital platforms. They needed a strategy to convey artisanal value to a broader audience without diluting craft identity.",
+    research:"We conducted market analysis of the artisanal cheese industry, evaluated direct competitors and larger brands, and created **three detailed buyer personas** using demographic, psychographic, and behavioral data. We built empathy maps through interviews and surveys to understand pain points, from the overwhelm of choosing at the cheese counter to wanting to feel like a knowledgeable food enthusiast.",
+    solution:"Developed a **seven-component integrated strategy**: (1) Brand positioning around craftsmanship and tradition. (2) Brand voice and messaging framework with maker's journey storytelling. (3) Seasonal and product-specific campaign themes. (4) Creative concepts with mood boards showcasing the cheese-making process. (5) **Channel strategy tailored to audience behavior**. (6) Content strategy for education, engagement, and conversion. (7) Measurement framework with KPIs for every initiative.",
+    results:"Delivered **clear, implementable brand positioning** differentiating Beecher's from both mass-market and competing artisanal brands. Well-defined personas provided a foundation for targeted marketing. Multi-channel plan included draft content ready for refinement. The strategy was presented to stakeholders and received positive feedback as a **viable roadmap for market expansion**."
   },
   {
     id:"wholef", title:"UX Research for Amazon Whole Foods",
@@ -215,17 +239,6 @@ const projects = [
     results:"Delivered **intuitive navigation with shorter paths** to key information. Content was clear, concise, and culturally inclusive. Mobile-friendly and accessible design. Application process streamlined with step-by-step guidance. Non-native speakers reported **reduced cognitive load** in follow-up testing."
   },
   {
-    id:"strat-comm", title:"Strategic Communications at Braxton Institute",
-    tags:["Marketing","Content Strategy","Social Media"],
-    oneLiner:"First newsletter, 71.4% open rate, multimedia content engine. Built from nothing.",
-    image:"/images/braxton-stonewall.png", imageAlt:"Stonewall Riots mobile video series created for Braxton Institute",
-    metrics:[{v:"71.4%",l:"Newsletter open rate"},{v:"32.1%",l:"Click-through rate"},{v:"3x",l:"vs. industry avg open rate"}],
-    problem:"The Braxton Institute, a social justice organization, had **no consistent branding, no newsletter, no email marketing, limited multimedia content, and no social media calendar or style guide**. The organization had a powerful mission but wasn't communicating it effectively. Donors and community members weren't being engaged between events. Everything needed to be built from scratch.",
-    research:"Conducted a thorough marketing audit analyzing existing touchpoints, brand consistency, and engagement data. Mapped stakeholder segments, **donors, community members, partner organizations, and board members**, identifying what content each group found most engaging and which channels they preferred.",
-    solution:"Designed and launched the **organization's first-ever newsletter**. Created email campaigns to re-engage lapsed donors. Produced multimedia content including a **Stonewall Riots social media video series**, event highlight content, and video teasers. Established a **structured social media calendar** with mission-tied content pillars. Developed a comprehensive style guide and contributed blog content and editorial ideas.",
-    results:"Inaugural newsletter achieved **71.4% open rate and 32.1% CTR**, dramatically exceeding nonprofit averages of ~25% open and ~3% CTR (roughly **3x industry average**). Email campaigns drove measurable donor re-engagement. Multimedia strategy elevated presence across platforms. The marketing foundation continued to perform after my departure."
-  },
-  {
     id:"dataviz", title:"Data Analytics & Visualization",
     tags:["Analytics","Data Viz"],
     oneLiner:"How age and income shape digital ad performance, told through data.",
@@ -239,20 +252,21 @@ const projects = [
   },
 ];
 
+
 /* ═══════════════════════════════════════════════
    DATA: AI-DRIVEN MARKETING PROJECTS
    ═══════════════════════════════════════════════ */
 const aiProjects = [
   {
-    id:"voc", title:"GPT-Powered Voice-of-Customer Program",
-    tags:["AI","Sales Enablement","Voice of Customer","Automation"],
-    oneLiner:"An AI system that extracts buyer objections from sales calls, so marketing speaks the customer's language.",
+    id:"voc", title:"AI-Powered Voice-of-Customer Program",
+    tags:["AI","Voice of Customer","Automation","Analytics"],
+    oneLiner:"A multi-tool AI system that extracts buyer objections from sales calls, so marketing speaks the customer's language.",
     image:"/images/valur.png", imageAlt:"Valur logo, where the VOC program was built",
-    metrics:[{v:"40%",l:"Faster time-to-content"},{v:"Ongoing",l:"Runs continuously"}],
+    metrics:[{v:"Ongoing",l:"Runs continuously"},{v:"3+",l:"Integrated tools"}],
     problem:"At Valur, marketing messaging was written based on internal assumptions. Meanwhile, the sales team had real conversations daily, full of **specific objections, hesitations, and language patterns that marketing never saw**. No systematic way existed to extract these insights and feed them into positioning and campaigns. The gap between what marketing said and what buyers felt was growing.",
     research:"Analyzed dozens of transcripts across deal stages. Identified **recurring objection categories** (cost concerns, trust in fintech, complexity, comparison to traditional advisors), mapped language clusters prospects used repeatedly, and documented decision-stage signals. Categorized objections by frequency, deal impact, and which ones required new messaging.",
-    solution:"Built a **GPT-powered pipeline** processing new transcripts on an ongoing basis. The system extracts objections, classifies by type and deal stage, identifies **specific buyer language patterns**, and surfaces win/loss correlations. Output feeds directly into: rewritten campaign copy, restructured email sequences, **objection-handling one-pagers** for sales, and a dashboard tracking trending objections over time.",
-    results:"Messaging shifted from **assumption-based to evidence-based**. Campaign copy now uses actual buyer language for higher resonance. Sales reported objection-handling materials felt more relevant. Win/loss patterns directly informed strategic decisions on **which segments to prioritize and which messaging angles to retire**. The system accelerated content production with clear, research-backed briefs."
+    solution:"Built a **multi-tool VOC pipeline** integrating several systems to process sales call transcripts on an ongoing basis. Here's how the workflow operates: Sales calls are recorded and transcribed via the team's existing call recording tool. Transcripts are fed into **Google Gemini**, which handles the core extraction: it classifies objections by type and deal stage, identifies **specific buyer language patterns**, and surfaces win/loss correlations. I designed the prompt architecture and structured the output format so Gemini's analysis feeds directly into a **shared workspace** (Google Sheets + Docs) where the marketing team can access updated objection trends, buyer language banks, and sentiment shifts. From there, the insights flow into **HubSpot** for campaign segmentation and email sequence targeting, and into shared content briefs that inform rewritten campaign copy, restructured email sequences, and **objection-handling one-pagers** for sales. The system is designed to run continuously: as new calls come in, they get processed through the same pipeline, keeping the insights current rather than static.",
+    results:"Messaging shifted from **assumption-based to evidence-based**. Campaign copy now uses actual buyer language for higher resonance. Sales reported objection-handling materials felt more relevant. Win/loss patterns directly informed strategic decisions on **which segments to prioritize and which messaging angles to retire**. The pipeline made customer insight extraction a repeatable, integrated workflow rather than a one-time research project."
   },
   {
     id:"drfirst-gpt", title:"Custom GPT for Healthcare Brand Consistency",
@@ -280,19 +294,30 @@ const aiProjects = [
   },
 ];
 
+
 /* ═══════════════════════════════════════════════
-   DATA: TIMELINE (Valur ends Feb 2026)
+   DATA: TIMELINE
    ═══════════════════════════════════════════════ */
 const timeline = [
   { role:"Marketing Operations Analyst", note:"First Marketing Hire", company:"Valur", period:"2024 – Feb 2026",
-    desc:"Built the marketing function from zero. Email campaigns hitting 54.84% open rate. Doubled partner calls in one week. Designed AI-powered systems that now run continuously: a GPT pipeline that extracts buyer objections and language patterns from sales call transcripts to ground all messaging in real customer language, and a sales enablement toolkit that lets the partnerships team generate on-brand, objection-specific content in minutes instead of days.", current:true },
+    desc:"Built the marketing function from zero. Email campaigns hitting 54.84% open rate. Doubled partner calls in one week. Designed an AI-powered voice-of-customer program using Google Gemini integrated with HubSpot that extracts buyer objections and language patterns from sales call transcripts on an ongoing basis, grounding all messaging in real customer language. Built lead magnets and nurture sequences that grew top-of-funnel pipeline.", current:true },
   { role:"Product Marketing & Growth", company:"Yuzi Care", period:"2023 – 2024",
-    desc:"Led GTM for an AI-powered maternal care marketplace. 46% cold outreach CTR, 65% LinkedIn engagement lift. Research that directly reshaped the product roadmap." },
+    desc:"Supported early go-to-market planning for an AI-powered postpartum care marketplace. Conducted competitive benchmarking and pricing analysis to inform positioning. Provided UX and pre-launch strategy research that informed the founding team's launch planning. 46% cold outreach CTR, 65% LinkedIn engagement lift." },
   { role:"Marketing Communications Intern", company:"DrFirst", period:"2023",
-    desc:"Social strategy for iPrescribe, competitive intelligence, crisis comms planning, and a custom GPT for brand consistency." },
+    desc:"Social strategy for iPrescribe, competitive intelligence, crisis comms planning. Built a custom GPT trained on DrFirst's brand guidelines with compliance guardrails and prompt templates for social, blogs, emails, and press releases, enabling org-wide on-brand content production." },
   { role:"Graduate Marketing Specialist", company:"UW Disability Cultural Center", period:"2022 – 2023",
-    desc:"Website redesign, accessible newsletters, community campaigns. 20% site engagement increase. Newsletter CTR from 0.1% to 3.8%." },
+    desc:"Technical SEO overhaul using Google Search Console, Screaming Frog, and Yoast. WordPress redesign unifying two sites. Newsletter CTR from 0.1% to 3.8%. Added AI-generated voice narration to enhance accessibility for the target audience, which became a permanent feature." },
 ];
+
+
+/* ═══════════════════════════════════════════════
+   DATA: EDUCATION
+   ═══════════════════════════════════════════════ */
+const education = [
+  { degree:"M.S. Communication: Digital Media", school:"University of Washington", period:"2022 – 2024", note:"Seattle, WA" },
+  { degree:"B.A. Media Studies & English Literature", school:"Christ University", period:"2018 – 2021", note:"Bangalore, India" },
+];
+
 
 /* ═══════════════════════════════════════════════
    DATA: CONTENT PORTFOLIO
@@ -311,8 +336,9 @@ const contentItems = [
 const typeIcons = { written: PenTool, video: Play, newsletter: Newspaper, social: Megaphone };
 const typeLabels = { written: "Written", video: "Video", newsletter: "Newsletter", social: "Social Media" };
 
+
 /* ═══════════════════════════════════════════════
-   PROJECT DEEP DIVE (with metric cards)
+   PROJECT DEEP DIVE (opens in-page with back-to-position)
    ═══════════════════════════════════════════════ */
 const ProjectDeepDive = ({ project, onBack }) => {
   const { C } = useTheme();
@@ -330,7 +356,6 @@ const ProjectDeepDive = ({ project, onBack }) => {
           <h1 className="text-3xl font-semibold mb-3" style={{ fontFamily:"'IBM Plex Serif',Georgia,serif", color:C.text }}>{project.title}</h1>
           <div className="flex flex-wrap gap-1.5 mb-6">{project.tags.map(t=><Tag key={t} label={t}/>)}</div>
         </Reveal>
-        {/* Project image */}
         {project.image && (
           <Reveal delay={65}>
             <div className="mb-8 rounded-xl overflow-hidden border" style={{ borderColor:C.border }}>
@@ -341,7 +366,6 @@ const ProjectDeepDive = ({ project, onBack }) => {
             </div>
           </Reveal>
         )}
-        {/* Case study / work sample links */}
         {(project.caseStudyUrl || project.secondaryUrl) && (
           <Reveal delay={72}>
             <div className="flex flex-wrap gap-3 mb-8">
@@ -366,7 +390,6 @@ const ProjectDeepDive = ({ project, onBack }) => {
             </div>
           </Reveal>
         )}
-        {/* Metric cards */}
         {project.metrics && (
           <Reveal delay={80}>
             <div className={`grid gap-3 mb-10 ${project.metrics.length <= 3 ? "grid-cols-3" : "grid-cols-2 md:grid-cols-4"}`}>
@@ -380,7 +403,6 @@ const ProjectDeepDive = ({ project, onBack }) => {
           { icon:Lightbulb, label:"The Solution", content:project.solution },
           { icon:Award, label:"The Results", content:project.results },
         ].map((s,i)=>{
-          // Parse **bold** markers into spans
           const renderText = (text) => {
             const parts = text.split(/\*\*(.*?)\*\*/g);
             return parts.map((part, idx) =>
@@ -413,6 +435,7 @@ const ProjectDeepDive = ({ project, onBack }) => {
     </div>
   );
 };
+
 
 /* ═══════════════════════════════════════════════
    BUILT-WITH-AI POPUP
@@ -458,8 +481,9 @@ const BuiltWithAI = () => {
   );
 };
 
+
 /* ═══════════════════════════════════════════════
-   NAV (with theme toggle)
+   NAV (with prominent theme toggle)
    ═══════════════════════════════════════════════ */
 const Nav = ({ onHome }) => {
   const { C, dark, toggle } = useTheme();
@@ -484,15 +508,25 @@ const Nav = ({ onHome }) => {
               <button key={id} onClick={()=>scrollTo(id)} className="cursor-pointer" style={{ color:C.muted }}>{label}</button>
             ))}
           </div>
-          <button onClick={toggle} className="p-2 rounded-lg transition-colors cursor-pointer" style={{ color:C.muted }}
-            onMouseEnter={e=>e.currentTarget.style.color=C.accent} onMouseLeave={e=>e.currentTarget.style.color=C.muted}>
-            {dark ? <Sun size={16}/> : <Moon size={16}/>}
+          {/* Prominent dark mode toggle */}
+          <button onClick={toggle}
+            className="flex items-center gap-1.5 px-3 py-1.5 rounded-full border text-xs font-medium cursor-pointer transition-all"
+            style={{
+              borderColor: C.accent,
+              color: C.accent,
+              backgroundColor: dark ? C.accentLight : "transparent",
+            }}
+            onMouseEnter={e=>{e.currentTarget.style.backgroundColor=C.accent;e.currentTarget.style.color=C.bg;}}
+            onMouseLeave={e=>{e.currentTarget.style.backgroundColor=dark?C.accentLight:"transparent";e.currentTarget.style.color=C.accent;}}>
+            {dark ? <Sun size={13}/> : <Moon size={13}/>}
+            {dark ? "Light" : "Dark"}
           </button>
         </div>
       </div>
     </nav>
   );
 };
+
 
 /* ═══════════════════════════════════════════════
    EXPANDABLE PROJECT CARD
@@ -501,7 +535,6 @@ const ProjectCard = ({ project, onDeepDive }) => {
   const { C } = useTheme();
   const [expanded, setExpanded] = useState(false);
 
-  // Parse **bold** markers into spans
   const renderText = (text) => {
     const parts = text.split(/\*\*(.*?)\*\*/g);
     return parts.map((part, idx) =>
@@ -528,6 +561,7 @@ const ProjectCard = ({ project, onDeepDive }) => {
             <p className="text-xs leading-relaxed mb-2" style={{ color:C.textSec }}><strong style={{ color:C.text }}>Problem:</strong> {renderText(project.problem.substring(0,150)+"...")}</p>
             <p className="text-xs leading-relaxed" style={{ color:C.textSec }}><strong style={{ color:C.text }}>Result:</strong> {renderText(project.results.substring(0,150)+"...")}</p>
           </div>
+          {/* Full Deep Dive opens in new tab via anchor to deep dive route */}
           <button onClick={e=>{e.stopPropagation();onDeepDive(project.id);}}
             className="flex items-center gap-1.5 text-xs font-medium cursor-pointer transition-opacity"
             style={{ color:C.accent }} onMouseEnter={e=>e.currentTarget.style.opacity=0.7} onMouseLeave={e=>e.currentTarget.style.opacity=1}>
@@ -539,19 +573,34 @@ const ProjectCard = ({ project, onDeepDive }) => {
   );
 };
 
+
 /* ═══════════════════════════════════════════════
    MAIN APP
    ═══════════════════════════════════════════════ */
 export default function Portfolio() {
   const [dark, setDark] = useState(false);
   const [deepDiveId, setDeepDiveId] = useState(null);
+  const scrollPositionRef = useRef(0);
   const C = dark ? darkColors : lightColors;
   const toggle = () => setDark(d=>!d);
 
   const allProjects = [...projects, ...aiProjects];
   const activeProject = allProjects.find(p=>p.id===deepDiveId);
-  const goHome = () => { setDeepDiveId(null); window.scrollTo(0,0); };
-  const openDeepDive = id => { setDeepDiveId(id); window.scrollTo(0,0); };
+
+  // Save scroll position before deep dive, restore on back
+  const goHome = () => {
+    setDeepDiveId(null);
+    // Restore scroll position after render
+    requestAnimationFrame(() => {
+      window.scrollTo(0, scrollPositionRef.current);
+    });
+  };
+
+  const openDeepDive = id => {
+    scrollPositionRef.current = window.scrollY;
+    setDeepDiveId(id);
+    window.scrollTo(0, 0);
+  };
 
   const shell = children => (
     <ThemeCtx.Provider value={{ C, dark, toggle }}>
@@ -569,9 +618,9 @@ export default function Portfolio() {
     <>
       <BuiltWithAI />
 
-      {/* HERO */}
+      {/* HERO — matched to max-w-[800px] like the about section */}
       <header className="pt-28 pb-16 px-6">
-        <div className="max-w-[1000px] mx-auto">
+        <div className="max-w-[800px] mx-auto">
           <Reveal>
             <div className="flex items-center gap-5 mb-8">
               <img src="/profile.jpg" alt="Tonishqa Kaplish" className="w-20 h-20 md:w-24 md:h-24 rounded-full object-cover border-2 shadow-md"
@@ -588,13 +637,19 @@ export default function Portfolio() {
             </div>
           </Reveal>
           <Reveal delay={150}>
-            <p className="text-lg leading-relaxed max-w-xl mb-3" style={{ fontFamily:"'IBM Plex Serif',Georgia,serif", fontStyle:"italic", color:C.textSec }}>
-              I build marketing systems that listen before they sell.
+            <p className="text-lg leading-relaxed mb-3" style={{ fontFamily:"'IBM Plex Serif',Georgia,serif", fontStyle:"italic", color:C.textSec }}>
+              Building marketing systems anchored in real customer behavior.
             </p>
           </Reveal>
           <Reveal delay={250}>
-            <p className="text-base leading-relaxed max-w-xl mb-8" style={{ color:C.textSec }}>
-              I've built marketing functions from scratch and shipped go-to-market strategies across fintech and healthtech, using AI not as a shortcut, but as infrastructure. I design systems that surface real buyer language, automate insight extraction, and turn research into campaigns that move pipeline.
+            <p className="text-base leading-relaxed mb-4" style={{ color:C.textSec }}>
+              I've been trained in how people construct meaning, make decisions, and form identity around the things they choose. Today, I put that understanding to work.
+            </p>
+            <p className="text-base leading-relaxed mb-4" style={{ color:C.textSec }}>
+              I build AI infrastructure that turns customer language into strategy. Sales calls become positioning. Support tickets become content frameworks. Objection patterns become messaging that converts because it reflects what buyers actually said.
+            </p>
+            <p className="text-base leading-relaxed mb-8" style={{ color:C.textSec }}>
+              I've built this for industries where trust isn't a brand value on a slide deck. It's structural. You don't manufacture it. You earn it by proving you listened.
             </p>
           </Reveal>
           <Reveal delay={350}>
@@ -616,29 +671,45 @@ export default function Portfolio() {
         </div>
       </header>
 
+
       {/* ABOUT */}
       <section id="about" className="py-12 px-6">
         <div className="max-w-[800px] mx-auto">
           <Reveal><SectionHeader title="About" /></Reveal>
           <Reveal delay={100}>
             <div className="space-y-4 mb-8">
-              <p className="text-sm leading-relaxed" style={{ color:C.textSec }}>I think the most underutilized data in marketing lives inside sales calls, support tickets, and onboarding sessions. Real language. Real objections. Real patterns. I build AI systems that extract those signals and turn them into positioning, campaigns, and content that actually resonates, because it started from what people said, not what we assumed they meant.</p>
-              <p className="text-sm leading-relaxed" style={{ color:C.textSec }}>That's the throughline across everything I do: using AI to close the gap between what customers experience and what marketing communicates. Extracting buyer language from transcripts, training custom models on brand voice, automating competitive intelligence, building workflows where AI handles the repetitive extraction so marketers can focus on strategy. I don't just use AI tools. I design the systems that make AI useful for marketing teams.</p>
-              <p className="text-sm leading-relaxed" style={{ color:C.textSec }}>I've worked across fintech, healthtech, and maternal care. Industries where you earn trust or you earn nothing.</p>
+              <p className="text-sm leading-relaxed" style={{ color:C.textSec }}>Most marketers enter through tactics. I entered through frameworks. I treat marketing as a practice of understanding human behavior. Every campaign is a hypothesis about how people decide. Every positioning statement is an interpretation of identity. Every conversion problem is, underneath it all, a friction problem.</p>
+              <p className="text-sm leading-relaxed" style={{ color:C.textSec }}>My work focuses on closing the gap between what customers experience and what marketing communicates. In practice, that has looked like building marketing functions from zero. Designing AI systems that analyze sales calls to surface objection patterns. Translating those patterns into messaging used across demand gen, product marketing, and sales enablement. Automating competitive intelligence workflows that cut research time.</p>
+              <p className="text-sm leading-relaxed" style={{ color:C.textSec }}>AI handles the pattern recognition. I handle the meaning-making. That division of labor is what makes clarity repeatable.</p>
+              <p className="text-sm leading-relaxed" style={{ color:C.textSec }}>Donald Miller puts it well: the customer is the hero, the brand is the guide. I build systems that make sure the guide is actually listening.</p>
+              <p className="text-sm leading-relaxed" style={{ color:C.textSec }}>I'm not here to shout. I'm here to clarify. And I build the infrastructure that lets that clarity scale.</p>
             </div>
           </Reveal>
           <Reveal delay={200}>
             <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
               <Callout icon={Target} title="Marketing">Campaigns, segmentation, growth experiments. 54.84% email open rates. I start with research and let the data do the talking.</Callout>
               <Callout icon={BookOpen} title="Storytelling">65% LinkedIn engagement lift. Messaging that founders trusted on their homepage. I care about getting the words right.</Callout>
-              <Callout icon={Users} title="User Research">Built a GPT-powered VOC program. 70% survey response rates that reshaped product roadmaps. I show up with what users actually said.</Callout>
+              <Callout icon={Users} title="User Research">Built a voice-of-customer program on Gemini. 70% survey response rates that informed product roadmaps. I show up with what users actually said.</Callout>
             </div>
           </Reveal>
           <Reveal delay={300}>
             <div className="mt-10">
               <h3 className="text-sm font-semibold uppercase tracking-wide mb-4" style={{ color:C.muted }}>Toolkit</h3>
               <div className="grid grid-cols-2 md:grid-cols-4 gap-2.5">
-                {[{icon:Megaphone,label:"Go-to-Market"},{icon:BarChart3,label:"Marketing Analytics"},{icon:Brain,label:"AI / LLM Workflows"},{icon:PenTool,label:"Content Strategy"},{icon:Users,label:"User Research"},{icon:MessageSquare,label:"Conversational AI"},{icon:Layers,label:"Product Marketing"},{icon:Lightbulb,label:"Brand Storytelling"}].map(({icon:Icon,label},i)=>(
+                {[
+                  {icon:Megaphone,label:"Go-to-Market"},
+                  {icon:BarChart3,label:"Marketing Analytics"},
+                  {icon:Brain,label:"AI / LLM Workflows"},
+                  {icon:PenTool,label:"Content Strategy"},
+                  {icon:Users,label:"User Research"},
+                  {icon:MessageSquare,label:"Conversational AI"},
+                  {icon:Layers,label:"Product Marketing"},
+                  {icon:Lightbulb,label:"Brand Storytelling"},
+                  {icon:Search,label:"SEO / Technical SEO"},
+                  {icon:Target,label:"HubSpot"},
+                  {icon:BarChart3,label:"PostHog"},
+                  {icon:Puzzle,label:"Clay"},
+                ].map(({icon:Icon,label},i)=>(
                   <div key={i} className="flex items-center gap-2 rounded-lg border px-3 py-2.5 text-xs font-medium"
                     style={{ backgroundColor:C.bg, borderColor:C.border, color:C.textSec }}>
                     <Icon size={13} style={{ color:C.accent }} className="shrink-0"/>{label}
@@ -649,6 +720,7 @@ export default function Portfolio() {
           </Reveal>
         </div>
       </section>
+
 
       {/* EXPERIENCE */}
       <section id="work" className="py-12 px-6">
@@ -677,6 +749,34 @@ export default function Portfolio() {
         </div>
       </section>
 
+
+      {/* EDUCATION */}
+      <section id="education" className="py-12 px-6">
+        <div className="max-w-[800px] mx-auto">
+          <Reveal><SectionHeader title="Education" /></Reveal>
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+            {education.map((ed,i)=>(
+              <Reveal key={i} delay={i*100}>
+                <div className="rounded-lg border px-5 py-4" style={{ backgroundColor:C.surface, borderColor:C.border }}>
+                  <div className="flex items-start gap-3">
+                    <GraduationCap size={18} style={{ color:C.accent }} className="mt-0.5 shrink-0" />
+                    <div>
+                      <h3 className="text-sm font-semibold mb-0.5" style={{ fontFamily:"'IBM Plex Serif',Georgia,serif", color:C.text }}>{ed.degree}</h3>
+                      <p className="text-sm" style={{ color:C.textSec }}>{ed.school}</p>
+                      <div className="flex items-center gap-2 mt-1">
+                        <span className="text-xs" style={{ fontFamily:"'IBM Plex Mono',monospace", color:C.muted }}>{ed.period}</span>
+                        {ed.note && <span className="text-xs" style={{ color:C.muted }}>· {ed.note}</span>}
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </Reveal>
+            ))}
+          </div>
+        </div>
+      </section>
+
+
       {/* THE AI LAYER */}
       <section id="ai-lab" className="py-12 px-6">
         <div className="max-w-[800px] mx-auto">
@@ -687,6 +787,7 @@ export default function Portfolio() {
         </div>
       </section>
 
+
       {/* PROJECTS */}
       <section id="projects" className="py-12 px-6">
         <div className="max-w-[800px] mx-auto">
@@ -696,6 +797,7 @@ export default function Portfolio() {
           </div>
         </div>
       </section>
+
 
       {/* CONTENT PORTFOLIO */}
       <section id="content" className="py-12 px-6">
@@ -728,13 +830,14 @@ export default function Portfolio() {
         </div>
       </section>
 
-      {/* CONTACT */}
+
+      {/* CONTACT — matched to max-w-[800px] */}
       <section id="contact" className="py-12 px-6">
-        <div className="max-w-[1000px] mx-auto">
+        <div className="max-w-[800px] mx-auto">
           <Reveal><SectionHeader title="Let's Connect" /></Reveal>
           <Reveal delay={100}>
             <div className="rounded-xl border p-6 md:p-8" style={{ backgroundColor:C.surface, borderColor:C.border }}>
-              <p className="text-sm leading-relaxed mb-6 max-w-md" style={{ color:C.textSec }}>
+              <p className="text-sm leading-relaxed mb-6" style={{ color:C.textSec }}>
                 I'm always interested in opportunities at the intersection of marketing, AI, and user-centered growth. If something here resonated, or if you just want to talk about what makes great marketing, let's have a conversation.
               </p>
               <div className="flex flex-col sm:flex-row gap-3 mb-4">
@@ -755,6 +858,43 @@ export default function Portfolio() {
           </Reveal>
         </div>
       </section>
+
+
+      {/* BUILD LOG */}
+      <section className="py-12 px-6">
+        <div className="max-w-[800px] mx-auto">
+          <Reveal><SectionHeader title="Build Log" subtitle="How this site was made, and why that matters." /></Reveal>
+          <Reveal delay={100}>
+            <div className="rounded-xl border p-6" style={{ backgroundColor:C.surface, borderColor:C.border }}>
+              <p className="text-sm leading-relaxed mb-4" style={{ color:C.textSec }}>
+                This portfolio was designed and built entirely through AI-assisted development using <strong style={{ color:C.text }}>Claude Opus 4.6</strong> and <strong style={{ color:C.text }}>Cursor IDE</strong>. No templates. No drag-and-drop builders. No manual coding.
+              </p>
+              <p className="text-sm leading-relaxed mb-4" style={{ color:C.textSec }}>
+                I directed the architecture, content structure, design system, and interaction patterns through structured prompts. The AI generated the code. Every section, component, and animation was orchestrated through an iterative prompt-and-refine workflow that mirrors how I think about AI in marketing: define the system, direct the output, iterate until it's right.
+              </p>
+              <p className="text-sm leading-relaxed mb-5" style={{ color:C.textSec }}>
+                This isn't just a portfolio. It's a demonstration of AI workflow fluency. The same approach I used to build this site is the approach I use to build marketing systems: understand the tools deeply enough to direct them with precision.
+              </p>
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
+                {[
+                  {label:"Stack", value:"React 18 + Vite + Tailwind CSS v4"},
+                  {label:"AI Model", value:"Claude Opus 4.6 (Anthropic)"},
+                  {label:"IDE", value:"Cursor"},
+                  {label:"Architecture", value:"Single-file, zero build complexity"},
+                  {label:"Design System", value:"Custom warm palette + dark mode"},
+                  {label:"Typography", value:"IBM Plex Serif + Inter + IBM Plex Mono"},
+                ].map((item,i)=>(
+                  <div key={i} className="flex items-start gap-2 text-xs" style={{ color:C.textSec }}>
+                    <CheckCircle2 size={11} style={{ color:C.accent }} className="mt-0.5 shrink-0"/>
+                    <span><strong style={{ color:C.text }}>{item.label}:</strong> {item.value}</span>
+                  </div>
+                ))}
+              </div>
+            </div>
+          </Reveal>
+        </div>
+      </section>
+
 
       {/* FOOTER */}
       <footer className="py-8 px-6" style={{ borderTop:`1px solid ${C.border}` }}>
