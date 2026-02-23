@@ -5,7 +5,7 @@ import {
   Layers, Lightbulb, Megaphone, Users, BookOpen,
   CheckCircle2, FileText, ChevronDown, Coffee, Search,
   Puzzle, Award, X, Wand2, Sun, Moon, Play, Newspaper,
-  GraduationCap
+  GraduationCap, Menu
 } from "lucide-react";
 
 
@@ -87,6 +87,13 @@ const tagPalette = {
   "Content Repurposing": { l: { bg:"#EEF2FF",text:"#4338CA",border:"#C7D2FE" }, d: { bg:"#161936",text:"#C7D2FE",border:"#272D5E" } },
   "Sales Intelligence": { l: { bg:"#ECFDF5",text:"#065F46",border:"#A7F3D0" }, d: { bg:"#0D2E22",text:"#A7F3D0",border:"#1A4D3A" } },
   Slack: { l: { bg:"#F0F4F8",text:"#1A1D21",border:"#D1D5DB" }, d: { bg:"#1A1D21",text:"#D1D5DB",border:"#36393F" } },
+  Embeddings: { l: { bg:"#F5F3FF",text:"#5B21B6",border:"#DDD6FE" }, d: { bg:"#1E1536",text:"#DDD6FE",border:"#33245E" } },
+  NLP: { l: { bg:"#EEF2FF",text:"#3730A3",border:"#C7D2FE" }, d: { bg:"#161936",text:"#C7D2FE",border:"#272D5E" } },
+  "GTM Strategy": { l: { bg:"#FEF3C7",text:"#92400E",border:"#FDE68A" }, d: { bg:"#3D2E10",text:"#FDE68A",border:"#5C4520" } },
+  "Predictive Analytics": { l: { bg:"#DBEAFE",text:"#1E40AF",border:"#93C5FD" }, d: { bg:"#101D36",text:"#93C5FD",border:"#1A335E" } },
+  "Machine Learning": { l: { bg:"#F5F3FF",text:"#6D28D9",border:"#DDD6FE" }, d: { bg:"#1E1536",text:"#DDD6FE",border:"#33245E" } },
+  Optimization: { l: { bg:"#FFF7ED",text:"#C2410C",border:"#FDBA74" }, d: { bg:"#3A2210",text:"#FDBA74",border:"#5C3518" } },
+  "Lead Scoring": { l: { bg:"#ECFDF5",text:"#065F46",border:"#A7F3D0" }, d: { bg:"#0D2E22",text:"#A7F3D0",border:"#1A4D3A" } },
 };
 
 
@@ -313,37 +320,37 @@ const aiProjects = [
     results:"Designed to increase accessibility, enhance community engagement, provide personalized educational content, facilitate safe public conversations on social justice, and **reduce staff workload for routine inquiries**. Demonstrated the potential for conversational AI to serve communities that traditional interfaces often fail, and provided a **replicable model for other mission-driven organizations**."
   },
   {
-    id:"lead-nurture", title:"Auto-Segmenting Lead Nurture Engine",
-    tags:["AI","Lead Nurture","Email Marketing","Automation","Sales Enablement"],
-    oneLiner:"Drop in a raw lead list. Get back segmented nurture tracks with personalized email sequences, ready to import into HubSpot.",
+    id:"positioning-map", title:"Competitive Positioning Map (Embeddings-Based)",
+    tags:["AI","Competitive Intelligence","Embeddings","NLP","GTM Strategy"],
+    oneLiner:"Uses text embeddings to map how competitors position themselves across messaging, features, and audience. Instead of manually reading landing pages and decks, the system ingests competitor content, generates vector representations, and plots positioning clusters. You can see where messaging overlaps, where gaps exist, and how your own positioning compares — updated automatically as competitors ship new content.",
     image:null,
-    metrics:[{v:"1 input",l:"Raw CSV to full sequences"},{v:"3-4",l:"Auto-generated segments"},{v:"3 emails",l:"Per segment sequence"},{v:"HubSpot-ready",l:"CSV export with tags"}],
-    problem:"Most startups treat lead nurture as a single track. Everyone gets the same sequence regardless of whether they're a price-sensitive evaluator, an executive sponsor, or a technical validator. The result: **generic emails that speak to no one specifically**. Personalizing at scale requires segmentation, but manual segmentation is slow and subjective. By the time someone builds personas and writes sequences for each, the leads have gone cold. The gap isn't strategy. It's speed.",
-    research:"Analyzed lead nurture workflows across B2B SaaS and fintech companies. Found that **80% of teams have a segmentation framework on paper but don't operationalize it** because the manual work of classifying leads and writing segment-specific copy is too time-intensive. Mapped the data points typically available in a raw lead export (company, role, industry, acquisition source) and identified which combinations reliably predict buyer behavior and messaging receptivity.",
-    solution:"Built a **multi-stage autonomous pipeline** that transforms a raw CSV into ready-to-deploy nurture sequences. **Step 1: Enrich.** Claude reads each lead's company, role, and industry and infers likely pain points, priorities, and evaluation criteria. No external enrichment APIs needed. The model draws on pattern recognition across industries. **Step 2: Segment.** Based on enriched profiles, Claude clusters leads into 3-4 nurture tracks (e.g., 'price-sensitive evaluator,' 'executive sponsor,' 'technical validator,' 'passive researcher'). Each segment gets a behavioral profile. **Step 3: Draft.** For each segment, Claude generates a 3-email personalized sequence pulling from a messaging framework. Emails are written at the right altitude for each persona: strategic for executives, detailed for technical evaluators, ROI-focused for budget holders. **Step 4: Export.** Outputs a HubSpot-ready CSV with segment tags, email subject lines, body copy, and recommended send timing. **One input, full pipeline, no manual persona mapping.**",
-    results:"From a sample lead list, the system generated **4 distinct segments** with behavioral profiles that matched manual analysis. Each segment received a tailored 3-email sequence with differentiated messaging, tone, and call-to-action. The HubSpot-ready export eliminated the formatting and tagging step that typically adds hours to campaign setup. The system revealed segmentation nuances a human might miss: leads from the same industry but different roles received **fundamentally different sequences** based on inferred decision-making authority. **Built with:** Python, Claude API (Anthropic), CSV processing, HubSpot-compatible export format."
+    metrics:[{v:"Real-time",l:"Positioning updates"},{v:"Vector-based",l:"Semantic clustering"},{v:"Automated",l:"Content ingestion"},{v:"Visual",l:"Gap analysis"}],
+    problem:"Traditional competitive positioning analysis is manual, slow, and snapshot-based. Someone reads through competitor websites, takes notes, and builds a positioning matrix in a slide deck. By the time the deck is reviewed, the landscape has shifted. **The bigger problem: manual analysis misses semantic overlap.** Two competitors can position differently on the surface while targeting the exact same buyer segment with nearly identical value props, just using different words. Human pattern recognition struggles to catch this at scale across 5+ competitors and dozens of pages.",
+    research:"Analyzed how positioning analysis breaks down in practice. Found that teams either (1) do it once during a rebrand and never update it, or (2) assign it to someone who reviews competitor sites quarterly and writes a summary. Neither approach captures **semantic positioning overlap** or tracks shifts in real time. Researched text embedding models and vector similarity techniques. Identified that embeddings can surface when two competitors are saying fundamentally the same thing even when word choice differs, which is exactly what traditional competitive analysis misses.",
+    solution:"Built a **positioning intelligence system** using embeddings and clustering. **Step 1: Ingest.** The system scrapes competitor landing pages, product pages, and key messaging content. Extracts headlines, hero copy, feature descriptions, and value props. **Step 2: Embed.** Each piece of content gets converted into a vector embedding using a transformer model. The embedding captures semantic meaning, not just keywords. **Step 3: Cluster.** The system plots all competitor embeddings in vector space and runs clustering algorithms to identify positioning groups. Competitors close together in vector space are positioning similarly, even if their language differs. **Step 4: Visualize.** Outputs a 2D positioning map showing clusters, gaps, and your own positioning relative to competitors. The map updates automatically as new competitor content is ingested. **Step 5: Recommend.** The system flags white space opportunities: areas where no competitors are positioning, or where your messaging overlaps too closely with a competitor's.",
+    results:"From an initial set of 5 competitors in the fintech space, the system identified **3 distinct positioning clusters**: trust-focused (2 competitors emphasizing security and compliance), innovation-focused (2 competitors emphasizing AI and automation), and accessibility-focused (1 competitor emphasizing ease of use for non-experts). It flagged that the client's positioning sat directly in the middle of the trust and innovation clusters, creating **ambiguous differentiation**. The system recommended shifting messaging toward the accessibility gap, which was underserved. **Built with:** Python, OpenAI Embeddings API, scikit-learn (clustering), Plotly (visualization), BeautifulSoup (scraping)."
   },
   {
-    id:"content-lifecycle", title:"Content Lifecycle Autopilot",
-    tags:["AI","Content Repurposing","Content Strategy","Automation","Social Media"],
-    oneLiner:"One input, six platform-ready outputs. A blog post, webinar, or transcript goes in. LinkedIn posts, sales emails, social snippets, internal summaries, and SEO metadata come out.",
+    id:"content-predictor", title:"Content Performance Predictor",
+    tags:["AI","Content Strategy","Predictive Analytics","Machine Learning","Optimization"],
+    oneLiner:"Predicts how a piece of content will perform before it's published. The model trains on historical content data — engagement rates, conversion metrics, format, topic, channel, publish timing — and scores draft content against learned patterns. It flags what's likely to underperform and suggests adjustments based on what's historically driven results in similar contexts.",
     image:null,
-    metrics:[{v:"1 input",l:"Any content format accepted"},{v:"6+",l:"Platform-ready outputs"},{v:"<3 min",l:"Full repurposing cycle"},{v:"Zero",l:"Intermediate decisions needed"}],
-    problem:"Content teams create one piece and then spend days manually adapting it for different channels. A blog post needs a LinkedIn version, a sales email, tweet-length snippets, an internal summary for the sales team, and SEO metadata. Each adaptation requires a different format, tone, and angle. Most teams either skip repurposing entirely or do it inconsistently. **The content dies where it was born.** The ROI on every piece of content is a fraction of what it could be because distribution is treated as an afterthought, not a system.",
-    research:"Audited content workflows across marketing teams and found the same pattern: **teams know they should repurpose but don't because the cognitive switching cost is too high**. Writing a LinkedIn hook requires a different mental model than writing SEO metadata. Each platform has its own constraints, and most marketers default to their strongest channel and neglect the rest. Mapped the specific format requirements, character limits, tone expectations, and structural patterns for each major distribution channel.",
-    solution:"Built a **single-input content engine** that autonomously generates platform-optimized outputs. You drop in one piece of content: a blog post, webinar transcript, case study, or podcast transcript. The system generates: **(1) LinkedIn post** with a pattern-interrupt hook and engagement-optimized structure. **(2) Sales email** referencing the content as a value-add touchpoint. **(3) 3 tweet-length social snippets** each pulling a different insight. **(4) Internal Slack summary** for the sales team with key talking points. **(5) SEO meta title and description** optimized for click-through. **(6) Suggested follow-up content idea** based on gaps the system identified in the original piece. Each output is formatted for its platform. Each reflects a different funnel stage. **One input, full funnel, no intermediate decisions.**",
-    results:"From a single blog post input, the system generated **6 distinct outputs** in under 3 minutes, each correctly formatted and tonally calibrated for its platform. The LinkedIn post used a different hook structure than the sales email. The social snippets each isolated a different insight rather than repeating the same point. The follow-up content suggestion identified a gap the original author hadn't considered. The system **eliminated the 2-3 hours typically spent on manual repurposing** per piece and made consistent cross-channel distribution a default, not an aspiration. **Built with:** Python, Claude API (Anthropic), text/URL input processing, structured output formatting."
+    metrics:[{v:"Pre-publish",l:"Performance scoring"},{v:"Historical",l:"Pattern learning"},{v:"Real-time",l:"Draft feedback"},{v:"Actionable",l:"Optimization suggestions"}],
+    problem:"Most content teams operate on gut instinct. Someone drafts a blog post, schedules it, and waits to see if it performs. If it underperforms, the team says 'we'll try a different topic next time' and moves on. **There's no systematic way to predict performance before publishing**, which means teams waste time producing content destined to fail. The data exists: historical performance metrics, topic patterns, format trends, channel behavior. But it sits unused in analytics dashboards instead of feeding forward into content planning.",
+    research:"Analyzed content performance data across B2B SaaS companies. Found that **high-performing content shares predictable characteristics**: specific topic clusters, optimal post length ranges, formatting patterns (lists vs. narratives), and timing windows. But teams rarely codify these patterns into decision-making frameworks. Interviewed content marketers and discovered the core issue: **analyzing what worked after the fact is easy. Predicting what will work before you write it is hard.** The insight: this is a supervised learning problem. Historical content is labeled training data. Draft content is unlabeled input. The model should score drafts against learned patterns.",
+    solution:"Built a **predictive scoring model** that evaluates draft content before publication. **Step 1: Train.** The model ingests historical content data: post titles, topics, word count, format (listicle, how-to, case study, opinion), publish channel (blog, LinkedIn, email), publish day/time, and performance metrics (pageviews, engagement rate, conversion rate, time on page). It learns which features correlate with high performance. **Step 2: Score.** You input a draft title, topic, planned format, and channel. The model returns a performance score (0-100) predicting how it will perform relative to historical content. **Step 3: Explain.** The system surfaces which features are dragging the score down. Example: 'Posts on this topic historically underperform on LinkedIn but do well in email. Consider repositioning for email distribution.' Or: 'Your title structure matches low-performing patterns. High-performing titles in this topic use how-to framing.' **Step 4: Suggest.** Based on what's worked historically, the system recommends adjustments: title reframing, format changes, or channel shifts. **Step 5: Refine.** As new content publishes and performance data comes in, the model retrains automatically, improving predictions over time.",
+    results:"Tested against 6 months of historical blog content from a SaaS company. The model correctly predicted **top-quartile vs. bottom-quartile performance with 76% accuracy**. It flagged that **how-to content outperformed opinion content by 3x on average**, and that posts published on Tuesday mornings had 40% higher engagement than Friday posts. For a draft titled 'Why We Built This Feature,' the model scored it 34/100 and recommended reframing as 'How to [Achieve Outcome] Using [Feature],' which matched a high-performing title pattern. The system turned content strategy from reactive to predictive. **Built with:** Python, scikit-learn (random forest classifier), pandas (data processing), historical content CSV, predictive scoring API."
   },
   {
-    id:"win-loss", title:"Win/Loss Autopsy System",
-    tags:["AI","Sales Intelligence","Analytics","Automation","Voice of Customer"],
-    oneLiner:"Every closed deal triggers an autonomous analysis. Over time, it builds a living knowledge base of why you win and why you lose.",
+    id:"lead-scoring", title:"Adaptive Lead Scoring Engine (with Feedback Loop)",
+    tags:["AI","Lead Scoring","Predictive Analytics","Automation","Sales Intelligence"],
+    oneLiner:"A lead scoring model that retrains itself every time a deal closes. Feed it historical lead data — company size, industry, contact role, acquisition channel, engagement signals like pages visited, emails opened, content downloaded — along with the outcome. The model learns which attributes predict conversion. Every new closed deal (won or lost) triggers automatic retraining. The system re-evaluates feature weights and updates the model on its own. If enterprise deals start outperforming mid-market, the model catches it. If an acquisition channel stops producing, scores adjust. It also flags drift — surfacing alerts like 'Your model's accuracy has dropped 8% this month — here's what changed in the data.'",
     image:null,
-    metrics:[{v:"Automatic",l:"Post-deal trigger"},{v:"4-part",l:"Structured analysis"},{v:"Pattern",l:"Cross-deal matching"},{v:"Living",l:"Knowledge base built over time"}],
-    problem:"Most companies treat win/loss analysis as an occasional exercise. Someone runs a quarterly review, pulls a few anecdotes, and presents slides that confirm what everyone already assumed. **The real patterns, the recurring objections, the deals lost for the same reason three months in a row, go undetected** because there's no systematic way to process deal outcomes as they happen. By the time the quarterly review arrives, the context is stale and the actionable window has closed.",
-    research:"Studied win/loss analysis practices across B2B companies and found a consistent gap: **teams collect deal data but don't process it in real time**. CRM notes are inconsistent. Call transcripts sit unreviewed. The pattern recognition that would surface systemic issues requires someone to hold dozens of deals in their head simultaneously, which no individual can do reliably. The insight: win/loss analysis shouldn't be a periodic report. It should be **continuous infrastructure** that learns with every deal.",
-    solution:"Built an **autonomous post-deal analysis system** that triggers after every closed deal. You input the deal outcome (won or lost), the prospect's industry and size, and any available notes or call transcripts. **Step 1: Analyze.** Claude generates a structured win/loss analysis: what worked, what didn't, key decision factors, and where in the process the outcome was likely determined. **Step 2: Match.** The system cross-references the current deal against the historical database, flagging recurring patterns. Is this the third SaaS company lost to the same competitor? Is there a segment where the close rate is anomalously high? **Step 3: Recommend.** Based on the analysis and pattern matching, Claude generates specific messaging adjustments and suggested updates to the sales playbook. **Step 4: Accumulate.** Every analysis gets added to the knowledge base. The system gets smarter with each deal. A monthly digest summarizes emerging win/loss trends. **Fully autonomous after each deal close.**",
-    results:"After processing an initial batch of deals, the system identified **3 recurring loss patterns** that hadn't surfaced in manual reviews, including a specific objection cluster tied to implementation timelines that appeared in 4 of the last 6 lost deals. It flagged that **wins correlated strongly with early-stage champion identification** and recommended a specific qualification question to surface champions earlier. The living knowledge base provided sales leadership with a **searchable, always-current record** of why deals close or don't, replacing quarterly guesswork with continuous insight. **Built with:** Claude API (Anthropic), Python, Google Sheets (deal database), Make.com/Python orchestration, email digest."
+    metrics:[{v:"Auto-retrain",l:"After every deal close"},{v:"Drift detection",l:"Built-in accuracy monitoring"},{v:"Dynamic",l:"Feature weight updates"},{v:"Transparent",l:"Explainability included"}],
+    problem:"Most lead scoring models are static. Someone builds a model based on historical data, deploys it, and it runs unchanged for months or years. **The problem: buyer behavior shifts. Market conditions change. What predicted conversion six months ago might not predict it today.** A channel that was high-intent last quarter could be flooded with low-quality leads this quarter. An industry that historically converted well might stop converting due to macroeconomic factors. Static models don't adapt. They degrade silently, and by the time someone notices the scores don't match reality, months of opportunity have been lost.",
+    research:"Studied lead scoring implementations across B2B SaaS and fintech companies. Found that **most models are built once and forgotten**. Data scientists train a model during initial setup, sales uses it for a while, and then quietly stops trusting it because the scores stop matching their intuition. The core issue: **models are trained on historical data, but they operate in a dynamic environment.** Market conditions shift. Customer segments evolve. Channels mature. The solution isn't a better initial model. It's a model that **learns continuously** as new deals close, updating its understanding of what predicts conversion in real time.",
+    solution:"Built a **self-updating lead scoring system** with automatic retraining and drift detection. **Step 1: Train.** The model ingests historical lead data: company size, industry, contact role, acquisition channel (organic, paid, referral, event), engagement signals (pages visited, emails opened, content downloaded, demo requests), and outcome (won, lost, still open). It learns which features predict conversion using a gradient-boosting classifier. **Step 2: Score.** Every new lead gets scored 0-100 based on feature similarity to historical converters. High scores go to sales. Low scores go to nurture. **Step 3: Feedback Loop.** Every time a deal closes (won or lost), the outcome gets fed back into the training data and the model retrains automatically. Feature weights update. If enterprise leads started converting at higher rates, their weight increases. If a previously high-performing channel degrades, its weight drops. **Step 4: Drift Detection.** The system tracks model accuracy over time. If accuracy drops below a threshold (e.g., 8% decline), it triggers an alert: 'Model accuracy has degraded. Here's what changed in the data: [summary of feature distribution shifts].' **Step 5: Explainability.** For every lead score, the system outputs which features contributed most. Example: 'Score: 87. Primary drivers: enterprise company size (+22), demo request (+18), organic acquisition (+12). Detractors: low email engagement (-5).'",
+    results:"Deployed with 12 months of historical deal data. Initial model accuracy: 81% at predicting deal outcomes. After 3 months of continuous retraining, accuracy improved to 87% as the model adapted to shifting buyer behavior. **Key insight surfaced by drift detection:** a paid acquisition channel that historically scored high began underperforming after a targeting change. The model detected the drop, adjusted weights, and flagged the issue before sales wasted time on low-quality leads. The system also revealed that **demo requests became 30% more predictive** of conversion over time, prompting the team to prioritize demo acceleration in their sales process. **Built with:** Python, scikit-learn (gradient boosting), pandas (data pipeline), automated retraining via cron job, Slack alerts for drift detection."
   },
 ];
 
@@ -587,32 +594,33 @@ const BuiltWithAI = () => {
 
 
 /* ═══════════════════════════════════════════════
-   NAV (with prominent theme toggle)
+   NAV (with prominent theme toggle and mobile menu)
    ═══════════════════════════════════════════════ */
 const Nav = ({ onHome }) => {
   const { C, dark, toggle } = useTheme();
   const [scrolled, setScrolled] = useState(false);
+  const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   useEffect(()=>{ const h=()=>setScrolled(window.scrollY>40); window.addEventListener("scroll",h); return()=>window.removeEventListener("scroll",h); },[]);
-  const scrollTo = id => { const el=document.getElementById(id); if(el) el.scrollIntoView({ behavior:"smooth" }); };
-  const links = [["about","About"],["work","Work"],["ai-lab","AI Layer"],["projects","Projects"],["content","Content"],["contact","Contact"]];
+  const scrollTo = id => { const el=document.getElementById(id); if(el) el.scrollIntoView({ behavior:"smooth" }); setMobileMenuOpen(false); };
+  const links = [["about","About"],["work","Work"],["ai-lab","AI Infrastructure"],["projects","Projects"],["content","Content"],["contact","Contact"]];
   return (
     <nav className="fixed top-0 left-0 right-0 z-50 transition-all duration-300"
       style={{ backgroundColor:scrolled?C.navBg:"transparent", backdropFilter:scrolled?"blur(12px)":"none", borderBottom:scrolled?`1px solid ${C.border}`:"1px solid transparent" }}>
       <div className="max-w-[800px] mx-auto px-6 h-14 flex items-center justify-between">
         <button onClick={onHome} className="text-lg font-semibold tracking-tight cursor-pointer" style={{ fontFamily:"'IBM Plex Serif',Georgia,serif", color:C.text }}>TK</button>
-        <div className="flex items-center gap-1">
+        <div className="flex items-center gap-3">
+          {/* Desktop nav */}
           <div className="hidden md:flex items-center gap-5 text-sm mr-3">
             {links.map(([id,label])=>(
               <button key={id} onClick={()=>scrollTo(id)} className="transition-colors cursor-pointer"
                 style={{ color:C.muted }} onMouseEnter={e=>e.target.style.color=C.accent} onMouseLeave={e=>e.target.style.color=C.muted}>{label}</button>
             ))}
           </div>
-          <div className="flex md:hidden items-center gap-3 text-xs mr-2">
-            {[["about","About"],["projects","Projects"],["contact","Contact"]].map(([id,label])=>(
-              <button key={id} onClick={()=>scrollTo(id)} className="cursor-pointer" style={{ color:C.muted }}>{label}</button>
-            ))}
-          </div>
-          {/* Prominent dark mode toggle */}
+          {/* Mobile hamburger button */}
+          <button onClick={()=>setMobileMenuOpen(!mobileMenuOpen)} className="md:hidden p-2 cursor-pointer" style={{ color:C.text }}>
+            {mobileMenuOpen ? <X size={20}/> : <Menu size={20}/>}
+          </button>
+          {/* Dark mode toggle - always visible */}
           <button onClick={toggle}
             className="flex items-center gap-1.5 px-3 py-1.5 rounded-full border text-xs font-medium cursor-pointer transition-all"
             style={{
@@ -623,10 +631,26 @@ const Nav = ({ onHome }) => {
             onMouseEnter={e=>{e.currentTarget.style.backgroundColor=C.accent;e.currentTarget.style.color=C.bg;}}
             onMouseLeave={e=>{e.currentTarget.style.backgroundColor=dark?C.accentLight:"transparent";e.currentTarget.style.color=C.accent;}}>
             {dark ? <Sun size={13}/> : <Moon size={13}/>}
-            {dark ? "Light" : "Dark"}
+            <span className="hidden sm:inline">{dark ? "Light" : "Dark"}</span>
           </button>
         </div>
       </div>
+      {/* Mobile menu dropdown */}
+      {mobileMenuOpen && (
+        <div className="md:hidden border-t" style={{ backgroundColor:C.bg, borderColor:C.border }}>
+          <div className="max-w-[800px] mx-auto px-6 py-4">
+            {links.map(([id,label])=>(
+              <button key={id} onClick={()=>scrollTo(id)}
+                className="block w-full text-left py-3 text-sm font-medium transition-colors cursor-pointer"
+                style={{ color:C.textSec }}
+                onMouseEnter={e=>e.target.style.color=C.accent}
+                onMouseLeave={e=>e.target.style.color=C.textSec}>
+                {label}
+              </button>
+            ))}
+          </div>
+        </div>
+      )}
     </nav>
   );
 };
@@ -747,10 +771,13 @@ export default function Portfolio() {
           </Reveal>
           <Reveal delay={250}>
             <p className="text-base leading-relaxed mb-4" style={{ color:C.textSec }}>
+              I specialize in building AI-powered marketing infrastructure. From autonomous pipelines that turn unstructured customer data into strategy, to predictive systems that adapt without manual intervention — I work at the intersection of marketing, AI, and operations.
+            </p>
+            <p className="text-base leading-relaxed mb-4" style={{ color:C.textSec }}>
               I've been trained in how people construct meaning, make decisions, and form identity around the things they choose. Today, I put that understanding to work.
             </p>
             <p className="text-base leading-relaxed mb-4" style={{ color:C.textSec }}>
-              I build AI infrastructure that turns customer language into strategy. Sales calls become positioning. Support tickets become content frameworks. Objection patterns become messaging that converts because it reflects what buyers actually said.
+              Sales calls become positioning. Support tickets become content frameworks. Objection patterns become messaging that converts because it reflects what buyers actually said. I build the systems that make this happen automatically, not manually.
             </p>
             <p className="text-base leading-relaxed mb-8" style={{ color:C.textSec }}>
               I've built this for industries where trust isn't a brand value on a slide deck. It's structural. You don't manufacture it. You earn it by proving you listened.
@@ -796,30 +823,35 @@ export default function Portfolio() {
               <Callout icon={Users} title="User Research">Built a voice-of-customer program on Gemini. 70% survey response rates that informed product roadmaps. I show up with what users actually said.</Callout>
             </div>
           </Reveal>
-          <Reveal delay={300}>
-            <div className="mt-10">
-              <h3 className="text-sm font-semibold uppercase tracking-wide mb-4" style={{ color:C.muted }}>Toolkit</h3>
-              <div className="grid grid-cols-2 md:grid-cols-4 gap-2.5">
-                {[
-                  {icon:Megaphone,label:"Go-to-Market"},
-                  {icon:BarChart3,label:"Marketing Analytics"},
-                  {icon:Brain,label:"AI / LLM Workflows"},
-                  {icon:PenTool,label:"Content Strategy"},
-                  {icon:Users,label:"User Research"},
-                  {icon:MessageSquare,label:"Conversational AI"},
-                  {icon:Layers,label:"Product Marketing"},
-                  {icon:Lightbulb,label:"Brand Storytelling"},
-                  {icon:Search,label:"SEO / Technical SEO"},
-                  {icon:Target,label:"HubSpot"},
-                  {icon:BarChart3,label:"PostHog"},
-                  {icon:Puzzle,label:"Clay"},
-                ].map(({icon:Icon,label},i)=>(
-                  <div key={i} className="flex items-center gap-2 rounded-lg border px-3 py-2.5 text-xs font-medium"
-                    style={{ backgroundColor:C.bg, borderColor:C.border, color:C.textSec }}>
-                    <Icon size={13} style={{ color:C.accent }} className="shrink-0"/>{label}
-                  </div>
-                ))}
-              </div>
+        </div>
+      </section>
+
+
+      {/* TOOLKIT */}
+      <section id="toolkit" className="py-12 px-6">
+        <div className="max-w-[800px] mx-auto">
+          <Reveal><SectionHeader title="Toolkit" /></Reveal>
+          <Reveal delay={100}>
+            <div className="grid grid-cols-2 md:grid-cols-4 gap-2.5">
+              {[
+                {icon:Megaphone,label:"Go-to-Market"},
+                {icon:BarChart3,label:"Marketing Analytics"},
+                {icon:Brain,label:"AI / LLM Workflows"},
+                {icon:PenTool,label:"Content Strategy"},
+                {icon:Users,label:"User Research"},
+                {icon:MessageSquare,label:"Conversational AI"},
+                {icon:Layers,label:"Product Marketing"},
+                {icon:Lightbulb,label:"Brand Storytelling"},
+                {icon:Search,label:"SEO / Technical SEO"},
+                {icon:Target,label:"HubSpot"},
+                {icon:BarChart3,label:"PostHog"},
+                {icon:Puzzle,label:"Clay"},
+              ].map(({icon:Icon,label},i)=>(
+                <div key={i} className="flex items-center gap-2 rounded-lg border px-3 py-2.5 text-xs font-medium"
+                  style={{ backgroundColor:C.bg, borderColor:C.border, color:C.textSec }}>
+                  <Icon size={13} style={{ color:C.accent }} className="shrink-0"/>{label}
+                </div>
+              ))}
             </div>
           </Reveal>
         </div>
@@ -849,6 +881,60 @@ export default function Portfolio() {
                 </div>
               </Reveal>
             ))}
+          </div>
+        </div>
+      </section>
+
+
+      {/* AI INFRASTRUCTURE */}
+      <section id="ai-lab" className="py-12 px-6">
+        <div className="max-w-[800px] mx-auto">
+          <Reveal><SectionHeader title="AI Infrastructure" subtitle="Systems I've designed where AI is the infrastructure, not the afterthought." /></Reveal>
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+            {aiProjects.map((p,i)=>(<Reveal key={p.id} delay={i*80}><ProjectCard project={p} onDeepDive={openDeepDive}/></Reveal>))}
+          </div>
+        </div>
+      </section>
+
+
+      {/* PROJECTS */}
+      <section id="projects" className="py-12 px-6">
+        <div className="max-w-[800px] mx-auto">
+          <Reveal><SectionHeader title="Projects" subtitle="Click to preview. Expand for the snapshot. Deep dive for the full story." /></Reveal>
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+            {projects.map((p,i)=>(<Reveal key={p.id} delay={i*60}><ProjectCard project={p} onDeepDive={openDeepDive}/></Reveal>))}
+          </div>
+        </div>
+      </section>
+
+
+      {/* CONTENT PORTFOLIO */}
+      <section id="content" className="py-12 px-6">
+        <div className="max-w-[800px] mx-auto">
+          <Reveal><SectionHeader title="Content Portfolio" subtitle="Written pieces, video content, and newsletters." /></Reveal>
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+            {contentItems.map((w,i)=>{
+              const TypeIcon = typeIcons[w.type] || PenTool;
+              return (
+                <Reveal key={i} delay={i*60}>
+                  <a href={w.href} target="_blank" rel="noopener noreferrer"
+                    className="group block rounded-xl border p-5 transition-all duration-300"
+                    style={{ backgroundColor:C.bg, borderColor:C.border }}
+                    onMouseEnter={e=>{e.currentTarget.style.borderColor=C.accent;e.currentTarget.style.boxShadow=`0 4px 16px ${C.accentGlow}`;}}
+                    onMouseLeave={e=>{e.currentTarget.style.borderColor=C.border;e.currentTarget.style.boxShadow="none";}}>
+                    <div className="flex items-center gap-2 mb-2">
+                      <TypeIcon size={12} style={{ color:C.accent }}/>
+                      <span className="text-[10px] font-semibold uppercase tracking-wider" style={{ color:C.accent }}>{typeLabels[w.type]}</span>
+                    </div>
+                    <div className="flex items-start justify-between mb-1.5">
+                      <h3 className="text-sm font-semibold leading-snug pr-2" style={{ fontFamily:"'IBM Plex Serif',Georgia,serif", color:C.text }}>{w.title}</h3>
+                      <ArrowUpRight size={13} style={{ color:C.muted }} className="shrink-0 mt-0.5"/>
+                    </div>
+                    <p className="text-xs leading-relaxed" style={{ color:C.muted }}>{w.desc}</p>
+                  </a>
+                </Reveal>
+              );
+            })}
           </div>
         </div>
       </section>
@@ -896,10 +982,10 @@ export default function Portfolio() {
         </div>
       </section>
 
-      {/* CERTIFICATIONS */}
-      <section id="certifications" className="py-12 px-6">
+      {/* DIPLOMAS */}
+      <section id="diplomas" className="py-12 px-6">
         <div className="max-w-[800px] mx-auto">
-          <Reveal><SectionHeader title="Certifications" /></Reveal>
+          <Reveal><SectionHeader title="Diplomas" /></Reveal>
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
             {certifications.map((cert,i)=>(
               <Reveal key={i} delay={i*100}>
@@ -939,60 +1025,6 @@ export default function Portfolio() {
                 </div>
               </Reveal>
             ))}
-          </div>
-        </div>
-      </section>
-
-
-      {/* THE AI LAYER */}
-      <section id="ai-lab" className="py-12 px-6">
-        <div className="max-w-[800px] mx-auto">
-          <Reveal><SectionHeader title="The AI Layer" subtitle="Systems I've designed where AI is the infrastructure, not the afterthought." /></Reveal>
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-            {aiProjects.map((p,i)=>(<Reveal key={p.id} delay={i*80}><ProjectCard project={p} onDeepDive={openDeepDive}/></Reveal>))}
-          </div>
-        </div>
-      </section>
-
-
-      {/* PROJECTS */}
-      <section id="projects" className="py-12 px-6">
-        <div className="max-w-[800px] mx-auto">
-          <Reveal><SectionHeader title="Projects" subtitle="Click to preview. Expand for the snapshot. Deep dive for the full story." /></Reveal>
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-            {projects.map((p,i)=>(<Reveal key={p.id} delay={i*60}><ProjectCard project={p} onDeepDive={openDeepDive}/></Reveal>))}
-          </div>
-        </div>
-      </section>
-
-
-      {/* CONTENT PORTFOLIO */}
-      <section id="content" className="py-12 px-6">
-        <div className="max-w-[800px] mx-auto">
-          <Reveal><SectionHeader title="Content Portfolio" subtitle="Written pieces, video content, and newsletters." /></Reveal>
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-            {contentItems.map((w,i)=>{
-              const TypeIcon = typeIcons[w.type] || PenTool;
-              return (
-                <Reveal key={i} delay={i*60}>
-                  <a href={w.href} target="_blank" rel="noopener noreferrer"
-                    className="group block rounded-xl border p-5 transition-all duration-300"
-                    style={{ backgroundColor:C.bg, borderColor:C.border }}
-                    onMouseEnter={e=>{e.currentTarget.style.borderColor=C.accent;e.currentTarget.style.boxShadow=`0 4px 16px ${C.accentGlow}`;}}
-                    onMouseLeave={e=>{e.currentTarget.style.borderColor=C.border;e.currentTarget.style.boxShadow="none";}}>
-                    <div className="flex items-center gap-2 mb-2">
-                      <TypeIcon size={12} style={{ color:C.accent }}/>
-                      <span className="text-[10px] font-semibold uppercase tracking-wider" style={{ color:C.accent }}>{typeLabels[w.type]}</span>
-                    </div>
-                    <div className="flex items-start justify-between mb-1.5">
-                      <h3 className="text-sm font-semibold leading-snug pr-2" style={{ fontFamily:"'IBM Plex Serif',Georgia,serif", color:C.text }}>{w.title}</h3>
-                      <ArrowUpRight size={13} style={{ color:C.muted }} className="shrink-0 mt-0.5"/>
-                    </div>
-                    <p className="text-xs leading-relaxed" style={{ color:C.muted }}>{w.desc}</p>
-                  </a>
-                </Reveal>
-              );
-            })}
           </div>
         </div>
       </section>
