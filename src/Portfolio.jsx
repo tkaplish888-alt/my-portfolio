@@ -19,6 +19,7 @@ const lightColors = {
   text: "#2C2521", textSec: "#6B6058", muted: "#9C9389",
   navBg: "rgba(253,252,250,0.92)", overlay: "rgba(44,37,33,0.4)",
   metricBg: "#FDF8F4", metricBorder: "#F0DFD0",
+  annotationLine: "rgba(196,122,74,0.55)", annotationBg: "rgba(196,122,74,0.10)",
 };
 const darkColors = {
   bg: "#17140F", surface: "#211D17", surface2: "#2B261F",
@@ -27,6 +28,7 @@ const darkColors = {
   text: "#F0EDE8", textSec: "#B5AFA6", muted: "#7A746C",
   navBg: "rgba(23,20,15,0.92)", overlay: "rgba(0,0,0,0.55)",
   metricBg: "#2A2218", metricBorder: "#3D3225",
+  annotationLine: "rgba(212,147,95,0.55)", annotationBg: "rgba(212,147,95,0.10)",
 };
 
 
@@ -628,18 +630,18 @@ const BuiltWithAI = () => {
 
 
 /* ═══════════════════════════════════════════════
-   SCRIBBLE UNDERLINE (hand-drawn accent underline)
+   ANNOTATION (Notion-style underline + highlight)
    ═══════════════════════════════════════════════ */
 const Scribble = ({ children }) => {
   const { C } = useTheme();
-  const color = C.accent.replace('#', '%23');
   return (
     <span style={{
-      backgroundImage: `url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='30' height='6'%3E%3Cpath d='M0,4.5 C4,1.5 8,6 13,3.5 C18,1 23,5.5 27,3 C28.5,2.2 29.5,3.5 30,3.8' stroke='${color}' stroke-width='1.6' fill='none' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E")`,
-      backgroundRepeat: 'repeat-x',
-      backgroundPosition: 'bottom 0px left 0px',
-      backgroundSize: '30px 6px',
-      paddingBottom: '5px',
+      borderBottom: `1.5px solid ${C.annotationLine}`,
+      backgroundColor: C.annotationBg,
+      borderRadius: '2px',
+      paddingBottom: '1px',
+      paddingLeft: '1px',
+      paddingRight: '1px',
     }}>
       {children}
     </span>
@@ -668,10 +670,10 @@ const Nav = ({ onHome }) => {
             {links.map(([id,label])=>(
               id === "ai-lab" ? (
                 <button key={id} onClick={()=>scrollTo(id)}
-                  className="flex items-center gap-1.5 px-2.5 py-1 rounded-full text-xs font-semibold transition-all cursor-pointer"
-                  style={{ backgroundColor:C.accentLight, color:C.accent, border:`1px solid ${C.accent}` }}
-                  onMouseEnter={e=>{e.currentTarget.style.backgroundColor=C.accent;e.currentTarget.style.color=C.bg;}}
-                  onMouseLeave={e=>{e.currentTarget.style.backgroundColor=C.accentLight;e.currentTarget.style.color=C.accent;}}>
+                  className="flex items-center gap-1 transition-colors cursor-pointer"
+                  style={{ color:C.accent }}
+                  onMouseEnter={e=>e.currentTarget.style.opacity="0.7"}
+                  onMouseLeave={e=>e.currentTarget.style.opacity="1"}>
                   <Sparkles size={10}/> {label}
                 </button>
               ) : (
@@ -706,7 +708,7 @@ const Nav = ({ onHome }) => {
             {links.map(([id,label])=>(
               id === "ai-lab" ? (
                 <button key={id} onClick={()=>scrollTo(id)}
-                  className="flex items-center gap-1.5 w-full text-left py-3 text-sm font-semibold transition-colors cursor-pointer"
+                  className="flex items-center gap-1.5 w-full text-left py-3 text-sm font-medium transition-colors cursor-pointer"
                   style={{ color:C.accent }}>
                   <Sparkles size={13}/> {label}
                 </button>
@@ -856,7 +858,7 @@ export default function Portfolio() {
           </Reveal>
           <Reveal delay={150}>
             <p className="text-lg leading-relaxed mb-3" style={{ fontFamily:"'IBM Plex Serif',Georgia,serif", fontStyle:"italic", color:C.textSec }}>
-              Building marketing systems anchored in <Scribble>real customer behavior</Scribble>.
+              Building marketing systems anchored in real customer behavior.
             </p>
           </Reveal>
           <Reveal delay={250}>
@@ -870,7 +872,7 @@ export default function Portfolio() {
               Sales calls become positioning. Support tickets become content frameworks. Objection patterns become messaging that converts because it reflects what buyers actually said. I build the systems that make this happen <Scribble>automatically, not manually</Scribble>.
             </p>
             <p className="text-base leading-relaxed mb-8" style={{ color:C.textSec }}>
-              I've built this for industries where trust isn't a brand value on a slide deck. It's structural. You don't manufacture it. <Scribble>You earn it by proving you listened.</Scribble>
+              I've built this for industries where trust isn't a brand value on a slide deck. It's structural. You don't manufacture it. You earn it by proving you listened.
             </p>
           </Reveal>
           <Reveal delay={350}>
@@ -899,11 +901,11 @@ export default function Portfolio() {
           <Reveal><SectionHeader title="About" /></Reveal>
           <Reveal delay={100}>
             <div className="space-y-4 mb-8">
-              <p className="text-sm leading-relaxed" style={{ color:C.textSec }}>Most marketers enter through tactics. I entered <Scribble>through frameworks</Scribble>. I treat marketing as a practice of <Scribble>understanding human behavior</Scribble>. Every campaign is a hypothesis about how people decide. Every positioning statement is an interpretation of identity. Every conversion problem is, underneath it all, a friction problem.</p>
+              <p className="text-sm leading-relaxed" style={{ color:C.textSec }}>Most marketers enter through tactics. I entered through frameworks. I treat marketing as a practice of <Scribble>understanding human behavior</Scribble>. Every campaign is a hypothesis about how people decide. Every positioning statement is an interpretation of identity. Every conversion problem is, underneath it all, a friction problem.</p>
               <p className="text-sm leading-relaxed" style={{ color:C.textSec }}>My work focuses on closing the gap between what customers experience and what marketing communicates. In practice, that has looked like building marketing functions <Scribble>from zero</Scribble>. Designing AI systems that analyze sales calls to surface <Scribble>objection patterns</Scribble>. Translating those patterns into messaging used across demand gen, product marketing, and sales enablement. Automating competitive intelligence workflows that cut research time.</p>
-              <p className="text-sm leading-relaxed" style={{ color:C.textSec }}>AI handles the pattern recognition. I handle the meaning-making. That division of labor is what makes <Scribble>clarity repeatable</Scribble>.</p>
+              <p className="text-sm leading-relaxed" style={{ color:C.textSec }}>AI handles the pattern recognition. I handle the meaning-making. That division of labor is what makes clarity repeatable.</p>
               <p className="text-sm leading-relaxed" style={{ color:C.textSec }}>Donald Miller puts it well: the customer is the hero, the brand is the guide. I build systems that make sure the guide is actually listening.</p>
-              <p className="text-sm leading-relaxed" style={{ color:C.textSec }}>I'm not here to shout. I'm here to clarify. And I build the <Scribble>infrastructure that lets that clarity scale</Scribble>.</p>
+              <p className="text-sm leading-relaxed" style={{ color:C.textSec }}>I'm not here to shout. I'm here to clarify. And I build the infrastructure that lets that clarity scale.</p>
             </div>
           </Reveal>
           <Reveal delay={200}>
