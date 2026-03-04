@@ -659,7 +659,7 @@ const Nav = ({ onHome }) => {
 /* ═══════════════════════════════════════════════
    EXPANDABLE PROJECT CARD
    ═══════════════════════════════════════════════ */
-const ProjectCard = ({ project, onDeepDive }) => {
+const ProjectCard = ({ project, onDeepDive, deepDiveUrl }) => {
   const { C } = useTheme();
   const [expanded, setExpanded] = useState(false);
 
@@ -689,12 +689,19 @@ const ProjectCard = ({ project, onDeepDive }) => {
             <p className="text-xs leading-relaxed mb-2" style={{ color:C.textSec }}><strong style={{ color:C.text }}>Problem:</strong> {renderText(project.problem.substring(0,150)+"...")}</p>
             <p className="text-xs leading-relaxed" style={{ color:C.textSec }}><strong style={{ color:C.text }}>Result:</strong> {renderText(project.results.substring(0,150)+"...")}</p>
           </div>
-          {/* Full Deep Dive opens in new tab via anchor to deep dive route */}
-          <button onClick={e=>{e.stopPropagation();onDeepDive(project.id);}}
-            className="flex items-center gap-1.5 text-xs font-medium cursor-pointer transition-opacity"
-            style={{ color:C.accent }} onMouseEnter={e=>e.currentTarget.style.opacity=0.7} onMouseLeave={e=>e.currentTarget.style.opacity=1}>
-            Full deep dive <ArrowUpRight size={12}/>
-          </button>
+          {deepDiveUrl ? (
+            <a href={deepDiveUrl} target="_blank" rel="noopener noreferrer"
+              className="flex items-center gap-1.5 text-xs font-medium transition-opacity"
+              style={{ color:C.accent }} onMouseEnter={e=>e.currentTarget.style.opacity=0.7} onMouseLeave={e=>e.currentTarget.style.opacity=1}>
+              Full deep dive <ArrowUpRight size={12}/>
+            </a>
+          ) : (
+            <button onClick={e=>{e.stopPropagation();onDeepDive(project.id);}}
+              className="flex items-center gap-1.5 text-xs font-medium cursor-pointer transition-opacity"
+              style={{ color:C.accent }} onMouseEnter={e=>e.currentTarget.style.opacity=0.7} onMouseLeave={e=>e.currentTarget.style.opacity=1}>
+              Full deep dive <ArrowUpRight size={12}/>
+            </button>
+          )}
         </div>
       </div>
     </div>
@@ -705,20 +712,30 @@ const ProjectCard = ({ project, onDeepDive }) => {
 /* ═══════════════════════════════════════════════
    MAIN APP
    ═══════════════════════════════════════════════ */
+const getHashId = () => {
+  const match = window.location.hash.match(/^#\/deep-dive\/(.+)$/);
+  return match ? match[1] : null;
+};
+
 export default function Portfolio() {
   const [dark, setDark] = useState(false);
-  const [deepDiveId, setDeepDiveId] = useState(null);
+  const [deepDiveId, setDeepDiveId] = useState(() => getHashId());
   const scrollPositionRef = useRef(0);
   const C = dark ? darkColors : lightColors;
   const toggle = () => setDark(d=>!d);
 
+  useEffect(() => {
+    const onHashChange = () => setDeepDiveId(getHashId());
+    window.addEventListener("hashchange", onHashChange);
+    return () => window.removeEventListener("hashchange", onHashChange);
+  }, []);
+
   const allProjects = [...projects, ...aiProjects];
   const activeProject = allProjects.find(p=>p.id===deepDiveId);
 
-  // Save scroll position before deep dive, restore on back
   const goHome = () => {
+    history.replaceState(null, "", window.location.pathname);
     setDeepDiveId(null);
-    // Restore scroll position after render
     requestAnimationFrame(() => {
       window.scrollTo(0, scrollPositionRef.current);
     });
@@ -726,6 +743,7 @@ export default function Portfolio() {
 
   const openDeepDive = id => {
     scrollPositionRef.current = window.scrollY;
+    history.pushState(null, "", `${window.location.pathname}#/deep-dive/${id}`);
     setDeepDiveId(id);
     window.scrollTo(0, 0);
   };
@@ -891,7 +909,7 @@ export default function Portfolio() {
         <div className="max-w-[800px] mx-auto">
           <Reveal><SectionHeader title="AI Infrastructure" subtitle="Systems I've designed where AI is the infrastructure, not the afterthought." /></Reveal>
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-            {aiProjects.map((p,i)=>(<Reveal key={p.id} delay={i*80}><ProjectCard project={p} onDeepDive={openDeepDive}/></Reveal>))}
+            {aiProjects.map((p,i)=>(<Reveal key={p.id} delay={i*80}><ProjectCard project={p} deepDiveUrl={`#/deep-dive/${p.id}`}/></Reveal>))}
           </div>
         </div>
       </section>
