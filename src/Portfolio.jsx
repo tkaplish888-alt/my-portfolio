@@ -471,6 +471,36 @@ const ProjectDeepDive = ({ project, onBack }) => {
           <h1 className="text-3xl font-semibold mb-3" style={{ fontFamily:"'IBM Plex Serif',Georgia,serif", color:C.text }}>{project.title}</h1>
           <div className="flex flex-wrap gap-1.5 mb-6">{project.tags.map(t=><Tag key={t} label={t}/>)}</div>
         </Reveal>
+        {project.deepDiveImages && (
+          <Reveal delay={60}>
+            <div className="mb-8">
+              <div className="flex items-center gap-2 mb-2">
+                <Play size={15} style={{ color:C.accent }} />
+                <h3 className="text-xs font-semibold uppercase tracking-wide" style={{ color:C.accent }}>See It In Action</h3>
+              </div>
+              <p className="text-xs mb-4" style={{ color:C.muted }}>Click either image to open the live file directly — the real input and output from the pipeline.</p>
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                {project.deepDiveImages.map((img, i) => (
+                  <a key={i} href={img.url} target="_blank" rel="noopener noreferrer"
+                    className="group block rounded-xl border overflow-hidden transition-all duration-200"
+                    style={{ borderColor:C.border }}
+                    onMouseEnter={e=>e.currentTarget.style.borderColor=C.accent}
+                    onMouseLeave={e=>e.currentTarget.style.borderColor=C.border}>
+                    <div className="overflow-hidden" style={{ backgroundColor:C.surface }}>
+                      <img src={img.src} alt={img.alt} className="w-full object-cover transition-transform duration-300 group-hover:scale-[1.02]" />
+                    </div>
+                    <div className="px-4 py-3 flex items-center justify-between" style={{ backgroundColor:C.surface }}>
+                      <span className="text-xs font-medium" style={{ color:C.textSec }}>{img.caption}</span>
+                      <span className="flex items-center gap-1 text-xs font-medium shrink-0 ml-3" style={{ color:C.accent }}>
+                        {img.label} <ArrowUpRight size={11}/>
+                      </span>
+                    </div>
+                  </a>
+                ))}
+              </div>
+            </div>
+          </Reveal>
+        )}
         {project.image && (
           <Reveal delay={65}>
             <div className="mb-8 rounded-xl overflow-hidden border" style={{ borderColor:C.border }}>
@@ -539,36 +569,6 @@ const ProjectDeepDive = ({ project, onBack }) => {
             </div>
           </Reveal>
         );})}
-        {project.deepDiveImages && (
-          <Reveal delay={520}>
-            <div className="mb-8">
-              <div className="flex items-center gap-2 mb-2">
-                <Play size={15} style={{ color:C.accent }} />
-                <h3 className="text-xs font-semibold uppercase tracking-wide" style={{ color:C.accent }}>See It In Action</h3>
-              </div>
-              <p className="text-xs mb-4" style={{ color:C.muted }}>Click either image to open the live file directly — the real input and output from the pipeline.</p>
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                {project.deepDiveImages.map((img, i) => (
-                  <a key={i} href={img.url} target="_blank" rel="noopener noreferrer"
-                    className="group block rounded-xl border overflow-hidden transition-all duration-200"
-                    style={{ borderColor:C.border }}
-                    onMouseEnter={e=>e.currentTarget.style.borderColor=C.accent}
-                    onMouseLeave={e=>e.currentTarget.style.borderColor=C.border}>
-                    <div className="overflow-hidden" style={{ backgroundColor:C.surface }}>
-                      <img src={img.src} alt={img.alt} className="w-full object-cover transition-transform duration-300 group-hover:scale-[1.02]" />
-                    </div>
-                    <div className="px-4 py-3 flex items-center justify-between" style={{ backgroundColor:C.surface }}>
-                      <span className="text-xs font-medium" style={{ color:C.textSec }}>{img.caption}</span>
-                      <span className="flex items-center gap-1 text-xs font-medium shrink-0 ml-3" style={{ color:C.accent }}>
-                        {img.label} <ArrowUpRight size={11}/>
-                      </span>
-                    </div>
-                  </a>
-                ))}
-              </div>
-            </div>
-          </Reveal>
-        )}
         <Reveal delay={550}>
           <button onClick={onBack} className="flex items-center gap-2 text-sm mt-6 cursor-pointer transition-colors"
             style={{ color:C.muted }} onMouseEnter={e=>e.currentTarget.style.color=C.accent}
