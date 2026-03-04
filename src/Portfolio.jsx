@@ -281,7 +281,11 @@ const aiProjects = [
     problem:"Every sales call is full of signal. Bers name competitors, describe what 'too expensive' actually means to them, and reveal the internal politics blocking a deal. But in most startups, that intelligence dies in a call recording no one revisits. At Valur, the sales team was having rich, revealing conversations with financial advisors every day. Marketing had **no systematic way to capture those patterns** and feed them back into positioning, campaigns, or enablement materials. I was writing copy based on assumptions while the actual buyer language sat untouched in recordings.",
     research:"Analyzed dozens of transcripts across deal stages. Identified **recurring objection categories** (cost concerns, trust in fintech, complexity, comparison to traditional advisors), mapped the specific language clusters prospects used repeatedly, and documented decision-stage signals. Categorized objections by frequency, deal impact, and which ones required new messaging. The insight that shaped the architecture: this couldn't be a one-time research project. It needed to be **always-on infrastructure**.",
     solution:"Built an **autonomous pipeline** powered by the Claude API that processes sales call transcripts, G2 reviews, and support tickets through a 4-step analysis chain. **Step 1: Extract.** Claude reads the raw transcript and pulls out every buyer objection, hesitation, and notable quote, capturing exact language, not paraphrases. **Step 2: Classify.** Each objection gets tagged by category (pricing, trust, complexity, competitor, internal politics, timing) and by deal stage (discovery, evaluation, negotiation, closed-lost), with a 1-5 severity score. **Step 3: Compare.** New objections get checked against the existing library, flagging what's brand new, what's recurring, and what's a variation. **Step 4: Generate.** Claude produces an updated positioning brief and a practical objection-handling guide written in language sales reps would actually use. The system is **autonomous**: a Python folder watcher monitors a Google Drive inbox. New file in, full pipeline runs, Google Sheet updates, no human touch until review. A weekly VOC Digest summarizes trends in a 5-minute read.",
-    results:"From a single sample transcript, the pipeline identified **7 distinct objections across 5 categories**, including **3 severity-4 blockers** (trust concerns about legitimacy, implementation fear from past bad experiences, and competitive pressure from an incumbent). It flagged **4 net-new objections** not in the existing library. Processing time: ~90 seconds. Cost: under $0.05. The system revealed that pricing transparency was a discovery-stage concern tied to website UX, not the actual price, and that internal champion enablement was a recurring theme: buyers wanted collateral they could hand to their legal team without needing to translate it. **Built with:** Claude API (Anthropic), Python, Google Drive API, Google Sheets API."
+    results:"From a single sample transcript, the pipeline identified **7 distinct objections across 5 categories**, including **3 severity-4 blockers** (trust concerns about legitimacy, implementation fear from past bad experiences, and competitive pressure from an incumbent). It flagged **4 net-new objections** not in the existing library. Processing time: ~90 seconds. Cost: under $0.05. The system revealed that pricing transparency was a discovery-stage concern tied to website UX, not the actual price, and that internal champion enablement was a recurring theme: buyers wanted collateral they could hand to their legal team without needing to translate it. **Built with:** Claude API (Anthropic), Python, Google Drive API, Google Sheets API.",
+    deepDiveImages:[
+      { src:"/images/voc-input-drive.png", alt:"Google Drive folder containing sales call transcripts fed into the pipeline", caption:"Input: Google Drive transcript inbox", label:"Open in Google Drive", url:"https://drive.google.com/drive/folders/1iXHctXDoNybxegH3nz0nXgXbp1k1Z1OJ?usp=sharing" },
+      { src:"/images/voc-output-sheet.png", alt:"Google Sheet showing structured pipeline output with objections, categories, and severity scores", caption:"Output: Structured analysis in Google Sheets", label:"Open in Google Sheets", url:"https://docs.google.com/spreadsheets/d/1m8_viBvOqxlWLd9-Tp43HEeB84CX7rt8s7crgSSFrvk/edit?usp=sharing" },
+    ]
   },
   {
     id:"comp-intel", title:"Autonomous Competitive Intelligence Monitor",
@@ -535,6 +539,36 @@ const ProjectDeepDive = ({ project, onBack }) => {
             </div>
           </Reveal>
         );})}
+        {project.deepDiveImages && (
+          <Reveal delay={520}>
+            <div className="mb-8">
+              <div className="flex items-center gap-2 mb-2">
+                <Play size={15} style={{ color:C.accent }} />
+                <h3 className="text-xs font-semibold uppercase tracking-wide" style={{ color:C.accent }}>See It In Action</h3>
+              </div>
+              <p className="text-xs mb-4" style={{ color:C.muted }}>Click either image to open the live file directly — the real input and output from the pipeline.</p>
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                {project.deepDiveImages.map((img, i) => (
+                  <a key={i} href={img.url} target="_blank" rel="noopener noreferrer"
+                    className="group block rounded-xl border overflow-hidden transition-all duration-200"
+                    style={{ borderColor:C.border }}
+                    onMouseEnter={e=>e.currentTarget.style.borderColor=C.accent}
+                    onMouseLeave={e=>e.currentTarget.style.borderColor=C.border}>
+                    <div className="overflow-hidden" style={{ backgroundColor:C.surface }}>
+                      <img src={img.src} alt={img.alt} className="w-full object-cover transition-transform duration-300 group-hover:scale-[1.02]" />
+                    </div>
+                    <div className="px-4 py-3 flex items-center justify-between" style={{ backgroundColor:C.surface }}>
+                      <span className="text-xs font-medium" style={{ color:C.textSec }}>{img.caption}</span>
+                      <span className="flex items-center gap-1 text-xs font-medium shrink-0 ml-3" style={{ color:C.accent }}>
+                        {img.label} <ArrowUpRight size={11}/>
+                      </span>
+                    </div>
+                  </a>
+                ))}
+              </div>
+            </div>
+          </Reveal>
+        )}
         <Reveal delay={550}>
           <button onClick={onBack} className="flex items-center gap-2 text-sm mt-6 cursor-pointer transition-colors"
             style={{ color:C.muted }} onMouseEnter={e=>e.currentTarget.style.color=C.accent}
