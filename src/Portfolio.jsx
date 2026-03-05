@@ -652,12 +652,12 @@ const Scribble = ({ children }) => {
 /* ═══════════════════════════════════════════════
    NAV (with prominent theme toggle and mobile menu)
    ═══════════════════════════════════════════════ */
-const Nav = ({ onHome }) => {
+const Nav = ({ onHome, onSection }) => {
   const { C, dark, toggle } = useTheme();
   const [scrolled, setScrolled] = useState(false);
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   useEffect(()=>{ const h=()=>setScrolled(window.scrollY>40); window.addEventListener("scroll",h); return()=>window.removeEventListener("scroll",h); },[]);
-  const scrollTo = id => { const el=document.getElementById(id); if(el) el.scrollIntoView({ behavior:"smooth" }); setMobileMenuOpen(false); };
+  const scrollTo = id => { if(onSection) { onSection(id); } else { const el=document.getElementById(id); if(el) el.scrollIntoView({ behavior:"smooth" }); } setMobileMenuOpen(false); };
   const links = [["about","About"],["work","Work"],["ai-lab","AI Infrastructure"],["projects","Projects"],["content","Content"],["contact","Contact"]];
   return (
     <nav className="fixed top-0 left-0 right-0 z-50 transition-all duration-300"
@@ -822,11 +822,27 @@ export default function Portfolio() {
     window.scrollTo(0, 0);
   };
 
+  const navigateTo = id => {
+    if (deepDiveId) {
+      history.replaceState(null, "", window.location.pathname);
+      setDeepDiveId(null);
+      requestAnimationFrame(() => {
+        requestAnimationFrame(() => {
+          const el = document.getElementById(id);
+          if (el) el.scrollIntoView({ behavior: "smooth" });
+        });
+      });
+    } else {
+      const el = document.getElementById(id);
+      if (el) el.scrollIntoView({ behavior: "smooth" });
+    }
+  };
+
   const shell = children => (
     <ThemeCtx.Provider value={{ C, dark, toggle }}>
       <div className="min-h-screen transition-colors duration-300" style={{ backgroundColor:C.bg, color:C.text, fontFamily:"'Inter',sans-serif" }}>
         <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Serif:ital,wght@0,400;0,500;0,600;1,400&family=Inter:wght@300;400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet" />
-        <Nav onHome={goHome} />
+        <Nav onHome={goHome} onSection={navigateTo} />
         {children}
       </div>
     </ThemeCtx.Provider>
@@ -912,7 +928,7 @@ export default function Portfolio() {
             <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
               <Callout icon={Target} title="Marketing">Campaigns, segmentation, growth experiments. 54.84% email open rates. I start with research and let the data do the talking.</Callout>
               <Callout icon={BookOpen} title="Storytelling">65% LinkedIn engagement lift. Messaging that founders trusted on their homepage. I care about getting the words right.</Callout>
-              <Callout icon={Users} title="User Research">Built a voice-of-customer program on Gemini. 70% survey response rates that informed product roadmaps. I show up with what users actually said.</Callout>
+              <Callout icon={Users} title="User Research">Built a voice-of-customer program on Claude. 70% survey response rates that informed product roadmaps. I show up with what users actually said.</Callout>
             </div>
           </Reveal>
         </div>
