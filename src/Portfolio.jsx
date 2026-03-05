@@ -928,7 +928,7 @@ export default function Portfolio() {
             <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
               <Callout icon={Target} title="Marketing">Campaigns, segmentation, growth experiments. 54.84% email open rates. I start with research and let the data do the talking.</Callout>
               <Callout icon={BookOpen} title="Storytelling">65% LinkedIn engagement lift. Messaging that founders trusted on their homepage. I care about getting the words right.</Callout>
-              <Callout icon={Users} title="User Research">Built a voice-of-customer program on Claude. 70% survey response rates that informed product roadmaps. I show up with what users actually said.</Callout>
+              <Callout icon={Users} title="User Research">Built a voice-of-customer pipeline using the Claude API and Python. 70% survey response rates that informed product roadmaps. I show up with what users actually said.</Callout>
             </div>
           </Reveal>
         </div>
