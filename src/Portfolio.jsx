@@ -294,6 +294,10 @@ const aiProjects = [
     tags:["AI","Competitive Intelligence","Web Scraping","Automation","Slack"],
     oneLiner:"A system that watches competitor websites on autopilot. When messaging, pricing, or positioning changes, it detects the shift and sends a Slack alert with a strategic analysis. No dashboards to check. No manual reviews. It just runs.",
     image:null,
+    deepDiveDescription:"Here's what an alert looks like when the monitor detects a change.",
+    deepDiveImages:[
+      { src:"/images/comp-intel-slack-alert.png", alt:"Slack alert from the Competitive Intel Bot showing a detected change on Trust & Will with significance rating and structured analysis", caption:"", label:null, url:null },
+    ],
     caseStudyUrl:"https://github.com/tkaplish888-alt/competitive-intel-monitor", caseStudyLabel:"View on GitHub",
     metrics:[{v:"5",l:"Competitors monitored"},{v:"Weekly",l:"Autonomous runs"},{v:"<60s",l:"Per competitor analysis"},{v:"Zero",l:"Manual effort after setup"}],
     problem:"Competitive intelligence in most marketing teams is a spreadsheet someone updates when they remember to. A quarterly slide deck built on whatever someone noticed while browsing a competitor's site. By the time the team learns a competitor changed their pricing page or repositioned their messaging, the window to respond strategically has already closed. **The real cost isn't missing one change. It's the pattern blindness that builds when no one is systematically watching.** At Valur, I tracked five direct competitors in the estate planning space. Doing it manually meant inconsistent coverage, missed shifts, and no structured way to assess whether a change actually mattered.",
@@ -480,25 +484,34 @@ const ProjectDeepDive = ({ project, onBack }) => {
                 <Play size={15} style={{ color:C.accent }} />
                 <h3 className="text-xs font-semibold uppercase tracking-wide" style={{ color:C.accent }}>See It In Action</h3>
               </div>
-              <p className="text-xs mb-4" style={{ color:C.muted }}>Click either image to open the live file directly — the real input and output from the pipeline.</p>
+              <p className="text-xs mb-4" style={{ color:C.muted }}>{project.deepDiveDescription || "Click either image to open the live file directly — the real input and output from the pipeline."}</p>
               <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                {project.deepDiveImages.map((img, i) => (
-                  <a key={i} href={img.url} target="_blank" rel="noopener noreferrer"
-                    className="group block rounded-xl border overflow-hidden transition-all duration-200"
-                    style={{ borderColor:C.border }}
-                    onMouseEnter={e=>e.currentTarget.style.borderColor=C.accent}
-                    onMouseLeave={e=>e.currentTarget.style.borderColor=C.border}>
-                    <div className="overflow-hidden" style={{ backgroundColor:C.surface }}>
-                      <img src={img.src} alt={img.alt} className="w-full object-cover transition-transform duration-300 group-hover:scale-[1.02]" />
-                    </div>
-                    <div className="px-4 py-3 flex items-center justify-between" style={{ backgroundColor:C.surface }}>
-                      <span className="text-xs font-medium" style={{ color:C.textSec }}>{img.caption}</span>
-                      <span className="flex items-center gap-1 text-xs font-medium shrink-0 ml-3" style={{ color:C.accent }}>
-                        {img.label} <ArrowUpRight size={11}/>
-                      </span>
-                    </div>
-                  </a>
-                ))}
+                {project.deepDiveImages.map((img, i) => {
+                  const inner = (
+                    <>
+                      <div className="overflow-hidden" style={{ backgroundColor:C.surface }}>
+                        <img src={img.src} alt={img.alt} className="w-full object-cover transition-transform duration-300 group-hover:scale-[1.02]" />
+                      </div>
+                      {(img.caption || img.label) && (
+                        <div className="px-4 py-3 flex items-center justify-between" style={{ backgroundColor:C.surface }}>
+                          {img.caption && <span className="text-xs font-medium" style={{ color:C.textSec }}>{img.caption}</span>}
+                          {img.label && <span className="flex items-center gap-1 text-xs font-medium shrink-0 ml-3" style={{ color:C.accent }}>{img.label} <ArrowUpRight size={11}/></span>}
+                        </div>
+                      )}
+                    </>
+                  );
+                  return img.url ? (
+                    <a key={i} href={img.url} target="_blank" rel="noopener noreferrer"
+                      className="group block rounded-xl border overflow-hidden transition-all duration-200"
+                      style={{ borderColor:C.border }}
+                      onMouseEnter={e=>e.currentTarget.style.borderColor=C.accent}
+                      onMouseLeave={e=>e.currentTarget.style.borderColor=C.border}>
+                      {inner}
+                    </a>
+                  ) : (
+                    <div key={i} className="rounded-xl border overflow-hidden" style={{ borderColor:C.border }}>{inner}</div>
+                  );
+                })}
               </div>
             </div>
           </Reveal>
