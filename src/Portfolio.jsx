@@ -485,12 +485,12 @@ const ProjectDeepDive = ({ project, onBack }) => {
                 <h3 className="text-xs font-semibold uppercase tracking-wide" style={{ color:C.accent }}>See It In Action</h3>
               </div>
               <p className="text-xs mb-4" style={{ color:C.muted }}>{project.deepDiveDescription || "Click either image to open the live file directly — the real input and output from the pipeline."}</p>
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+              <div className={`grid gap-4 ${project.deepDiveImages.length === 1 ? 'grid-cols-1' : 'grid-cols-1 md:grid-cols-2'}`}>
                 {project.deepDiveImages.map((img, i) => {
                   const inner = (
                     <>
                       <div className="overflow-hidden" style={{ backgroundColor:C.surface }}>
-                        <img src={img.src} alt={img.alt} className="w-full object-cover transition-transform duration-300 group-hover:scale-[1.02]" />
+                        <img src={img.src} alt={img.alt} className="w-full object-contain transition-transform duration-300 group-hover:scale-[1.02]" />
                       </div>
                       {(img.caption || img.label) && (
                         <div className="px-4 py-3 flex items-center justify-between" style={{ backgroundColor:C.surface }}>
@@ -509,7 +509,13 @@ const ProjectDeepDive = ({ project, onBack }) => {
                       {inner}
                     </a>
                   ) : (
-                    <div key={i} className="rounded-xl border overflow-hidden" style={{ borderColor:C.border }}>{inner}</div>
+                    <a key={i} href={img.src} target="_blank" rel="noopener noreferrer"
+                      className="group block rounded-xl border overflow-hidden transition-all duration-200 cursor-zoom-in"
+                      style={{ borderColor:C.border }}
+                      onMouseEnter={e=>e.currentTarget.style.borderColor=C.accent}
+                      onMouseLeave={e=>e.currentTarget.style.borderColor=C.border}>
+                      {inner}
+                    </a>
                   );
                 })}
               </div>
