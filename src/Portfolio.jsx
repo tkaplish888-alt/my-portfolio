@@ -1180,19 +1180,18 @@ export default function Portfolio() {
                   <div className="flex items-start gap-3 mb-3">
                     <Users size={18} style={{ color:C.accent }} className="mt-0.5 shrink-0" />
                     <div>
-                      <h3 className="text-sm font-semibold" style={{ color:C.text }}>
-                        {ref.linkedin ? (
-                          <a href={ref.linkedin} target="_blank" rel="noopener noreferrer"
-                            className="inline-flex items-center gap-1 transition-colors"
-                            style={{ color:C.text }}
-                            onMouseEnter={e=>e.currentTarget.style.color=C.accent}
-                            onMouseLeave={e=>e.currentTarget.style.color=C.text}>
-                            {ref.name} <ArrowUpRight size={12} />
-                          </a>
-                        ) : ref.name}
-                      </h3>
+                      <h3 className="text-sm font-semibold" style={{ color:C.text }}>{ref.name}</h3>
                       <p className="text-xs" style={{ color:C.textSec }}>{ref.title}</p>
                       <p className="text-xs mt-0.5" style={{ color:C.muted }}>{ref.relationship} · {ref.date}</p>
+                      {ref.linkedin && (
+                        <a href={ref.linkedin} target="_blank" rel="noopener noreferrer"
+                          className="inline-flex items-center gap-1 text-xs font-medium mt-1.5 transition-colors"
+                          style={{ color:C.accent }}
+                          onMouseEnter={e=>e.currentTarget.style.opacity="0.7"}
+                          onMouseLeave={e=>e.currentTarget.style.opacity="1"}>
+                          <Linkedin size={12} /> LinkedIn profile <ArrowUpRight size={11} />
+                        </a>
+                      )}
                     </div>
                   </div>
                   <p className="text-xs leading-relaxed pl-8" style={{ color:C.textSec, fontStyle:"italic" }}>
