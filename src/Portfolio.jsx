@@ -274,6 +274,16 @@ const projects = [
    ═══════════════════════════════════════════════ */
 const aiProjects = [
   {
+    id:"agentic-crm", title:"Agentic CRM Layer",
+    tags:["MCP","LLM","CRM Infrastructure"],
+    oneLiner:"HubSpot already ships an MCP server so AI agents can use its CRM. I tested it against a CRM I built myself, found exactly where the design breaks down, and rebuilt it around a different principle.",
+    image:null,
+    hook:"HubSpot already ships an MCP server so AI agents can use its CRM. I tested it against a CRM I built myself, found exactly where the design breaks down, and rebuilt it around a different principle.",
+    problem:"Every CRM integration built for AI agents so far still carries an old assumption: organize the tools the way the database is organized. Contacts here, companies there, deals in their own bucket. That's a fine shape for a person clicking through screens. It's the wrong shape for an agent trying to answer a real question, because **real questions don't live inside one table**. \"Which deals have gone quiet, who owns them, and what should I say\" touches four objects and a join. Hand an agent tools built for objects instead of questions, and it starts assembling the join itself, one lookup at a time, deciding on its own when it's seen enough. **That decision happens silently. The answer looks finished either way.**",
+    research:"I didn't take the gap on faith. I built a **synthetic CRM engineered to hold the mess real ones actually have**: missing fields, duplicate records, deals aged from days to months. I set the correct answers before running a single test, which turned the evaluation into arithmetic instead of opinion. Then I ran the questions an operator actually asks, not a demo question, against the existing tooling and watched exactly where the seams opened up.",
+    solution:"The fix wasn't a bigger toolkit. It was a **different design principle**. I rebuilt the server so every tool is shaped around a decision someone needs to make, not a table in a database, joining contact to company to deal to activity on the backend so the agent hands back one finished answer instead of stitching one together in front of you. **Every write action drafts.** Nothing reaches a customer without a person approving it first, by design, not as a limitation bolted on after. It's the same shift every CRM platform will eventually have to make: **from tools built for people to click, to tools built for agents to reason with.** This one just made the move early."
+  },
+  {
     id:"voc", title:"Autonomous Voice-of-Customer Pipeline",
     tags:["AI","Voice of Customer","Automation","Analytics","Sales Enablement"],
     oneLiner:"An AI system that runs on trigger, not on command. It ingests sales call transcripts and outputs structured competitive intelligence, without a human in the loop.",
@@ -563,12 +573,19 @@ const ProjectDeepDive = ({ project, onBack }) => {
             </div>
           </Reveal>
         )}
+        {project.hook && (
+          <Reveal delay={90}>
+            <div className="mb-10 pl-4 border-l-2" style={{ borderColor:C.accent }}>
+              <p className="text-base leading-relaxed" style={{ color:C.text, fontFamily:"'IBM Plex Serif',Georgia,serif", fontStyle:"italic" }}>{project.hook}</p>
+            </div>
+          </Reveal>
+        )}
         {[
           { icon:Puzzle, label:"The Problem", content:project.problem },
           { icon:Search, label:"The Research", content:project.research },
           { icon:Lightbulb, label:"The Solution", content:project.solution },
           { icon:Award, label:"The Results", content:project.results },
-        ].map((s,i)=>{
+        ].filter(s=>s.content).map((s,i)=>{
           const renderText = (text) => {
             const parts = text.split(/\*\*(.*?)\*\*/g);
             return parts.map((part, idx) =>
@@ -780,7 +797,11 @@ const ProjectCard = ({ project, onDeepDive, deepDiveUrl }) => {
         <div className="px-5 pb-5 pt-0">
           <div className="border-t pt-4 mb-3" style={{ borderColor:C.border }}>
             <p className="text-xs leading-relaxed mb-2" style={{ color:C.textSec }}><strong style={{ color:C.text }}>Problem:</strong> {renderText(project.problem.substring(0,150)+"...")}</p>
-            <p className="text-xs leading-relaxed" style={{ color:C.textSec }}><strong style={{ color:C.text }}>Result:</strong> {renderText(project.results.substring(0,150)+"...")}</p>
+            {project.results ? (
+              <p className="text-xs leading-relaxed" style={{ color:C.textSec }}><strong style={{ color:C.text }}>Result:</strong> {renderText(project.results.substring(0,150)+"...")}</p>
+            ) : (
+              <p className="text-xs leading-relaxed" style={{ color:C.textSec }}><strong style={{ color:C.text }}>Solution:</strong> {renderText(project.solution.substring(0,150)+"...")}</p>
+            )}
           </div>
           {deepDiveUrl ? (
             <a href={deepDiveUrl} target="_blank" rel="noopener noreferrer"
