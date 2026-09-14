@@ -379,8 +379,10 @@ const aiProjects = [
    DATA: TIMELINE
    ═══════════════════════════════════════════════ */
 const timeline = [
+  { role:"Marketing Tech Lead", company:"Flatiron School", period:"Apr 2026 – Present · Remote",
+    desc:"Consolidated a four-part legacy registration system into one calendar-native Apps Script flow, replacing a Formstack-to-Zoom-to-Customer.io chain and cutting cost while capturing consent data the old setup missed. Closed a 30% registrant-to-attendee mismatch with HMAC-validated Zoom and Customer.io webhooks, unlocking the show-rate analytics admissions now runs on. Built a five-stage Python pipeline tracking Flatiron's visibility in AI answers — 61% mention rate, 35% share of voice, roughly double the nearest competitor. Classified the full population of chat transcripts against a validated failure taxonomy via the Claude API, cutting inbound lead noise 20% and arming sales with buyer language.", current:true },
   { role:"Marketing Operations Analyst", note:"First Marketing Hire", company:"Valur", period:"2024 – Feb 2026",
-    desc:"Built the marketing function from zero. Email campaigns hitting 54.84% open rate. Doubled partner calls in one week. Designed an autonomous voice-of-customer pipeline using the Claude API that extracts buyer objections and language patterns from sales call transcripts on an ongoing basis, grounding all messaging in real customer language. Built lead magnets and nurture sequences that grew top-of-funnel pipeline.", current:true },
+    desc:"Built the marketing function from zero. Email campaigns hitting 54.84% open rate. Doubled partner calls in one week. Designed an autonomous voice-of-customer pipeline using the Claude API that extracts buyer objections and language patterns from sales call transcripts on an ongoing basis, grounding all messaging in real customer language. Built lead magnets and nurture sequences that grew top-of-funnel pipeline." },
   { role:"Product Marketing & Growth", company:"Yuzi Care", period:"2023 – 2024",
     desc:"Supported early go-to-market planning for an AI-powered postpartum care marketplace. Conducted competitive benchmarking and pricing analysis to inform positioning. Provided UX and pre-launch strategy research that informed the founding team's launch planning. 46% cold outreach CTR, 65% LinkedIn engagement lift." },
   { role:"Marketing Communications Intern", company:"DrFirst", period:"2023",
@@ -1038,7 +1040,7 @@ export default function Portfolio() {
       <section id="ai-lab" className="py-12 px-6">
         <div className="max-w-[800px] mx-auto">
           <Reveal><SectionHeader title="AI Infrastructure" subtitle="Systems I've designed where AI is the infrastructure, not the afterthought." /></Reveal>
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-4 items-start">
             {aiProjects.map((p,i)=>(<Reveal key={p.id} delay={i*80}><ProjectCard project={p} deepDiveUrl={`#/deep-dive/${p.id}`}/></Reveal>))}
           </div>
         </div>
@@ -1049,7 +1051,7 @@ export default function Portfolio() {
       <section id="projects" className="py-12 px-6">
         <div className="max-w-[800px] mx-auto">
           <Reveal><SectionHeader title="Projects" subtitle="Click to preview. Expand for the snapshot. Deep dive for the full story." /></Reveal>
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-4 items-start">
             {projects.map((p,i)=>(<Reveal key={p.id} delay={i*60}><ProjectCard project={p} onDeepDive={openDeepDive}/></Reveal>))}
           </div>
         </div>
