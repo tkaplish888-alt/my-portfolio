@@ -436,6 +436,20 @@ const certifications = [
    ═══════════════════════════════════════════════ */
 const references = [
   {
+    name:"Julia Osmar",
+    title:"Operations Leader | Customer Experience and Delivery | Team Builder",
+    relationship:"Managed Tonishqa directly at Flatiron School",
+    date:"September 14, 2026",
+    quote:"It's rare to have someone on your team hit the ground as quickly as Tonishqa did. She quickly rolled up her sleeves, asked thoughtful questions to understand where her efforts could be most impactful and built out a roadmap to keep herself accountable. She is a true growth systems thinker and spent several months turning heavy, manual marketing workflows into streamlined, AI-native systems, including evaluation pipelines that catch chatbot failures and automation that connects CRM and event data without manual upkeep. In addition, she is thoughtful, resourceful and amazing to work with - a true delight to have on your team. Every Marketing team needs a Tonishqa!"
+  },
+  {
+    name:"Jem Millett",
+    title:"Revenue Operations & Sales Leader | Building AI-enabled forecasting, pipeline, and CRM systems for growth-stage companies | 90%+ CAC reduction, 2500% ARR increase in 12mo | 3x successful Exit",
+    relationship:"Worked with Tonishqa on different teams at Flatiron School",
+    date:"September 14, 2026",
+    quote:"Tonishqa partnered with me on some of the most technical, cross-functional projects I ran at Flatiron School, including migrating our Jira ticketing system to Crisp, our AI-enabled live chat platform. She built the workflows that let admissions and marketing use the new system day-to-day, not just the backend that made it possible. What stood out was how she worked across teams. She didn't just ship the technical piece and move on. She sat with admissions and marketing to understand what they actually needed, then built for that instead of building what was easiest to build. That's a rare combination: someone who can architect an AI system and also translate it for the people who have to live in it every day. Any team bringing her on gets someone who treats technical work as a means to an actual outcome, not an end in itself."
+  },
+  {
     name:"Susan Lawson-Dawson",
     title:"Word Wrangler",
     relationship:"Mentor at DrFirst",
@@ -696,7 +710,7 @@ const Nav = ({ onHome, onSection }) => {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   useEffect(()=>{ const h=()=>setScrolled(window.scrollY>40); window.addEventListener("scroll",h); return()=>window.removeEventListener("scroll",h); },[]);
   const scrollTo = id => { if(onSection) { onSection(id); } else { const el=document.getElementById(id); if(el) el.scrollIntoView({ behavior:"smooth" }); } setMobileMenuOpen(false); };
-  const links = [["about","About"],["work","Work"],["ai-lab","AI Infrastructure"],["projects","Projects"],["content","Content"],["contact","Contact"]];
+  const links = [["about","About"],["work","Work"],["ai-lab","AI Infrastructure"],["projects","Projects"],["content","Content"],["references","References"],["contact","Contact"]];
   return (
     <nav className="fixed top-0 left-0 right-0 z-50 transition-all duration-300"
       style={{ backgroundColor:scrolled?C.navBg:"transparent", backdropFilter:scrolled?"blur(12px)":"none", borderBottom:scrolled?`1px solid ${C.border}`:"1px solid transparent" }}>
