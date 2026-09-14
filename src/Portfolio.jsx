@@ -437,6 +437,7 @@ const certifications = [
 const references = [
   {
     name:"Julia Osmar",
+    linkedin:"https://www.linkedin.com/in/julia-osmar/",
     title:"Operations Leader | Customer Experience and Delivery | Team Builder",
     relationship:"Managed Tonishqa directly at Flatiron School",
     date:"September 14, 2026",
@@ -444,6 +445,7 @@ const references = [
   },
   {
     name:"Jem Millett",
+    linkedin:"https://www.linkedin.com/in/jemillett/",
     title:"Revenue Operations & Sales Leader | Building AI-enabled forecasting, pipeline, and CRM systems for growth-stage companies | 90%+ CAC reduction, 2500% ARR increase in 12mo | 3x successful Exit",
     relationship:"Worked with Tonishqa on different teams at Flatiron School",
     date:"September 14, 2026",
@@ -1178,7 +1180,17 @@ export default function Portfolio() {
                   <div className="flex items-start gap-3 mb-3">
                     <Users size={18} style={{ color:C.accent }} className="mt-0.5 shrink-0" />
                     <div>
-                      <h3 className="text-sm font-semibold" style={{ color:C.text }}>{ref.name}</h3>
+                      <h3 className="text-sm font-semibold" style={{ color:C.text }}>
+                        {ref.linkedin ? (
+                          <a href={ref.linkedin} target="_blank" rel="noopener noreferrer"
+                            className="inline-flex items-center gap-1 transition-colors"
+                            style={{ color:C.text }}
+                            onMouseEnter={e=>e.currentTarget.style.color=C.accent}
+                            onMouseLeave={e=>e.currentTarget.style.color=C.text}>
+                            {ref.name} <ArrowUpRight size={12} />
+                          </a>
+                        ) : ref.name}
+                      </h3>
                       <p className="text-xs" style={{ color:C.textSec }}>{ref.title}</p>
                       <p className="text-xs mt-0.5" style={{ color:C.muted }}>{ref.relationship} · {ref.date}</p>
                     </div>
