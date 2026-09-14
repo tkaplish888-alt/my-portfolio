@@ -380,7 +380,7 @@ const aiProjects = [
    ═══════════════════════════════════════════════ */
 const timeline = [
   { role:"Marketing Tech Lead", company:"Flatiron School", period:"Apr 2026 – Present · Remote",
-    desc:"Consolidated a four-part legacy registration system into one calendar-native Apps Script flow, replacing a Formstack-to-Zoom-to-Customer.io chain and cutting cost while capturing consent data the old setup missed. Closed a 30% registrant-to-attendee mismatch with HMAC-validated Zoom and Customer.io webhooks, unlocking the show-rate analytics admissions now runs on. Built a five-stage Python pipeline tracking Flatiron's visibility in AI answers — 61% mention rate, 35% share of voice, roughly double the nearest competitor. Classified the full population of chat transcripts against a validated failure taxonomy via the Claude API, cutting inbound lead noise 20% and arming sales with buyer language.", current:true },
+    desc:"Replaced a four-tool registration chain — Formstack, Zoom, Customer.io, custom middleware — with one calendar-native Apps Script flow: lower cost, zero missed consent. Instrumented registration and attendance with HMAC-validated Zoom and Customer.io webhooks, closing a 30% registrant-to-attendee mismatch and unlocking the show-rate analytics admissions now runs on. Built a conversational AI flow that qualifies leads and captures full applications in-chat, with deterministic field mapping into Formstack and Close and the LLM scoped strictly to scoring. Shipped a five-stage Python pipeline tracking Flatiron's visibility in AI answers: 61% mention rate, 35% share of voice, roughly double the nearest competitor. Classified all 165 bot-handled chat transcripts via the Claude API against a validated failure taxonomy, cutting inbound lead noise 20% and arming sales with real buyer language.", current:true },
   { role:"Marketing Operations Analyst", note:"First Marketing Hire", company:"Valur", period:"2024 – Feb 2026",
     desc:"Built the marketing function from zero. Email campaigns hitting 54.84% open rate. Doubled partner calls in one week. Designed an autonomous voice-of-customer pipeline using the Claude API that extracts buyer objections and language patterns from sales call transcripts on an ongoing basis, grounding all messaging in real customer language. Built lead magnets and nurture sequences that grew top-of-funnel pipeline." },
   { role:"Product Marketing & Growth", company:"Yuzi Care", period:"2023 – 2024",
@@ -935,7 +935,7 @@ export default function Portfolio() {
           </Reveal>
           <Reveal delay={350}>
             <div className="flex flex-wrap items-center gap-3">
-              <a href="https://drive.google.com/file/d/1T-C7rqrs5Hjn61aavQDGebtuAmQkTHoA/view" target="_blank" rel="noopener noreferrer"
+              <a href="https://drive.google.com/file/d/1GfiffSVA9x6ib3nranMavYqdhr0pqeUf/view?usp=sharing" target="_blank" rel="noopener noreferrer"
                 className="inline-flex items-center gap-2 text-sm font-medium px-5 py-2.5 rounded-lg transition-colors" style={{ backgroundColor:C.text, color:C.bg }}>
                 <FileText size={15}/> Resume
               </a>
