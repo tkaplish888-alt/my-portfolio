@@ -953,7 +953,7 @@ export default function Portfolio() {
           </Reveal>
           <Reveal delay={350}>
             <div className="flex flex-wrap items-center gap-3">
-              <a href="https://drive.google.com/file/d/1GfiffSVA9x6ib3nranMavYqdhr0pqeUf/view?usp=sharing" target="_blank" rel="noopener noreferrer"
+              <a href="https://drive.google.com/file/d/1WGH6Mm0dUJT7LssIlzCY2OgLCZWIByyU/view?usp=sharing" target="_blank" rel="noopener noreferrer"
                 className="inline-flex items-center gap-2 text-sm font-medium px-5 py-2.5 rounded-lg transition-colors" style={{ backgroundColor:C.text, color:C.bg }}>
                 <FileText size={15}/> Resume
               </a>
