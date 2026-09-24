@@ -5,7 +5,7 @@ import {
   Layers, Lightbulb, Megaphone, Users, BookOpen,
   CheckCircle2, FileText, ChevronDown, Coffee, Search,
   Puzzle, Award, X, Wand2, Sun, Moon, Play, Newspaper,
-  GraduationCap, Menu
+  GraduationCap, Menu, Github
 } from "lucide-react";
 
 
@@ -274,6 +274,18 @@ const projects = [
    ═══════════════════════════════════════════════ */
 const aiProjects = [
   {
+    id:"aeo-dashboard", title:"AEO/GEO Visibility Dashboard",
+    tags:["AI","Analytics","Data Viz","Automation"],
+    oneLiner:"A five-stage pipeline that measures how often AI answer engines mention Flatiron by name, and how strongly they recommend it over competitors. Current standing: 61% mention rate, 35% share of voice, roughly double the nearest competitor.",
+    image:null,
+    metrics:[{v:"61%",l:"Mention rate"},{v:"35%",l:"Share of voice"},{v:"~2x",l:"Nearest competitor"},{v:"5x",l:"Runs per prompt, per cycle"}],
+    hook:"Answer engines like ChatGPT, Perplexity, and Gemini are quietly becoming the first place prospective students look. I built the system that tells us whether Flatiron shows up in those answers, and whether it's the school being recommended or just one listed in passing.",
+    problem:"AI answer engines increasingly decide which schools get surfaced before a prospective student ever lands on a website. Flatiron had **no way to measure this**: no baseline mention rate, no sense of how it compared to competing bootcamps in AI-generated answers, and no way to tell whether a content change or campaign actually moved the needle in that channel. AEO/GEO (answer engine optimization / generative engine optimization) was a blind spot.",
+    research:"I mapped the actual questions prospective students ask AI tools when researching coding bootcamps: comparison questions, city-specific questions, curriculum and outcomes questions. Single-run testing was unreliable since the same prompt can produce a different answer from one run to the next, even with identical inputs. To control for that, I ran **each prompt five times per cycle** rather than once, and treated **an explicit recommendation as a different outcome from a passing mention**, since showing up in a list of ten schools means something different from being the model's actual pick.",
+    solution:"Built a **five-stage Python pipeline**: (1) **Prompt config** — the fixed set of prompts and the competitor set to track. (2) **Scheduled runs** — GitHub Actions triggers each cycle on a recurring schedule with zero manual steps. (3) **Response parsing** — every AI response gets parsed to detect whether Flatiron is mentioned, whether it's explicitly recommended versus just listed, and which competitors appear alongside it. (4) **Time-series storage** — results land in SQLite, preserving history instead of overwriting it, so trends are visible over time, not just a single snapshot. (5) **Live dashboard** — mention rate, share of voice, and competitor comparison, rendered for the team to check without touching the underlying data.",
+    results:"Current standing: **61% mention rate** and **35% share of voice**, roughly **double the nearest competitor**. Because scoring separates recommendations from passing mentions, the dashboard shows not just whether Flatiron shows up, but whether the model is actually vouching for it, not just listing it. Running each prompt five times per cycle keeps the numbers from swinging on model randomness alone, so week-over-week movement reflects a real shift, not noise. **Built with:** Python, GitHub Actions, SQLite, prompt-based evaluation."
+  },
+  {
     id:"agentic-crm", title:"Agentic CRM Layer",
     tags:["MCP","LLM","CRM Infrastructure"],
     oneLiner:"HubSpot already ships an MCP server so AI agents can use its CRM. I tested it against a CRM I built myself, found exactly where the design breaks down, and rebuilt it around a different principle.",
@@ -347,6 +359,7 @@ const aiProjects = [
     tags:["AI","Competitive Intelligence","Embeddings","NLP","GTM Strategy"],
     oneLiner:"Uses text embeddings to map how competitors position themselves across messaging, features, and audience. Instead of manually reading landing pages and decks, the system ingests competitor content, generates vector representations, and plots positioning clusters. You can see where messaging overlaps, where gaps exist, and how your own positioning compares — updated automatically as competitors ship new content.",
     image:null,
+    caseStudyUrl:"https://github.com/tkaplish888-alt/competitive-positioning-map", caseStudyLabel:"View on GitHub",
     metrics:[{v:"Real-time",l:"Positioning updates"},{v:"Vector-based",l:"Semantic clustering"},{v:"Automated",l:"Content ingestion"},{v:"Visual",l:"Gap analysis"}],
     problem:"Traditional competitive positioning analysis is manual, slow, and snapshot-based. Someone reads through competitor websites, takes notes, and builds a positioning matrix in a slide deck. By the time the deck is reviewed, the landscape has shifted. **The bigger problem: manual analysis misses semantic overlap.** Two competitors can position differently on the surface while targeting the exact same buyer segment with nearly identical value props, just using different words. Human pattern recognition struggles to catch this at scale across 5+ competitors and dozens of pages.",
     research:"Analyzed how positioning analysis breaks down in practice. Found that teams either (1) do it once during a rebrand and never update it, or (2) assign it to someone who reviews competitor sites quarterly and writes a summary. Neither approach captures **semantic positioning overlap** or tracks shifts in real time. Researched text embedding models and vector similarity techniques. Identified that embeddings can surface when two competitors are saying fundamentally the same thing even when word choice differs, which is exactly what traditional competitive analysis misses.",
@@ -789,9 +802,10 @@ const Nav = ({ onHome, onSection }) => {
 /* ═══════════════════════════════════════════════
    EXPANDABLE PROJECT CARD
    ═══════════════════════════════════════════════ */
-const ProjectCard = ({ project, onDeepDive, deepDiveUrl }) => {
+const ProjectCard = ({ project, onDeepDive }) => {
   const { C } = useTheme();
   const [expanded, setExpanded] = useState(false);
+  const githubUrl = project.caseStudyUrl && project.caseStudyUrl.includes("github.com") ? project.caseStudyUrl : null;
 
   const renderText = (text) => {
     const parts = text.split(/\*\*(.*?)\*\*/g);
@@ -806,9 +820,19 @@ const ProjectCard = ({ project, onDeepDive, deepDiveUrl }) => {
     <div className="rounded-xl border transition-all duration-300"
       style={{ backgroundColor:C.bg, borderColor:expanded?C.accent:C.border, boxShadow:expanded?`0 4px 16px ${C.accentGlow}`:"none" }}>
       <button onClick={()=>setExpanded(!expanded)} className="w-full text-left p-5 cursor-pointer">
-        <div className="flex items-start justify-between mb-2">
-          <h3 className="text-sm font-semibold leading-snug pr-2" style={{ fontFamily:"'IBM Plex Serif',Georgia,serif", color:C.text }}>{project.title}</h3>
-          <ChevronDown size={14} className="shrink-0 mt-1 transition-transform duration-300" style={{ color:C.muted, transform:expanded?"rotate(180deg)":"rotate(0)" }}/>
+        <div className="flex items-start justify-between gap-3 mb-2">
+          <h3 className="text-sm font-semibold leading-snug" style={{ fontFamily:"'IBM Plex Serif',Georgia,serif", color:C.text }}>{project.title}</h3>
+          <div className="flex items-center gap-2 shrink-0">
+            {githubUrl && (
+              <a href={githubUrl} target="_blank" rel="noopener noreferrer" onClick={e=>e.stopPropagation()}
+                title="View on GitHub" aria-label="View on GitHub"
+                className="p-1 rounded-md transition-colors" style={{ color:C.muted }}
+                onMouseEnter={e=>e.currentTarget.style.color=C.accent} onMouseLeave={e=>e.currentTarget.style.color=C.muted}>
+                <Github size={14}/>
+              </a>
+            )}
+            <ChevronDown size={14} className="transition-transform duration-300" style={{ color:C.muted, transform:expanded?"rotate(180deg)":"rotate(0)" }}/>
+          </div>
         </div>
         <p className="text-xs leading-relaxed mb-3" style={{ color:C.muted }}>{project.oneLiner}</p>
         <div className="flex flex-wrap gap-1.5">{project.tags.map(t=><Tag key={t} label={t}/>)}</div>
@@ -823,19 +847,11 @@ const ProjectCard = ({ project, onDeepDive, deepDiveUrl }) => {
               <p className="text-xs leading-relaxed" style={{ color:C.textSec }}><strong style={{ color:C.text }}>Solution:</strong> {renderText(project.solution.substring(0,150)+"...")}</p>
             )}
           </div>
-          {deepDiveUrl ? (
-            <a href={deepDiveUrl} target="_blank" rel="noopener noreferrer"
-              className="flex items-center gap-1.5 text-xs font-medium transition-opacity"
-              style={{ color:C.accent }} onMouseEnter={e=>e.currentTarget.style.opacity=0.7} onMouseLeave={e=>e.currentTarget.style.opacity=1}>
-              Full deep dive <ArrowUpRight size={12}/>
-            </a>
-          ) : (
-            <button onClick={e=>{e.stopPropagation();onDeepDive(project.id);}}
-              className="flex items-center gap-1.5 text-xs font-medium cursor-pointer transition-opacity"
-              style={{ color:C.accent }} onMouseEnter={e=>e.currentTarget.style.opacity=0.7} onMouseLeave={e=>e.currentTarget.style.opacity=1}>
-              Full deep dive <ArrowUpRight size={12}/>
-            </button>
-          )}
+          <button onClick={e=>{e.stopPropagation();onDeepDive(project.id);}}
+            className="flex items-center gap-1.5 text-xs font-medium cursor-pointer transition-opacity"
+            style={{ color:C.accent }} onMouseEnter={e=>e.currentTarget.style.opacity=0.7} onMouseLeave={e=>e.currentTarget.style.opacity=1}>
+            Full deep dive <ArrowUpRight size={12}/>
+          </button>
         </div>
       </div>
     </div>
@@ -961,6 +977,10 @@ export default function Portfolio() {
                 className="inline-flex items-center gap-2 text-sm font-medium px-5 py-2.5 rounded-lg border transition-all" style={{ borderColor:C.border, color:C.textSec }}>
                 <Linkedin size={15}/> LinkedIn
               </a>
+              <a href="https://github.com/tkaplish888-alt" target="_blank" rel="noopener noreferrer"
+                className="inline-flex items-center gap-2 text-sm font-medium px-5 py-2.5 rounded-lg border transition-all" style={{ borderColor:C.border, color:C.textSec }}>
+                <Github size={15}/> GitHub
+              </a>
               <a href="https://calendly.com/tkaplish888/30min" target="_blank" rel="noopener noreferrer"
                 className="inline-flex items-center gap-2 text-sm font-medium px-5 py-2.5 rounded-lg border transition-all" style={{ borderColor:C.border, color:C.textSec }}>
                 <Coffee size={15}/> Grab a virtual coffee with me
@@ -1057,9 +1077,9 @@ export default function Portfolio() {
       {/* AI INFRASTRUCTURE */}
       <section id="ai-lab" className="py-12 px-6">
         <div className="max-w-[800px] mx-auto">
-          <Reveal><SectionHeader title="AI Infrastructure" subtitle="Systems I've designed where AI is the infrastructure, not the afterthought." /></Reveal>
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-4 items-start">
-            {aiProjects.map((p,i)=>(<Reveal key={p.id} delay={i*80}><ProjectCard project={p} deepDiveUrl={`#/deep-dive/${p.id}`}/></Reveal>))}
+          <Reveal><SectionHeader title="AI Infrastructure" subtitle="Systems I've designed where AI is the infrastructure, not the afterthought. Click a project to preview it, then open the full deep dive." /></Reveal>
+          <div className="flex flex-col gap-3">
+            {aiProjects.map((p,i)=>(<Reveal key={p.id} delay={i*60}><ProjectCard project={p} onDeepDive={openDeepDive}/></Reveal>))}
           </div>
         </div>
       </section>
@@ -1069,7 +1089,7 @@ export default function Portfolio() {
       <section id="projects" className="py-12 px-6">
         <div className="max-w-[800px] mx-auto">
           <Reveal><SectionHeader title="Projects" subtitle="Click to preview. Expand for the snapshot. Deep dive for the full story." /></Reveal>
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-4 items-start">
+          <div className="flex flex-col gap-3">
             {projects.map((p,i)=>(<Reveal key={p.id} delay={i*60}><ProjectCard project={p} onDeepDive={openDeepDive}/></Reveal>))}
           </div>
         </div>
