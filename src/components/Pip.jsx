@@ -7,6 +7,7 @@
      thinking   eyes shift up and to the side, three gold pixels blink
      talking    only the mouth moves
      happy      half-lidded eyes, mouth corners up one pixel, faint blush
+     sleeping   eyes closed, small relaxed mouth, pixel Z's drift up and fade
 
    The portrait is drawn on a 48x48 grid. The static base is merged into one
    <path> per color (a few dozen elements instead of hundreds), computed once. */
@@ -99,6 +100,11 @@ export default function Pip({ mood = "idle", size = 64, className = "", title, b
       <g className="pxa-g pxa-mc"><R x={21} y={27} w={1} c={C.lip} /><R x={27} y={27} w={1} c={C.lip} /></g>
       <g className="pxa-g pxa-mo"><R x={22} y={28} w={5} c={C.dk} /><R x={23} y={29} w={3} c={C.dk} /></g>
       <g className="pxa-g pxa-bl"><R x={17} y={24} w={3} c={C.bl} /><R x={29} y={24} w={3} c={C.bl} /></g>
+      <g className="pxa-g pxa-zz">
+        <g className="pxa-z1"><R x={37} y={11} w={3} c={C.j3} /><R x={39} y={12} w={1} c={C.j3} /><R x={38} y={13} w={1} c={C.j3} /><R x={37} y={14} w={3} c={C.j3} /></g>
+        <g className="pxa-z2"><R x={41} y={3} w={4} c={C.j3} /><R x={44} y={4} w={1} c={C.j3} /><R x={43} y={5} w={1} c={C.j3} /><R x={42} y={6} w={1} c={C.j3} /><R x={41} y={7} w={4} c={C.j3} /></g>
+      </g>
+      <g className="pxa-g pxa-ms"><R x={23} y={28} w={3} c={C.lip} /></g>
       <g className="pxa-g pxa-td"><R x={39} y={8} w={2} h={2} c={C.g} /><R x={42} y={6} w={2} h={2} c={C.g} /><R x={45} y={4} w={2} h={2} c={C.g} /></g>
     </svg>
   );

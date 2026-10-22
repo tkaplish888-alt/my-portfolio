@@ -12,11 +12,13 @@
 import Anthropic from "@anthropic-ai/sdk";
 import { site, projects, aiProjects, timeline, education, certifications, references, contentItems, changelog } from "../src/data.js";
 import { persona, availability, personalNotes, projectNotes } from "../src/bot/persona.js";
+import { checkLimits, LIMITS } from "./_ratelimit.js";
 
 const MODEL = "claude-haiku-5-5";
 const MAX_TURNS = 12;          // most recent messages sent to the model
 const MAX_CHARS = 800;         // per visitor message
-const RATE = { max: 20, windowMs: 10 * 60 * 1000 }; // per visitor IP, best effort
+const MAX_ASSISTANT_CHARS = 1500; // per earlier Pip reply (the browser sends history, so it can be forged)
+const MAX_TOTAL_CHARS = 8000;  // whole conversation sent to the model
 
 /* ── knowledge ───────────────────────────────────────────────── */
 const clean = t => String(t || "").replace(/\*\*/g, "").replace(/\s+/g, " ").trim();
@@ -69,14 +71,29 @@ const SECTION_NAMES = { systems: "AI builds", work: "Experience", "case-studies"
 const VISITORS = { hiring: "someone hiring", founder: "a founder", builder: "an engineer or builder" };
 const allIds = new Set([...projects, ...aiProjects].map(p => p.id));
 
-/* ── rate limit (per warm instance; Anthropic + Vercel spend caps are the real backstop) ── */
-const hits = new Map();
-const limited = ip => {
-  const now = Date.now();
-  const recent = (hits.get(ip) || []).filter(t => now - t < RATE.windowMs);
-  recent.push(now);
-  hits.set(ip, recent);
-  return recent.length > RATE.max;
+// Bedtime lines for when Pip hits a limit. One is picked at random so repeat
+// visitors don't see the same thing twice. The page shows Pip asleep too.
+const SLEEPY = {
+  burst: [
+    "Whew, that was a lot of questions in a row! My pixels are getting heavy, so I'm taking a quick power nap. Back in a few minutes. Tonishqa's inbox never sleeps, though!",
+    "Okay, tiny nap time. Even a 48x48 portrait needs to recharge after a chat this good. Give me a few minutes, or email Tonishqa in the meantime!",
+    "*yawns in low resolution* I'll be back in a few minutes, promise. If it can't wait, Tonishqa reads her email herself!",
+  ],
+  visitorDaily: [
+    "We've talked so much today that I'm officially tucked in for the night! Come say hi tomorrow, or reach Tonishqa directly. She's way more awake than I am.",
+    "That's all the chatting I've got in me today. Pajamas on, lights out. See you tomorrow! Tonishqa's email works anytime.",
+  ],
+  siteDaily: [
+    "So many visitors today! I've talked myself into a deep sleep and I'll be back tomorrow. Tonishqa's inbox is wide awake, though!",
+    "Pip has clocked out for the day after chatting with a whole crowd of lovely people. Back tomorrow, fully recharged! Tonishqa reads her email herself in the meantime.",
+  ],
+};
+const pick = arr => arr[Math.floor(Math.random() * arr.length)];
+
+// When the visitor can try again, so the page knows how long Pip naps.
+const wakeAt = reason => {
+  if (reason === "burst") return Date.now() + LIMITS.burst.windowSec * 1000;
+  const d = new Date(); d.setUTCHours(24, 0, 0, 0); return d.getTime(); // next midnight UTC
 };
 
 const text = (body, status = 200) => new Response(body, { status, headers: { "content-type": "text/plain; charset=utf-8" } });
@@ -91,7 +108,13 @@ export async function POST(request) {
   if (!process.env.ANTHROPIC_API_KEY) return text("Pip is napping right now. Email works: " + site.email, 503);
 
   const ip = (request.headers.get("x-forwarded-for") || "anon").split(",")[0].trim();
-  if (limited(ip)) return text("Pip needs a short break. Try again in a few minutes, or email Tonishqa directly: " + site.email, 429);
+  const hit = await checkLimits(ip);
+  if (hit) {
+    return new Response(`${pick(SLEEPY[hit])}\n[[link:email]]`, {
+      status: 429,
+      headers: { "content-type": "text/plain; charset=utf-8", "cache-control": "no-store", "x-pip-sleep": hit, "x-pip-wake": String(wakeAt(hit)) },
+    });
+  }
 
   let body;
   try { body = await request.json(); } catch { return text("Bad request", 400); }
@@ -99,7 +122,10 @@ export async function POST(request) {
   const messages = (Array.isArray(body?.messages) ? body.messages : [])
     .filter(m => (m.role === "user" || m.role === "assistant") && typeof m.content === "string" && m.content.trim())
     .slice(-MAX_TURNS)
-    .map(m => ({ role: m.role, content: m.content.slice(0, MAX_CHARS) }));
+    .map(m => ({ role: m.role, content: m.content.slice(0, m.role === "user" ? MAX_CHARS : MAX_ASSISTANT_CHARS) }));
+  while (messages.length && messages[0].role !== "user") messages.shift();
+  // Keep the newest turns that fit the overall budget.
+  while (messages.length > 1 && messages.reduce((n, m) => n + m.content.length, 0) > MAX_TOTAL_CHARS) messages.splice(0, 2);
   while (messages.length && messages[0].role !== "user") messages.shift();
   if (!messages.length || messages.at(-1).role !== "user") return text("Bad request", 400);
 
