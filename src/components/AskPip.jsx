@@ -36,6 +36,7 @@ const Rich = ({ text }) => {
 };
 
 export default function AskPip({ projectId, visitor, onOpenProject, onGo }) {
+  const [enabled, setEnabled] = useState(false);
   const [open, setOpen] = useState(false);
   const [messages, setMessages] = useState([]);
   const [input, setInput] = useState("");
@@ -47,6 +48,11 @@ export default function AskPip({ projectId, visitor, onOpenProject, onGo }) {
   const scroller = useRef(null);
   const inputRef = useRef(null);
   const happyTimer = useRef(null);
+
+  /* Only show Pip once the server confirms it's switched on. */
+  useEffect(() => {
+    fetch("/api/chat").then(r => r.ok ? r.json() : null).then(d => setEnabled(Boolean(d?.enabled))).catch(() => {});
+  }, []);
 
   /* Which section is on screen (drives the suggested questions). */
   useEffect(() => {
@@ -149,6 +155,8 @@ export default function AskPip({ projectId, visitor, onOpenProject, onGo }) {
   };
 
   const typingMood = !busy && input.trim() ? "listening" : null;
+
+  if (!enabled) return null;
 
   return (
     <div data-pip>

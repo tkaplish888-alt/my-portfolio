@@ -81,6 +81,12 @@ const limited = ip => {
 
 const text = (body, status = 200) => new Response(body, { status, headers: { "content-type": "text/plain; charset=utf-8" } });
 
+// GET /api/chat tells the page whether Pip is switched on (a key is configured),
+// so the chat stays hidden instead of failing if the key is missing.
+export function GET() {
+  return Response.json({ enabled: Boolean(process.env.ANTHROPIC_API_KEY) }, { headers: { "cache-control": "no-store" } });
+}
+
 export async function POST(request) {
   if (!process.env.ANTHROPIC_API_KEY) return text("Pip is napping right now. Email works: " + site.email, 503);
 

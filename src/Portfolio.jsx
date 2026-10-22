@@ -30,7 +30,7 @@ const VIEWS = {
   },
   hiring: {
     label: "I'm hiring",
-    line: "Marketing technology lead. First marketing hire at Valur, then AI builds at Flatiron School. Experience and references come first.",
+    line: "I built a marketing function from zero, then the AI tools to run it. Here's the track record, and the people who'll vouch for it.",
     cta: "resume",
     order: ["work", "references", "builds", "cases", "content"],
   },
@@ -213,22 +213,6 @@ export default function Portfolio({ initialPath = "/" }) {
           <SignalMachine onOpen={openDeepDive} />
         </div>
       </div>
-
-      {/* AT A GLANCE (kept as <p> tags so llms-full.txt picks them up) */}
-      <section id="about" className="px-5 md:px-8 py-10">
-        <dl className="max-w-[1040px] mx-auto grid sm:grid-cols-3 gap-6 sm:gap-10">
-          {[
-            ["Studied", "English literature, then a master's in communication at UW"],
-            ["Builds with", "Python, Claude API, MCP, HubSpot, Clay, PostHog"],
-            ["Shipped", `${aiProjects.length} AI builds and ${projects.length} marketing case studies`],
-          ].map(([k, v]) => (
-            <div key={k} className="border-t-[1.5px] border-edge pt-3">
-              <dt className="text-[13px] font-semibold text-muted">{k}</dt>
-              <dd><p className="text-[15.5px] leading-snug mt-1">{v}</p></dd>
-            </div>
-          ))}
-        </dl>
-      </section>
 
       {view.order.map(k => SECTIONS[k])}
 

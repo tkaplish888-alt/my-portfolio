@@ -400,7 +400,7 @@ export const archivedProjects = [
    how Tonishqa thinks. Small tweaks and features stay out.
    ═══════════════════════════════════════════════ */
 export const changelog = [
-  { date:"Oct 2026", title:"Show, don't tell", note:"Rebuilt the site so the work speaks first: a hands-on hero, a visitor switch and far fewer words." },
+  { date:"Oct 2026", title:"V2", note:"A full redesign, and Pip joins as an AI guide that answers questions about the work." },
   { date:"Oct 7, 2026", title:"Readable by AI crawlers", note:"Most AI crawlers never run JavaScript, so they were seeing a blank page. Now every page ships as plain HTML, plus llms.txt." },
   { date:"Sep 24, 2026", title:"Measuring AI answers", note:"Started tracking whether answer engines recommend Flatiron, not just whether they mention it." },
   { date:"Sep 17, 2026", title:"Tools shaped for agents", note:"Tested HubSpot's official MCP server against one built around real operator questions. It found 112 stale deals; the official one found none." },
