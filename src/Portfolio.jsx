@@ -14,6 +14,7 @@ import Changelog from "./components/Changelog.jsx";
 import BuiltWithAI from "./components/BuiltWithAI.jsx";
 import DeepDive from "./components/DeepDive.jsx";
 import Pip from "./components/Pip.jsx";
+import AskPip from "./components/AskPip.jsx";
 
 const RESUME_URL = "https://drive.google.com/file/d/1WGH6Mm0dUJT7LssIlzCY2OgLCZWIByyU/view?usp=sharing";
 const buildsWithCode = aiProjects.filter(p => p.caseStudyUrl?.includes("github.com")).length;
@@ -114,6 +115,7 @@ export default function Portfolio({ initialPath = "/" }) {
       <Nav onHome={goHome} onSection={navigateTo} onToggleTheme={toggleTheme} />
       {children}
       <BuiltWithAI />
+      <AskPip projectId={activeProject?.id} visitor={visitor} onOpenProject={openDeepDive} onGo={navigateTo} />
     </div>
   );
 

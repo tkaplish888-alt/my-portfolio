@@ -7,6 +7,7 @@ const STACK = [
   "Lucide Icons · Bricolage Grotesque + IBM Plex Sans fonts",
   "Component architecture, prerendered to static HTML",
   "Interactive hero, visitor switch, dark/light themes",
+  "Pip, an on-page guide running on Claude Haiku 5.5",
   "Content extracted and restructured via AI prompts",
   "Warm, accessible design system with full dark mode",
 ];

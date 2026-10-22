@@ -396,15 +396,14 @@ export const archivedProjects = [
 
 /* ═══════════════════════════════════════════════
    DATA: CHANGELOG (newest first)
-   Shown in the Changelog section. Add a line whenever the site ships.
+   Shown in the Changelog section. Only big milestones, or changes that show
+   how Tonishqa thinks. Small tweaks and features stay out.
    ═══════════════════════════════════════════════ */
 export const changelog = [
-  { date:"Oct 2026", title:"The redesign", note:"Warmer look, a hands-on hero, a visitor switch, and Pip moves in." },
-  { date:"Oct 7, 2026", title:"Readable by AI crawlers", note:"Every page now ships as static HTML, plus llms.txt and a sitemap." },
-  { date:"Sep 24, 2026", title:"AEO visibility dashboard", note:"Tracks how often answer engines mention and recommend Flatiron." },
-  { date:"Sep 17, 2026", title:"Agentic CRM layer results", note:"Head-to-head numbers against HubSpot's official MCP server, with code." },
-  { date:"Sep 14, 2026", title:"Flatiron School and references", note:"New role, plus two LinkedIn recommendations." },
-  { date:"Mar 2026", title:"See it in action", note:"Real pipeline inputs and outputs, and shareable links for every case study." },
-  { date:"Feb 2026", title:"First AI builds", note:"Voice-of-customer pipeline and competitive intelligence monitor go up." },
+  { date:"Oct 2026", title:"Show, don't tell", note:"Rebuilt the site so the work speaks first: a hands-on hero, a visitor switch and far fewer words." },
+  { date:"Oct 7, 2026", title:"Readable by AI crawlers", note:"Most AI crawlers never run JavaScript, so they were seeing a blank page. Now every page ships as plain HTML, plus llms.txt." },
+  { date:"Sep 24, 2026", title:"Measuring AI answers", note:"Started tracking whether answer engines recommend Flatiron, not just whether they mention it." },
+  { date:"Sep 17, 2026", title:"Tools shaped for agents", note:"Tested HubSpot's official MCP server against one built around real operator questions. It found 112 stale deals; the official one found none." },
+  { date:"Feb 2026", title:"From research project to always-on", note:"Turned customer and competitor research into pipelines that run on their own." },
   { date:"Feb 10, 2026", title:"Version one", note:"The first site, built with Claude Opus 4.6 in Claude Code and Cursor." },
 ];
