@@ -1,6 +1,7 @@
 import { useEffect, useRef, useState } from "react";
 import { ArrowRight, ArrowDown, FileAudio, Globe, MessagesSquare, Database } from "lucide-react";
 import { Metric } from "./ui.jsx";
+import Pip from "./Pip.jsx";
 
 /* The hero's interactive moment: pick a messy input, watch which system
    handles it, and see what comes out. All figures come from the case studies. */
@@ -46,10 +47,11 @@ export default function SignalMachine({ onOpen }) {
   return (
     <div className="rounded-[10px] border-[1.5px] border-edge bg-card shadow-hard-lg overflow-hidden">
       {/* window bar */}
-      <div className="flex items-center gap-2 px-4 py-2.5 border-b-[1.5px] border-edge bg-marigold">
-        <span className="w-2.5 h-2.5 rounded-full border-[1.5px] border-edge bg-card" />
-        <span className="w-2.5 h-2.5 rounded-full border-[1.5px] border-edge bg-card" />
-        <span className="ml-1 text-[13px] font-semibold text-on-accent">Feed it something messy. See what comes out.</span>
+      <div className="flex items-center gap-2 pl-4 pr-2 h-11 border-b-[1.5px] border-edge bg-marigold text-on-accent">
+        <span className="w-2.5 h-2.5 rounded-full border-[1.5px] border-edge bg-card" aria-hidden />
+        <span className="w-2.5 h-2.5 rounded-full border-[1.5px] border-edge bg-card" aria-hidden />
+        <span className="ml-1 text-[13px] font-semibold flex-1">Pick a source. See the tool I built for it.</span>
+        <Pip mood={running ? "thinking" : "idle"} size={38} />
       </div>
 
       <div className="grid md:grid-cols-[1fr_auto_1.25fr]">

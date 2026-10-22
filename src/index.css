@@ -116,6 +116,35 @@ body {
 @keyframes rise { from { opacity: 0; transform: translateY(6px); } to { opacity: 1; transform: none; } }
 .rise { animation: rise 320ms ease-out both; }
 
+/* ── Pip, the mascot ─────────────────────────────────────────── */
+.pip * { transform-box: fill-box; }
+.pip-body { animation: pip-bob 3.2s ease-in-out infinite; transform-origin: 50% 100%; }
+.pip-eyes ellipse, .pip-eyes circle { transform-origin: center; animation: pip-blink 4.5s infinite; }
+.pip-ear { transition: transform 260ms cubic-bezier(.3,1.6,.5,1); }
+.pip-ear--l { transform-origin: 100% 100%; }
+.pip-ear--r { transform-origin: 0% 100%; }
+.pip-steam { opacity: 0; }
+.pip-lid { transform-origin: 50% 100%; }
+.pip-cheek { transition: opacity 200ms; opacity: .55; }
+
+.pip--listening .pip-ear--l { transform: rotate(14deg) translateY(-2px); }
+.pip--listening .pip-ear--r { transform: rotate(-14deg) translateY(-2px); }
+.pip--thinking .pip-steam { opacity: 1; }
+.pip--thinking .pip-steam circle { animation: pip-steam 1.4s ease-out infinite; }
+.pip--thinking .pip-steam circle:nth-child(2) { animation-delay: .25s; }
+.pip--thinking .pip-steam circle:nth-child(3) { animation-delay: .5s; }
+.pip--talking .pip-lid { animation: pip-lid .5s ease-in-out infinite; }
+.pip--talking .pip-mouth { animation: pip-talk .32s ease-in-out infinite; transform-origin: center; }
+.pip--happy .pip-cheek { opacity: .9; }
+.pip--happy .pip-body { animation: pip-hop .6s ease-out 1; }
+
+@keyframes pip-bob { 0%,100% { transform: translateY(0); } 50% { transform: translateY(-1.5px); } }
+@keyframes pip-blink { 0%,94%,100% { transform: scaleY(1); } 97% { transform: scaleY(.1); } }
+@keyframes pip-steam { from { transform: translate(-6px, 10px) scale(.4); opacity: 0; } 30% { opacity: 1; } to { transform: translate(0, -4px) scale(1.1); opacity: 0; } }
+@keyframes pip-lid { 0%,100% { transform: translateY(0) rotate(0); } 50% { transform: translateY(-3px) rotate(-4deg); } }
+@keyframes pip-talk { 0%,100% { transform: scaleY(1); } 50% { transform: scaleY(1.9); } }
+@keyframes pip-hop { 0% { transform: translateY(0); } 40% { transform: translateY(-6px); } 100% { transform: translateY(0); } }
+
 @media (prefers-reduced-motion: reduce) {
   *, *::before, *::after { animation: none !important; transition: none !important; }
 }

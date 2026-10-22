@@ -7,6 +7,7 @@ const LINKS = [
   ["case-studies", "Case studies"],
   ["references", "References"],
   ["contact", "Contact"],
+  ["changelog", "Changelog"],
 ];
 
 export default function Nav({ onHome, onSection, onToggleTheme }) {

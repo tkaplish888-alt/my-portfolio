@@ -393,3 +393,18 @@ export const archivedProjects = [
     solution:"Built a **self-updating lead scoring system** with automatic retraining and drift detection. **Step 1: Train.** The model ingests historical lead data: company size, industry, contact role, acquisition channel (organic, paid, referral, event), engagement signals (pages visited, emails opened, content downloaded, demo requests), and outcome (won, lost, still open). It learns which features predict conversion using a gradient-boosting classifier. **Step 2: Score.** Every new lead gets scored 0-100 based on feature similarity to historical converters. High scores go to sales. Low scores go to nurture. **Step 3: Feedback Loop.** Every time a deal closes (won or lost), the outcome gets fed back into the training data and the model retrains automatically. Feature weights update. If enterprise leads started converting at higher rates, their weight increases. If a previously high-performing channel degrades, its weight drops. **Step 4: Drift Detection.** The system tracks model accuracy over time. If accuracy drops below a threshold (e.g., 8% decline), it triggers an alert: 'Model accuracy has degraded. Here's what changed in the data: [summary of feature distribution shifts].' **Step 5: Explainability.** For every lead score, the system outputs which features contributed most. Example: 'Score: 87. Primary drivers: enterprise company size (+22), demo request (+18), organic acquisition (+12). Detractors: low email engagement (-5).'"
   },
 ];
+
+/* ═══════════════════════════════════════════════
+   DATA: CHANGELOG (newest first)
+   Shown in the Changelog section. Add a line whenever the site ships.
+   ═══════════════════════════════════════════════ */
+export const changelog = [
+  { date:"Oct 2026", title:"The redesign", note:"Warmer look, a hands-on hero, a visitor switch, and Pip moves in." },
+  { date:"Oct 7, 2026", title:"Readable by AI crawlers", note:"Every page now ships as static HTML, plus llms.txt and a sitemap." },
+  { date:"Sep 24, 2026", title:"AEO visibility dashboard", note:"Tracks how often answer engines mention and recommend Flatiron." },
+  { date:"Sep 17, 2026", title:"Agentic CRM layer results", note:"Head-to-head numbers against HubSpot's official MCP server, with code." },
+  { date:"Sep 14, 2026", title:"Flatiron School and references", note:"New role, plus two LinkedIn recommendations." },
+  { date:"Mar 2026", title:"See it in action", note:"Real pipeline inputs and outputs, and shareable links for every case study." },
+  { date:"Feb 2026", title:"First AI builds", note:"Voice-of-customer pipeline and competitive intelligence monitor go up." },
+  { date:"Feb 10, 2026", title:"Version one", note:"The first site, built with Claude Opus 4.6 in Claude Code and Cursor." },
+];
