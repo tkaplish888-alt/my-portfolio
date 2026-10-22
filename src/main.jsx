@@ -1,5 +1,11 @@
 import { StrictMode } from 'react'
 import { createRoot, hydrateRoot } from 'react-dom/client'
+// Fonts are self-hosted (no Google Fonts request).
+import '@fontsource-variable/bricolage-grotesque/opsz.css'
+import '@fontsource/ibm-plex-sans/400.css'
+import '@fontsource/ibm-plex-sans/500.css'
+import '@fontsource/ibm-plex-sans/600.css'
+import '@fontsource/ibm-plex-sans/400-italic.css'
 import './index.css'
 import App from './App.jsx'
 

@@ -152,7 +152,8 @@ export const projects = [
    ═══════════════════════════════════════════════ */
 export const aiProjects = [
   {
-    id:"aeo-dashboard", title:"AEO/GEO Visibility Dashboard",
+    id:"aeo-dashboard", teaser:"Measures how often ChatGPT, Perplexity and Gemini mention Flatiron, and whether they actually recommend it.",
+    title:"AEO/GEO Visibility Dashboard",
     tags:["AI","Analytics","Data Viz","Automation"],
     oneLiner:"A five-stage pipeline that measures how often AI answer engines mention Flatiron by name, and how strongly they recommend it over competitors. Current standing: 61% mention rate, 35% share of voice, roughly double the nearest competitor.",
     image:null,
@@ -164,7 +165,8 @@ export const aiProjects = [
     results:"Current standing: **61% mention rate** and **35% share of voice**, roughly **double the nearest competitor**. Because scoring separates recommendations from passing mentions, the dashboard shows not just whether Flatiron shows up, but whether the model is actually vouching for it, not just listing it. Running each prompt five times per cycle keeps the numbers from swinging on model randomness alone, so week-over-week movement reflects a real shift, not noise. **Built with:** Python, GitHub Actions, SQLite, prompt-based evaluation."
   },
   {
-    id:"agentic-crm", title:"Agentic CRM Layer",
+    id:"agentic-crm", teaser:"An MCP server for HubSpot shaped around the questions operators ask, not database tables. It found 112 stale deals the official server missed.",
+    title:"Agentic CRM Layer",
     tags:["MCP","LLM","CRM Infrastructure"],
     oneLiner:"HubSpot already ships an MCP server so AI agents can use its CRM. I tested it against a CRM I built myself, found exactly where the design breaks down, and rebuilt it around a different principle.",
     image:null,
@@ -177,7 +179,8 @@ export const aiProjects = [
     results:"I connected both servers to Claude Desktop against the same HubSpot portal and asked them the same questions. Same MCP, same REST API, same data, the only variable was how the tools were shaped. Asked which deals had gone quiet for 30 days, the official server made **7 tool calls and found zero**, reading last-modified dates and concluding nothing was stale. The workflow-shaped server made **2 calls and found 112 deals, worth $3.68M**, with the longest silence running **313 days**. Asked which channel sends leads that don't close, the official server made **21 calls** and concluded the CRM had no channel data. It was reading HubSpot's built-in traffic-source field; the real answer lived in a custom property it never discovered. The workflow-shaped server made **2 calls** and returned **paid_social converting at 3.4%, against 32% for referrals**. The clearest result was what never got touched: across five runs and roughly 53 tool calls, the official server never queried a single one of the portal's **2,942 logged notes**, the exact data that answers 'who's gone quiet.' The strongest result wasn't something I built. Given the full picture in one consolidated payload instead of scattered lookups, Claude ranked stalled deals by silence and value, noticed that deals stuck at Contract Sent usually signal internal buyer friction rather than lost interest, and adjusted its outreach tone by role and channel, low-pressure for a referral lead, sharp and value-forward for a CTO. None of that reasoning is in the tool code. It became possible once the agent stopped spending its effort on retrieval. **Built with:** Python, FastMCP, HubSpot CRM API v3/v4, Claude Desktop."
   },
   {
-    id:"voc", title:"Autonomous Voice-of-Customer Pipeline",
+    id:"voc", teaser:"Turns sales call transcripts into structured objections and positioning briefs, without anyone pressing a button.",
+    title:"Autonomous Voice-of-Customer Pipeline",
     tags:["AI","Voice of Customer","Automation","Analytics","Sales Enablement"],
     oneLiner:"An AI system that runs on trigger, not on command. It ingests sales call transcripts and outputs structured competitive intelligence, without a human in the loop.",
     image:null /* /images/valur.png is not in public/images */, imageAlt:"Valur logo, where the VOC pipeline was built",
@@ -193,7 +196,8 @@ export const aiProjects = [
     ]
   },
   {
-    id:"comp-intel", title:"Autonomous Competitive Intelligence Monitor",
+    id:"comp-intel", teaser:"Watches competitor sites every week and pings Slack only when a change actually matters.",
+    title:"Autonomous Competitive Intelligence Monitor",
     tags:["AI","Competitive Intelligence","Web Scraping","Automation","Slack"],
     oneLiner:"A system that watches competitor websites on autopilot. When messaging, pricing, or positioning changes, it detects the shift and sends a Slack alert with a strategic analysis. No dashboards to check. No manual reviews. It just runs.",
     image:null,
@@ -209,7 +213,8 @@ export const aiProjects = [
     results:"System successfully deployed and tested against live competitor sites. The architecture **eliminates the most expensive failure mode in competitive intelligence: not checking**. The significance filter ensures the team only gets interrupted when something actually matters, solving the alert fatigue problem that kills most monitoring setups. Snapshot history (10 versions per URL) enables trend analysis over time, not just point-in-time comparisons. Total infrastructure cost: effectively zero (GitHub Actions free tier + minimal Claude API usage since identical pages skip analysis). **Built with:** Python, Claude API (Anthropic), BeautifulSoup, Slack Webhooks, GitHub Actions, JSON snapshot storage."
   },
   {
-    id:"drfirst-gpt", title:"Custom GPT for Healthcare Brand Consistency",
+    id:"drfirst-gpt", teaser:"A custom GPT trained on DrFirst's brand voice, so any team can draft on-brand, compliance-aware content.",
+    title:"Custom GPT for Healthcare Brand Consistency",
     tags:["AI","Healthcare AI","Prompt Engineering","GPT"],
     oneLiner:"A custom ChatGPT trained on DrFirst's brand voice, enabling consistent content at scale.",
     image:null /* /images/drfirst-gpt.jpg is not in public/images */, imageAlt:"DrFirst Assistant custom GPT interface",
@@ -220,7 +225,8 @@ export const aiProjects = [
     results:"Team members across the organization produced on-brand content independently, **reducing the marketing bottleneck**. Content review cycles shortened significantly because first drafts arrived pre-aligned. Particularly valuable for the **sales team generating product descriptions and objection-handling content** without waiting for marketing. Demonstrated how AI can be embedded as an operational efficiency tool, not a novelty."
   },
   {
-    id:"braxbot", title:"Conversational AI Chatbot: Braxbot",
+    id:"braxbot", teaser:"A conversational AI designed to make social justice resources easier to reach.",
+    title:"Conversational AI Chatbot: Braxbot",
     tags:["Chatbot","AI","UX","User Research"],
     oneLiner:"A conversational AI designed to make social justice resources accessible to the people who need them most.",
     image:null /* /images/braxbot-chat.png is not in public/images */, imageAlt:"Braxbot conversational interface prototype",
@@ -233,7 +239,8 @@ export const aiProjects = [
     results:"Designed to increase accessibility, enhance community engagement, provide personalized educational content, facilitate safe public conversations on social justice, and **reduce staff workload for routine inquiries**. Demonstrated the potential for conversational AI to serve communities that traditional interfaces often fail, and provided a **replicable model for other mission-driven organizations**."
   },
   {
-    id:"positioning-map", title:"Competitive Positioning Map (Embeddings-Based)",
+    id:"positioning-map", teaser:"Uses text embeddings to map where competitors' messaging overlaps and where the white space is.",
+    title:"Competitive Positioning Map (Embeddings-Based)",
     tags:["AI","Competitive Intelligence","Embeddings","NLP","GTM Strategy"],
     oneLiner:"Uses text embeddings to map how competitors position themselves across messaging, features, and audience. Instead of manually reading landing pages and decks, the system ingests competitor content, generates vector representations, and plots positioning clusters. You can see where messaging overlaps, where gaps exist, and how your own positioning compares — updated automatically as competitors ship new content.",
     image:null,
@@ -245,7 +252,8 @@ export const aiProjects = [
     results:"From an initial set of 5 competitors in the fintech space, the system identified **3 distinct positioning clusters**: trust-focused (2 competitors emphasizing security and compliance), innovation-focused (2 competitors emphasizing AI and automation), and accessibility-focused (1 competitor emphasizing ease of use for non-experts). It flagged that the client's positioning sat directly in the middle of the trust and innovation clusters, creating **ambiguous differentiation**. The system recommended shifting messaging toward the accessibility gap, which was underserved. **Built with:** Python, OpenAI Embeddings API, scikit-learn (clustering), Plotly (visualization), BeautifulSoup (scraping)."
   },
   {
-    id:"content-predictor", title:"Content Performance Predictor",
+    id:"content-predictor", teaser:"Scores draft content against historical performance before it gets published.",
+    title:"Content Performance Predictor",
     tags:["AI","Content Strategy","Predictive Analytics","Machine Learning","Optimization"],
     oneLiner:"Predicts how a piece of content will perform before it's published. The model trains on historical content data — engagement rates, conversion metrics, format, topic, channel, publish timing — and scores draft content against learned patterns. It flags what's likely to underperform and suggests adjustments based on what's historically driven results in similar contexts.",
     image:null,
@@ -256,7 +264,8 @@ export const aiProjects = [
     results:"Tested against 6 months of historical blog content from a SaaS company. The model correctly predicted **top-quartile vs. bottom-quartile performance with 76% accuracy**. It flagged that **how-to content outperformed opinion content by 3x on average**, and that posts published on Tuesday mornings had 40% higher engagement than Friday posts. For a draft titled 'Why We Built This Feature,' the model scored it 34/100 and recommended reframing as 'How to [Achieve Outcome] Using [Feature],' which matched a high-performing title pattern. The system turned content strategy from reactive to predictive. **Built with:** Python, scikit-learn (random forest classifier), pandas (data processing), historical content CSV, predictive scoring API."
   },
   {
-    id:"lead-scoring", title:"Adaptive Lead Scoring Engine (with Feedback Loop)",
+    id:"lead-scoring", teaser:"A lead scoring model that retrains itself every time a deal closes, and flags when it starts drifting.",
+    title:"Adaptive Lead Scoring Engine (with Feedback Loop)",
     tags:["AI","Lead Scoring","Predictive Analytics","Automation","Sales Intelligence"],
     oneLiner:"A lead scoring model that retrains itself every time a deal closes. Feed it historical lead data — company size, industry, contact role, acquisition channel, engagement signals like pages visited, emails opened, content downloaded — along with the outcome. The model learns which attributes predict conversion. Every new closed deal (won or lost) triggers automatic retraining. The system re-evaluates feature weights and updates the model on its own. If enterprise deals start outperforming mid-market, the model catches it. If an acquisition channel stops producing, scores adjust. It also flags drift — surfacing alerts like 'Your model's accuracy has dropped 8% this month — here's what changed in the data.'",
     image:null,
@@ -272,15 +281,15 @@ export const aiProjects = [
    DATA: TIMELINE
    ═══════════════════════════════════════════════ */
 export const timeline = [
-  { role:"Marketing Tech Lead", company:"Flatiron School", period:"Apr 2026 – Present · Remote",
+  { role:"Marketing Tech Lead", company:"Flatiron School", highlights:["Replaced a four-tool registration chain with one calendar-native Apps Script flow", "Closed a 30% registrant-to-attendee data gap with validated Zoom and Customer.io webhooks", "Built a conversational AI flow that qualifies leads and captures applications in-chat", "Tracked Flatiron's visibility in AI answers: 61% mention rate, 35% share of voice", "Classified 165 bot-handled chats with the Claude API, cutting inbound lead noise 20%"], period:"Apr 2026 – Present · Remote",
     desc:"Replaced a four-tool registration chain — Formstack, Zoom, Customer.io, custom middleware — with one calendar-native Apps Script flow: lower cost, zero missed consent. Instrumented registration and attendance with HMAC-validated Zoom and Customer.io webhooks, closing a 30% registrant-to-attendee mismatch and unlocking the show-rate analytics admissions now runs on. Built a conversational AI flow that qualifies leads and captures full applications in-chat, with deterministic field mapping into Formstack and Close and the LLM scoped strictly to scoring. Shipped a five-stage Python pipeline tracking Flatiron's visibility in AI answers: 61% mention rate, 35% share of voice, roughly double the nearest competitor. Classified all 165 bot-handled chat transcripts via the Claude API against a validated failure taxonomy, cutting inbound lead noise 20% and arming sales with real buyer language.", current:true },
-  { role:"Marketing Operations Analyst", note:"First Marketing Hire", company:"Valur", period:"2024 – Feb 2026",
+  { role:"Marketing Operations Analyst", note:"First Marketing Hire", company:"Valur", highlights:["Built the marketing function from zero as the first marketing hire", "Email open rates reached 54.84%; partner calls doubled in one week", "Designed a Claude-powered voice-of-customer pipeline that mines sales calls for objections", "Built lead magnets and nurture sequences that grew top-of-funnel pipeline"], period:"2024 – Feb 2026",
     desc:"Built the marketing function from zero. Email campaigns hitting 54.84% open rate. Doubled partner calls in one week. Designed an autonomous voice-of-customer pipeline using the Claude API that extracts buyer objections and language patterns from sales call transcripts on an ongoing basis, grounding all messaging in real customer language. Built lead magnets and nurture sequences that grew top-of-funnel pipeline." },
-  { role:"Product Marketing & Growth", company:"Yuzi Care", period:"2023 – 2024",
+  { role:"Product Marketing & Growth", company:"Yuzi Care", highlights:["Competitive benchmarking and pricing analysis to shape positioning", "Pre-launch UX and strategy research for the founding team", "46% cold outreach CTR and a 65% LinkedIn engagement lift"], period:"2023 – 2024",
     desc:"Supported early go-to-market planning for an AI-powered postpartum care marketplace. Conducted competitive benchmarking and pricing analysis to inform positioning. Provided UX and pre-launch strategy research that informed the founding team's launch planning. 46% cold outreach CTR, 65% LinkedIn engagement lift." },
-  { role:"Marketing Communications Intern", company:"DrFirst", period:"2023",
+  { role:"Marketing Communications Intern", company:"DrFirst", highlights:["Social strategy for iPrescribe, competitive intelligence and crisis comms planning", "Built a custom GPT on DrFirst's brand guidelines, with compliance guardrails"], period:"2023",
     desc:"Social strategy for iPrescribe, competitive intelligence, crisis comms planning. Built a custom GPT trained on DrFirst's brand guidelines with compliance guardrails and prompt templates for social, blogs, emails, and press releases, enabling org-wide on-brand content production." },
-  { role:"Graduate Marketing Specialist", company:"UW Disability Cultural Center", period:"2022 – 2023",
+  { role:"Graduate Marketing Specialist", company:"UW Disability Cultural Center", highlights:["Technical SEO overhaul with Search Console, Screaming Frog and Yoast", "Unified two WordPress sites into one accessible platform", "Newsletter CTR from 0.1% to 3.8%, helped by AI voice narration that became permanent"], period:"2022 – 2023",
     desc:"Technical SEO overhaul using Google Search Console, Screaming Frog, and Yoast. WordPress redesign unifying two sites. Newsletter CTR from 0.1% to 3.8%. Added AI-generated voice narration to enhance accessibility for the target audience, which became a permanent feature." },
 ];
 

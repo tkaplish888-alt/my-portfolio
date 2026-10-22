@@ -1,1 +1,113 @@
 @import "tailwindcss";
+
+/* Dark mode follows the data-theme attribute on <html> (set by the theme toggle). */
+@custom-variant dark (&:where([data-theme="dark"], [data-theme="dark"] *));
+
+/* ── Design tokens ──────────────────────────────────────────────
+   Sage-oat paper, green-black ink, and three working accents:
+   marigold (primary action), cobalt (links), tomato (live status).
+   Every color is a variable so dark mode is a single swap. */
+:root {
+  --paper: #e8e9e0;
+  --card: #f7f7f2;
+  --sunk: #dfe0d5;
+  --ink: #1f2421;
+  --ink-2: #454c47;
+  --muted: #6b726c;
+  --rule: #c3c6b8;
+  --marigold: #f2a900;
+  --marigold-soft: #fbe6ad;
+  --cobalt: #2b4bd8;
+  --cobalt-soft: #dde3fb;
+  --tomato: #e2462f;
+  --moss: #4f7a3a;
+  --moss-soft: #dfe9d3;
+  --shadow: #1f2421;
+  color-scheme: light;
+}
+
+[data-theme="dark"] {
+  --paper: #1a1d1b;
+  --card: #232724;
+  --sunk: #151816;
+  --ink: #ecede6;
+  --ink-2: #c4c8bf;
+  --muted: #8f968f;
+  --rule: #3a403b;
+  --marigold: #f5b520;
+  --marigold-soft: #3d3215;
+  --cobalt: #8ea2ff;
+  --cobalt-soft: #222a4a;
+  --tomato: #ff6a52;
+  --moss: #9cc283;
+  --moss-soft: #263321;
+  --shadow: #000000;
+  color-scheme: dark;
+}
+
+@theme inline {
+  --color-paper: var(--paper);
+  --color-card: var(--card);
+  --color-sunk: var(--sunk);
+  --color-ink: var(--ink);
+  --color-ink-2: var(--ink-2);
+  --color-muted: var(--muted);
+  --color-rule: var(--rule);
+  --color-marigold: var(--marigold);
+  --color-marigold-soft: var(--marigold-soft);
+  --color-cobalt: var(--cobalt);
+  --color-cobalt-soft: var(--cobalt-soft);
+  --color-tomato: var(--tomato);
+  --color-moss: var(--moss);
+  --color-moss-soft: var(--moss-soft);
+  --font-display: "Bricolage Grotesque Variable", "Bricolage Grotesque", ui-sans-serif, system-ui, sans-serif;
+  --font-sans: "IBM Plex Sans", ui-sans-serif, system-ui, sans-serif;
+  --shadow-hard: 3px 3px 0 0 var(--shadow);
+  --shadow-hard-lg: 5px 5px 0 0 var(--shadow);
+}
+
+html { background: var(--paper); }
+body {
+  background: var(--paper);
+  color: var(--ink);
+  font-family: var(--font-sans);
+  -webkit-font-smoothing: antialiased;
+}
+
+/* Display type: tight, heavy, optical size tuned for headlines */
+.display {
+  font-family: var(--font-display);
+  font-variation-settings: "opsz" 96;
+  letter-spacing: -0.025em;
+  line-height: 1.02;
+}
+
+/* Chunky press button: lifts on hover, presses flat on click */
+.btn {
+  display: inline-flex; align-items: center; gap: 0.5rem;
+  border: 1.5px solid var(--ink);
+  border-radius: 6px;
+  padding: 0.55rem 1rem;
+  font-weight: 600; font-size: 0.875rem;
+  box-shadow: var(--shadow-hard);
+  transition: transform 120ms ease, box-shadow 120ms ease, background-color 120ms ease;
+  cursor: pointer;
+}
+.btn:hover { transform: translate(-1px, -1px); box-shadow: 4px 4px 0 0 var(--shadow); }
+.btn:active { transform: translate(3px, 3px); box-shadow: 0 0 0 0 var(--shadow); }
+
+:focus-visible { outline: 2.5px solid var(--cobalt); outline-offset: 2px; border-radius: 4px; }
+
+/* The signal machine's one orchestrated moment: a scan line while it "runs" */
+@keyframes scan { from { transform: translateX(-100%); } to { transform: translateX(100%); } }
+.scanning::after {
+  content: ""; position: absolute; inset: 0;
+  background: linear-gradient(90deg, transparent, var(--marigold-soft), transparent);
+  animation: scan 700ms ease-in-out;
+}
+@keyframes rise { from { opacity: 0; transform: translateY(6px); } to { opacity: 1; transform: none; } }
+.rise { animation: rise 320ms ease-out both; }
+
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after { animation: none !important; transition: none !important; }
+}
