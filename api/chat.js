@@ -12,11 +12,13 @@
 import Anthropic from "@anthropic-ai/sdk";
 import { site, projects, aiProjects, timeline, education, certifications, references, contentItems, changelog } from "../src/data.js";
 import { persona, availability, personalNotes, projectNotes } from "../src/bot/persona.js";
+import { checkLimits } from "./_ratelimit.js";
 
 const MODEL = "claude-haiku-5-5";
 const MAX_TURNS = 12;          // most recent messages sent to the model
 const MAX_CHARS = 800;         // per visitor message
-const RATE = { max: 20, windowMs: 10 * 60 * 1000 }; // per visitor IP, best effort
+const MAX_ASSISTANT_CHARS = 1500; // per earlier Pip reply (the browser sends history, so it can be forged)
+const MAX_TOTAL_CHARS = 8000;  // whole conversation sent to the model
 
 /* ── knowledge ───────────────────────────────────────────────── */
 const clean = t => String(t || "").replace(/\*\*/g, "").replace(/\s+/g, " ").trim();
@@ -69,14 +71,10 @@ const SECTION_NAMES = { systems: "AI builds", work: "Experience", "case-studies"
 const VISITORS = { hiring: "someone hiring", founder: "a founder", builder: "an engineer or builder" };
 const allIds = new Set([...projects, ...aiProjects].map(p => p.id));
 
-/* ── rate limit (per warm instance; Anthropic + Vercel spend caps are the real backstop) ── */
-const hits = new Map();
-const limited = ip => {
-  const now = Date.now();
-  const recent = (hits.get(ip) || []).filter(t => now - t < RATE.windowMs);
-  recent.push(now);
-  hits.set(ip, recent);
-  return recent.length > RATE.max;
+const LIMIT_REPLIES = {
+  burst: "Pip needs a short breather (pixels overheat). Try again in a few minutes, or email Tonishqa directly: ",
+  visitorDaily: "That's Pip's limit for today. Tonishqa reads email herself, though: ",
+  siteDaily: "Pip has talked to a lot of people today and is clocked out until tomorrow. Email works anytime: ",
 };
 
 const text = (body, status = 200) => new Response(body, { status, headers: { "content-type": "text/plain; charset=utf-8" } });
@@ -91,7 +89,8 @@ export async function POST(request) {
   if (!process.env.ANTHROPIC_API_KEY) return text("Pip is napping right now. Email works: " + site.email, 503);
 
   const ip = (request.headers.get("x-forwarded-for") || "anon").split(",")[0].trim();
-  if (limited(ip)) return text("Pip needs a short break. Try again in a few minutes, or email Tonishqa directly: " + site.email, 429);
+  const hit = await checkLimits(ip);
+  if (hit) return text(LIMIT_REPLIES[hit] + site.email, 429);
 
   let body;
   try { body = await request.json(); } catch { return text("Bad request", 400); }
@@ -99,7 +98,10 @@ export async function POST(request) {
   const messages = (Array.isArray(body?.messages) ? body.messages : [])
     .filter(m => (m.role === "user" || m.role === "assistant") && typeof m.content === "string" && m.content.trim())
     .slice(-MAX_TURNS)
-    .map(m => ({ role: m.role, content: m.content.slice(0, MAX_CHARS) }));
+    .map(m => ({ role: m.role, content: m.content.slice(0, m.role === "user" ? MAX_CHARS : MAX_ASSISTANT_CHARS) }));
+  while (messages.length && messages[0].role !== "user") messages.shift();
+  // Keep the newest turns that fit the overall budget.
+  while (messages.length > 1 && messages.reduce((n, m) => n + m.content.length, 0) > MAX_TOTAL_CHARS) messages.splice(0, 2);
   while (messages.length && messages[0].role !== "user") messages.shift();
   if (!messages.length || messages.at(-1).role !== "user") return text("Bad request", 400);
 
