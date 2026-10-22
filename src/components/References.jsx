@@ -15,7 +15,7 @@ export default function References({ items }) {
   const go = d => { setI((i + d + items.length) % items.length); setFull(false); };
 
   return (
-    <div className="rounded-lg border-[1.5px] border-ink bg-card shadow-hard-lg p-6 md:p-10">
+    <div className="rounded-lg border-[1.5px] border-edge bg-card shadow-hard-lg p-6 md:p-10">
       <figure key={r.name} className="rise">
         <blockquote className="display text-[1.45rem] md:text-[1.9rem] font-semibold leading-[1.2] max-w-[34ch]">
           “{rest && !full ? `${lead.replace(/[.!?]$/, "")}…` : lead}”
@@ -38,11 +38,11 @@ export default function References({ items }) {
 
       <div className="mt-8 flex items-center justify-between">
         <div className="flex gap-1.5" aria-hidden>
-          {items.map((_, k) => <span key={k} className={`h-2 rounded-full border border-ink transition-all ${k === i ? "w-6 bg-marigold" : "w-2 bg-paper"}`} />)}
+          {items.map((_, k) => <span key={k} className={`h-2 rounded-full border border-edge transition-all ${k === i ? "w-6 bg-marigold" : "w-2 bg-paper"}`} />)}
         </div>
         <div className="flex gap-2">
           <button onClick={() => go(-1)} aria-label="Previous note" className="btn bg-card text-ink !px-2.5"><ArrowLeft size={16} /></button>
-          <button onClick={() => go(1)} aria-label="Next note" className="btn bg-marigold text-[#1f2421] !px-2.5"><ArrowRight size={16} /></button>
+          <button onClick={() => go(1)} aria-label="Next note" className="btn bg-marigold text-on-accent !px-2.5"><ArrowRight size={16} /></button>
         </div>
       </div>
     </div>

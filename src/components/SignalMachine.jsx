@@ -44,12 +44,12 @@ export default function SignalMachine({ onOpen }) {
   const run = RUNS[active];
 
   return (
-    <div className="rounded-[10px] border-[1.5px] border-ink bg-card shadow-hard-lg overflow-hidden">
+    <div className="rounded-[10px] border-[1.5px] border-edge bg-card shadow-hard-lg overflow-hidden">
       {/* window bar */}
-      <div className="flex items-center gap-2 px-4 py-2.5 border-b-[1.5px] border-ink bg-marigold">
-        <span className="w-2.5 h-2.5 rounded-full border-[1.5px] border-ink bg-card" />
-        <span className="w-2.5 h-2.5 rounded-full border-[1.5px] border-ink bg-card" />
-        <span className="ml-1 text-[13px] font-semibold text-[#1f2421]">Pick an input. See what my systems make of it.</span>
+      <div className="flex items-center gap-2 px-4 py-2.5 border-b-[1.5px] border-edge bg-marigold">
+        <span className="w-2.5 h-2.5 rounded-full border-[1.5px] border-edge bg-card" />
+        <span className="w-2.5 h-2.5 rounded-full border-[1.5px] border-edge bg-card" />
+        <span className="ml-1 text-[13px] font-semibold text-on-accent">Feed it something messy. See what comes out.</span>
       </div>
 
       <div className="grid md:grid-cols-[1fr_auto_1.25fr]">
@@ -60,7 +60,7 @@ export default function SignalMachine({ onOpen }) {
             return (
               <button key={r.id} role="tab" aria-selected={on} onClick={() => pick(i)}
                 className={`flex items-center gap-2.5 text-left text-[14px] font-medium px-3 py-2.5 rounded-md border-[1.5px] transition-colors cursor-pointer
-                  ${on ? "border-ink bg-ink text-paper" : "border-rule bg-paper text-ink hover:border-ink"}`}>
+                  ${on ? "border-edge bg-ink text-paper" : "border-rule bg-paper text-ink hover:border-edge"}`}>
                 <r.icon size={16} className="shrink-0" aria-hidden />
                 {r.input}
               </button>

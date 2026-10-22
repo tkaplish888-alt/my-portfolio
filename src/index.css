@@ -8,40 +8,46 @@
    marigold (primary action), cobalt (links), tomato (live status).
    Every color is a variable so dark mode is a single swap. */
 :root {
-  --paper: #e8e9e0;
-  --card: #f7f7f2;
-  --sunk: #dfe0d5;
-  --ink: #1f2421;
-  --ink-2: #454c47;
-  --muted: #6b726c;
-  --rule: #c3c6b8;
-  --marigold: #f2a900;
-  --marigold-soft: #fbe6ad;
-  --cobalt: #2b4bd8;
-  --cobalt-soft: #dde3fb;
-  --tomato: #e2462f;
+  /* Softened for comfort, still WCAG AA: body text 10:1, secondary 6:1,
+     small muted text 4.5:1+, borders and controls 3:1+. */
+  --paper: #e7e6dc;
+  --card: #f2f1ea;
+  --sunk: #dddcd1;
+  --ink: #2d322f;
+  --ink-2: #4f5551;
+  --muted: #5b615c;
+  --rule: #c4c4b6;
+  --edge: #565c57;
+  --marigold: #e6b04a;
+  --marigold-soft: #f3e2b8;
+  --cobalt: #2f49b8;
+  --cobalt-soft: #dfe3f3;
+  --tomato: #c8432f;
   --moss: #4f7a3a;
-  --moss-soft: #dfe9d3;
-  --shadow: #1f2421;
+  --moss-soft: #e0e7d6;
+  --shadow: #565c57;
+  --on-accent: #2d322f;
   color-scheme: light;
 }
 
 [data-theme="dark"] {
-  --paper: #1a1d1b;
-  --card: #232724;
-  --sunk: #151816;
-  --ink: #ecede6;
-  --ink-2: #c4c8bf;
-  --muted: #8f968f;
-  --rule: #3a403b;
-  --marigold: #f5b520;
-  --marigold-soft: #3d3215;
-  --cobalt: #8ea2ff;
-  --cobalt-soft: #222a4a;
-  --tomato: #ff6a52;
+  --paper: #1d201e;
+  --card: #262a27;
+  --sunk: #181b19;
+  --ink: #d9dbd3;
+  --ink-2: #bcc0b8;
+  --muted: #979d96;
+  --rule: #3b413c;
+  --edge: #7d847d;
+  --marigold: #d9a646;
+  --marigold-soft: #3a311c;
+  --cobalt: #9aabf5;
+  --cobalt-soft: #262c45;
+  --tomato: #ef7a66;
   --moss: #9cc283;
-  --moss-soft: #263321;
-  --shadow: #000000;
+  --moss-soft: #283224;
+  --shadow: #0e100f;
+  --on-accent: #2d322f;
   color-scheme: dark;
 }
 
@@ -53,6 +59,8 @@
   --color-ink-2: var(--ink-2);
   --color-muted: var(--muted);
   --color-rule: var(--rule);
+  --color-edge: var(--edge);
+  --color-on-accent: var(--on-accent);
   --color-marigold: var(--marigold);
   --color-marigold-soft: var(--marigold-soft);
   --color-cobalt: var(--cobalt);
@@ -85,7 +93,7 @@ body {
 /* Chunky press button: lifts on hover, presses flat on click */
 .btn {
   display: inline-flex; align-items: center; gap: 0.5rem;
-  border: 1.5px solid var(--ink);
+  border: 1.5px solid var(--edge);
   border-radius: 6px;
   padding: 0.55rem 1rem;
   font-weight: 600; font-size: 0.875rem;

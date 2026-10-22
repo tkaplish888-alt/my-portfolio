@@ -28,7 +28,7 @@ export default function DeepDive({ project: p, onBack }) {
         {(p.caseStudyUrl || p.secondaryUrl) && (
           <div className="flex flex-wrap gap-3 mt-6">
             {p.caseStudyUrl && (
-              <a href={p.caseStudyUrl} target="_blank" rel="noopener noreferrer" className="btn bg-marigold text-[#1f2421]">
+              <a href={p.caseStudyUrl} target="_blank" rel="noopener noreferrer" className="btn bg-marigold text-on-accent">
                 {p.caseStudyLabel || "View case study"} <ArrowUpRight size={15} aria-hidden />
               </a>
             )}
@@ -41,7 +41,7 @@ export default function DeepDive({ project: p, onBack }) {
         )}
 
         {p.metrics && (
-          <div className="mt-8 rounded-lg border-[1.5px] border-ink bg-card shadow-hard p-5 grid grid-cols-2 md:grid-cols-4 gap-5">
+          <div className="mt-8 rounded-lg border-[1.5px] border-edge bg-card shadow-hard p-5 grid grid-cols-2 md:grid-cols-4 gap-5">
             {p.metrics.map(m => <Metric key={m.l} v={m.v} l={m.l} size="lg" />)}
           </div>
         )}
@@ -54,10 +54,10 @@ export default function DeepDive({ project: p, onBack }) {
             <div className={`grid gap-5 ${p.deepDiveImages.length > 1 ? "md:grid-cols-2" : ""}`}>
               {p.deepDiveImages.map(img => (
                 <a key={img.src} href={img.url || img.src} target="_blank" rel="noopener noreferrer"
-                  className="block rounded-lg border-[1.5px] border-ink bg-card shadow-hard overflow-hidden hover:shadow-hard-lg transition-shadow">
+                  className="block rounded-lg border-[1.5px] border-edge bg-card shadow-hard overflow-hidden hover:shadow-hard-lg transition-shadow">
                   <img src={img.src} alt={img.alt} className="w-full object-contain bg-paper" />
                   {(img.caption || img.label) && (
-                    <span className="flex items-center justify-between gap-3 px-4 py-3 border-t-[1.5px] border-ink text-[13.5px]">
+                    <span className="flex items-center justify-between gap-3 px-4 py-3 border-t-[1.5px] border-edge text-[13.5px]">
                       <span className="text-ink-2">{img.caption}</span>
                       {img.label && <span className="inline-flex items-center gap-1 font-semibold text-cobalt shrink-0">{img.label} <ArrowUpRight size={13} aria-hidden /></span>}
                     </span>
@@ -74,12 +74,12 @@ export default function DeepDive({ project: p, onBack }) {
               {parts.map(([k, label], i) => (
                 <button key={k} role="tab" id={`tab-${k}`} aria-controls={`panel-${k}`} aria-selected={i === tab} onClick={() => setTab(i)}
                   className={`shrink-0 text-[14px] font-semibold px-4 py-2 rounded-t-md border-[1.5px] border-b-0 cursor-pointer
-                    ${i === tab ? "bg-card border-ink" : "bg-transparent border-transparent text-ink-2 hover:text-ink"}`}>
+                    ${i === tab ? "bg-card border-edge" : "bg-transparent border-transparent text-ink-2 hover:text-ink"}`}>
                   {label}
                 </button>
               ))}
             </div>
-            <div className="rounded-b-lg rounded-tr-lg border-[1.5px] border-ink bg-card shadow-hard p-6 md:p-8 -mt-[1.5px]">
+            <div className="rounded-b-lg rounded-tr-lg border-[1.5px] border-edge bg-card shadow-hard p-6 md:p-8 -mt-[1.5px]">
               {parts.map(([k], i) => (
                 <div key={k} id={`panel-${k}`} role="tabpanel" aria-labelledby={`tab-${k}`} hidden={i !== tab}>
                   <p className="text-[16px] leading-[1.75] text-ink-2 max-w-[68ch]"><RichText text={p[k]} /></p>

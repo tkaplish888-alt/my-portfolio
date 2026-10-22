@@ -14,8 +14,8 @@ export default function Experience({ items }) {
           return (
             <button key={t.company} role="tab" aria-selected={on} onClick={() => setActive(i)}
               className={`relative shrink-0 text-left md:pl-7 md:py-3 px-3 py-2 rounded-md md:rounded-none border-[1.5px] md:border-0 cursor-pointer
-                ${on ? "border-ink bg-ink text-paper md:bg-transparent md:text-ink" : "border-rule md:text-ink-2 hover:text-ink"}`}>
-              <span className={`hidden md:block absolute left-0 top-[1.15rem] w-[15px] h-[15px] rounded-full border-[1.5px] border-ink
+                ${on ? "border-edge bg-ink text-paper md:bg-transparent md:text-ink" : "border-rule md:text-ink-2 hover:text-ink"}`}>
+              <span className={`hidden md:block absolute left-0 top-[1.15rem] w-[15px] h-[15px] rounded-full border-[1.5px] border-edge
                 ${on ? "bg-marigold" : "bg-paper"}`} aria-hidden />
               <span className={`block text-[15px] ${on ? "font-semibold" : "font-medium"}`}>{t.company}</span>
               <span className={`block text-[12.5px] ${on ? "opacity-75 md:opacity-100 md:text-muted" : "text-muted"}`}>{t.period.split(" · ")[0]}</span>
@@ -24,7 +24,7 @@ export default function Experience({ items }) {
         })}
       </div>
 
-      <div key={item.company} role="tabpanel" className="rise rounded-lg border-[1.5px] border-ink bg-card shadow-hard p-6 md:p-7">
+      <div key={item.company} role="tabpanel" className="rise rounded-lg border-[1.5px] border-edge bg-card shadow-hard p-6 md:p-7">
         <div className="flex flex-wrap items-center gap-2">
           {item.current && (
             <span className="inline-flex items-center gap-1.5 text-[12px] font-semibold px-2 py-0.5 rounded-full bg-paper border border-rule">

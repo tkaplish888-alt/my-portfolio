@@ -15,7 +15,7 @@ export default function ContentShelf({ items }) {
           return (
             <button key={t} onClick={() => setType(t)} aria-pressed={on}
               className={`text-[13.5px] font-medium px-3 py-1.5 rounded-full border-[1.5px] cursor-pointer
-                ${on ? "bg-ink text-paper border-ink" : "bg-card border-rule hover:border-ink"}`}>
+                ${on ? "bg-ink text-paper border-edge" : "bg-card border-rule hover:border-edge"}`}>
               {t === "all" ? "Everything" : TYPES[t][0]}
             </button>
           );

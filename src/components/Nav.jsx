@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import { Menu, X, Sun, Moon } from "lucide-react";
 
 const LINKS = [
-  ["systems", "Systems"],
+  ["systems", "AI builds"],
   ["work", "Experience"],
   ["case-studies", "Case studies"],
   ["references", "References"],
@@ -23,7 +23,7 @@ export default function Nav({ onHome, onSection, onToggleTheme }) {
   const go = id => { onSection(id); setOpen(false); };
 
   return (
-    <nav className={`fixed top-0 inset-x-0 z-50 transition-colors ${scrolled || open ? "bg-paper/95 backdrop-blur border-b-[1.5px] border-ink" : "border-b-[1.5px] border-transparent"}`}>
+    <nav className={`fixed top-0 inset-x-0 z-50 transition-colors ${scrolled || open ? "bg-paper/95 backdrop-blur border-b-[1.5px] border-edge" : "border-b-[1.5px] border-transparent"}`}>
       <div className="max-w-[1040px] mx-auto px-5 md:px-8 h-14 flex items-center justify-between">
         <button onClick={onHome} className="display text-xl font-extrabold cursor-pointer" aria-label="Back to top">
           tonishqa<span className="text-marigold">.</span>
@@ -39,7 +39,7 @@ export default function Nav({ onHome, onSection, onToggleTheme }) {
             ))}
           </div>
           <button onClick={onToggleTheme} aria-label="Toggle dark mode"
-            className="p-2 rounded-md border-[1.5px] border-ink bg-card hover:bg-marigold-soft cursor-pointer">
+            className="p-2 rounded-md border-[1.5px] border-edge bg-card hover:bg-marigold-soft cursor-pointer">
             <Sun size={16} className="hidden dark:block" aria-hidden />
             <Moon size={16} className="dark:hidden" aria-hidden />
           </button>

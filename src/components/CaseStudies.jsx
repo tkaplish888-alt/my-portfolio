@@ -7,7 +7,7 @@ const Row = ({ p, onOpen }) => {
   const [open, setOpen] = useState(false);
   const lead = p.metrics?.[0];
   return (
-    <li className="border-b-[1.5px] border-ink last:border-0">
+    <li className="border-b-[1.5px] border-edge last:border-0">
       <button onClick={() => setOpen(o => !o)} aria-expanded={open}
         className={`w-full text-left grid grid-cols-[1fr_auto] md:grid-cols-[1fr_140px_auto] items-center gap-4 px-5 py-4 cursor-pointer transition-colors ${open ? "bg-marigold-soft" : "hover:bg-sunk"}`}>
         <span>
@@ -47,7 +47,7 @@ const Row = ({ p, onOpen }) => {
 
 export default function CaseStudies({ items, onOpen }) {
   return (
-    <ul className="rounded-lg border-[1.5px] border-ink bg-card shadow-hard overflow-hidden">
+    <ul className="rounded-lg border-[1.5px] border-edge bg-card shadow-hard overflow-hidden">
       {items.map(p => <Row key={p.id} p={p} onOpen={onOpen} />)}
     </ul>
   );

@@ -92,20 +92,20 @@ export default function Portfolio({ initialPath = "/" }) {
       <header className="px-5 md:px-8 pt-28 md:pt-36 pb-8">
         <div className="max-w-[1040px] mx-auto">
           <div className="flex items-center gap-3">
-            <img src="/profile.jpg" alt={site.imageAlt} className="w-12 h-12 rounded-full object-cover border-[1.5px] border-ink" />
+            <img src="/profile.jpg" alt={site.imageAlt} className="w-12 h-12 rounded-full object-cover border-[1.5px] border-edge" />
             <div className="text-[14px] leading-tight">
               <div className="font-semibold">{site.name}</div>
-              <div className="text-muted">Marketing systems, Seattle</div>
+              <div className="text-muted">Marketer who builds, Seattle</div>
             </div>
           </div>
           <h1 className="display text-[2.6rem] sm:text-[3.6rem] md:text-[4.6rem] font-extrabold mt-7 max-w-[15ch]">
-            Marketing systems anchored in real customer behavior.
+            I build marketing machines that actually listen.
           </h1>
           <p className="text-[17px] md:text-[18px] leading-relaxed text-ink-2 mt-6 max-w-[58ch]">
-            I build AI-powered marketing infrastructure. Sales calls become positioning, competitor sites become alerts, and CRM notes become next steps, automatically.
+            Part marketer, part tinkerer. I wire AI into the messy places customers talk, like sales calls, competitor sites and CRM notes, and turn what they say into what a team does next.
           </p>
           <div className="flex flex-wrap gap-3 mt-8">
-            <a href={RESUME_URL} target="_blank" rel="noopener noreferrer" className="btn bg-marigold text-[#1f2421]"><FileText size={15} aria-hidden /> Resume</a>
+            <a href={RESUME_URL} target="_blank" rel="noopener noreferrer" className="btn bg-marigold text-on-accent"><FileText size={15} aria-hidden /> Resume</a>
             <a href={site.links.calendly} target="_blank" rel="noopener noreferrer" className="btn bg-card text-ink"><Coffee size={15} aria-hidden /> Book a coffee chat</a>
             <a href={site.links.linkedin} target="_blank" rel="noopener noreferrer" className="btn bg-card text-ink !px-3" aria-label="LinkedIn"><Linkedin size={16} /></a>
             <a href={site.links.github} target="_blank" rel="noopener noreferrer" className="btn bg-card text-ink !px-3" aria-label="GitHub"><Github size={16} /></a>
@@ -123,46 +123,47 @@ export default function Portfolio({ initialPath = "/" }) {
       <Section id="about">
         <div className="grid md:grid-cols-[1.2fr_1fr] gap-10 md:gap-16">
           <div>
-            <SectionHead title="I entered marketing through frameworks, not tactics." />
+            <SectionHead title="Frameworks first. Then I start tinkering." />
             <div className="space-y-4 text-[16px] leading-[1.7] text-ink-2 max-w-[60ch]">
-              <p>I was trained in how people construct meaning and make decisions. So I treat every campaign as a hypothesis about how people decide, and every conversion problem as a friction problem.</p>
-              <p>AI handles the pattern recognition. I handle the meaning-making. Donald Miller says the customer is the hero and the brand is the guide. I build the systems that make sure the guide is actually listening.</p>
+              <p>I studied how people make meaning and make decisions, long before I touched a CRM. So every campaign I run is a hypothesis about how people decide, and every conversion problem is a friction problem waiting to be found.</p>
+              <p>My favorite way to work: notice something annoying, build a scrappy version over a weekend, and keep the parts that hold up. AI handles the pattern recognition. I handle the meaning-making.</p>
+              <p>Donald Miller says the customer is the hero and the brand is the guide. I build the tools that make sure the guide is actually listening.</p>
             </div>
           </div>
           <div className="md:pt-3">
-            <h3 className="text-[14px] font-semibold text-muted mb-3">What I work with</h3>
+            <h3 className="text-[14px] font-semibold text-muted mb-3">In my toolbox</h3>
             <ul className="flex flex-wrap gap-2">
-              {TOOLKIT.map(t => <li key={t} className="text-[13.5px] font-medium px-3 py-1.5 rounded-full border-[1.5px] border-ink bg-card">{t}</li>)}
+              {TOOLKIT.map(t => <li key={t} className="text-[13.5px] font-medium px-3 py-1.5 rounded-full border-[1.5px] border-edge bg-card">{t}</li>)}
             </ul>
           </div>
         </div>
       </Section>
 
       {/* AI SYSTEMS */}
-      <Section id="systems" className="bg-sunk border-y-[1.5px] border-ink">
-        <SectionHead title="Systems I've built">
-          Infrastructure where AI does the heavy lifting and people make the calls. Open any card for the numbers.
+      <Section id="systems" className="bg-sunk border-y-[1.5px] border-edge">
+        <SectionHead title="Things I've built with AI">
+          Most of these started as a question I couldn't stop poking at. AI does the heavy lifting, people make the calls. Open any card for the numbers.
         </SectionHead>
         <SystemsGrid items={aiProjects} onOpen={openDeepDive} />
       </Section>
 
       {/* EXPERIENCE */}
       <Section id="work">
-        <SectionHead title="Where I've done it" />
+        <SectionHead title="Where I've shipped" />
         <Experience items={timeline} />
       </Section>
 
       {/* CASE STUDIES */}
       <Section id="case-studies" className="pt-0 md:pt-4">
-        <SectionHead title="Marketing and GTM case studies">
-          Campaigns, research and positioning work from startups, nonprofits and school projects.
+        <SectionHead title="The marketing side">
+          Before the pipelines came the fundamentals: campaigns, research and positioning for startups, nonprofits and a few class projects.
         </SectionHead>
         <CaseStudies items={projects} onOpen={openDeepDive} />
       </Section>
 
       {/* REFERENCES */}
-      <Section id="references" className="bg-sunk border-y-[1.5px] border-ink">
-        <SectionHead title="What colleagues say" />
+      <Section id="references" className="bg-sunk border-y-[1.5px] border-edge">
+        <SectionHead title="What teammates say" />
         <References items={references} />
       </Section>
 
@@ -177,7 +178,7 @@ export default function Portfolio({ initialPath = "/" }) {
         <SectionHead title="Education" />
         <ul className="grid md:grid-cols-3 gap-5">
           {education.map(ed => (
-            <li key={ed.degree} className="rounded-lg border-[1.5px] border-ink bg-card p-5">
+            <li key={ed.degree} className="rounded-lg border-[1.5px] border-edge bg-card p-5">
               <div className="text-[13px] text-muted">{ed.period}</div>
               <h3 className="font-semibold text-[15.5px] leading-snug mt-1">{ed.degree}</h3>
               <p className="text-[14px] text-ink-2 mt-1">{ed.school}</p>
@@ -193,13 +194,13 @@ export default function Portfolio({ initialPath = "/" }) {
 
       {/* CONTACT */}
       <Section id="contact" className="pt-0 md:pt-0">
-        <div className="rounded-[10px] border-[1.5px] border-ink bg-marigold shadow-hard-lg p-7 md:p-12 text-[#1f2421]">
-          <h2 className="display text-[2.2rem] md:text-[3.2rem] font-extrabold max-w-[16ch]">If something here resonated, let's talk.</h2>
-          <p className="text-[16px] leading-relaxed mt-4 max-w-[52ch]">I'm always interested in opportunities at the intersection of marketing, AI and user-centered growth.</p>
+        <div className="rounded-[10px] border-[1.5px] border-edge bg-marigold shadow-hard-lg p-7 md:p-12 text-on-accent">
+          <h2 className="display text-[2.2rem] md:text-[3.2rem] font-extrabold max-w-[16ch]">Got a messy marketing problem? I like those.</h2>
+          <p className="text-[16px] leading-relaxed mt-4 max-w-[52ch]">I'm always up for talking about marketing, AI and the experiments in between. Especially if you're building something early.</p>
           <div className="flex flex-wrap gap-3 mt-7">
-            <a href={`mailto:${site.email}`} className="btn bg-[#1f2421] text-[#f7f7f2] border-[#1f2421]"><Mail size={15} aria-hidden /> {site.email}</a>
-            <a href={site.links.calendly} target="_blank" rel="noopener noreferrer" className="btn bg-[#f7f7f2] text-[#1f2421] border-[#1f2421]"><Coffee size={15} aria-hidden /> Book a coffee chat</a>
-            <a href={site.links.linkedin} target="_blank" rel="noopener noreferrer" className="btn bg-[#f7f7f2] text-[#1f2421] border-[#1f2421]"><Linkedin size={15} aria-hidden /> LinkedIn</a>
+            <a href={`mailto:${site.email}`} className="btn bg-ink text-paper border-ink"><Mail size={15} aria-hidden /> {site.email}</a>
+            <a href={site.links.calendly} target="_blank" rel="noopener noreferrer" className="btn bg-card text-ink"><Coffee size={15} aria-hidden /> Book a coffee chat</a>
+            <a href={site.links.linkedin} target="_blank" rel="noopener noreferrer" className="btn bg-card text-ink"><Linkedin size={15} aria-hidden /> LinkedIn</a>
           </div>
           <p className="flex items-center gap-1.5 text-[13.5px] mt-6"><MapPin size={14} aria-hidden /> {site.location.city}, Washington</p>
         </div>
@@ -207,11 +208,11 @@ export default function Portfolio({ initialPath = "/" }) {
 
       {/* BUILD LOG */}
       <Section id="build-log" className="pt-0 md:pt-0">
-        <details className="group rounded-lg border-[1.5px] border-ink bg-card">
+        <details className="group rounded-lg border-[1.5px] border-edge bg-card">
           <summary className="flex items-center justify-between gap-4 p-5 cursor-pointer list-none">
             <span>
               <span className="block display text-xl font-bold">How this site was built</span>
-              <span className="block text-[14px] text-muted mt-0.5">Directed by me, written by Claude.</span>
+              <span className="block text-[14px] text-muted mt-0.5">Directed by me, written by Claude. Yes, really.</span>
             </span>
             <ChevronDown size={18} className="group-open:rotate-180 transition-transform" aria-hidden />
           </summary>
@@ -223,7 +224,7 @@ export default function Portfolio({ initialPath = "/" }) {
         </details>
       </Section>
 
-      <footer className="px-5 md:px-8 py-8 border-t-[1.5px] border-ink">
+      <footer className="px-5 md:px-8 py-8 border-t-[1.5px] border-edge">
         <div className="max-w-[1040px] mx-auto flex flex-col sm:flex-row justify-between gap-2 text-[13.5px] text-muted">
           <span>© 2026 {site.name}</span>
           <span>Built with Claude Code</span>

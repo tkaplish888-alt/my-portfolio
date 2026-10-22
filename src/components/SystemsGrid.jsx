@@ -16,12 +16,12 @@ const SystemCard = ({ p, onOpen }) => {
   const github = p.caseStudyUrl?.includes("github.com") ? p.caseStudyUrl : null;
   const panelId = `sys-${p.id}`;
   return (
-    <article className={`rounded-lg border-[1.5px] border-ink bg-card transition-shadow ${open ? "shadow-hard-lg" : "shadow-hard"}`}>
+    <article className={`rounded-lg border-[1.5px] border-edge bg-card transition-shadow ${open ? "shadow-hard-lg" : "shadow-hard"}`}>
       <button onClick={() => setOpen(o => !o)} aria-expanded={open} aria-controls={panelId}
         className="w-full text-left p-5 cursor-pointer">
         <div className="flex items-start justify-between gap-4">
           <h3 className="display text-[1.3rem] font-bold leading-tight">{p.title}</h3>
-          <span className={`shrink-0 mt-0.5 grid place-items-center w-7 h-7 rounded-full border-[1.5px] border-ink transition-transform ${open ? "rotate-45 bg-marigold" : "bg-paper"}`}>
+          <span className={`shrink-0 mt-0.5 grid place-items-center w-7 h-7 rounded-full border-[1.5px] border-edge transition-transform ${open ? "rotate-45 bg-marigold" : "bg-paper"}`}>
             <Plus size={15} aria-hidden />
           </span>
         </div>
@@ -34,7 +34,7 @@ const SystemCard = ({ p, onOpen }) => {
             {p.metrics.slice(0, 4).map(m => <Metric key={m.l} v={m.v} l={m.l} />)}
           </div>
           <div className="flex flex-wrap gap-3 mt-5">
-            <button onClick={() => onOpen(p.id)} className="btn bg-marigold text-[#1f2421]">Read the case study</button>
+            <button onClick={() => onOpen(p.id)} className="btn bg-marigold text-on-accent">Read the case study</button>
             {github && (
               <a href={github} target="_blank" rel="noopener noreferrer" className="btn bg-card text-ink">
                 <Github size={15} aria-hidden /> Code
@@ -59,7 +59,7 @@ export default function SystemsGrid({ items, onOpen }) {
           return (
             <button key={label} onClick={() => setFilter(i)} aria-pressed={on}
               className={`text-[13.5px] font-medium px-3 py-1.5 rounded-full border-[1.5px] cursor-pointer transition-colors
-                ${on ? "bg-ink text-paper border-ink" : "bg-card border-rule hover:border-ink"}`}>
+                ${on ? "bg-ink text-paper border-edge" : "bg-card border-rule hover:border-edge"}`}>
               {label} <span className={on ? "opacity-70" : "text-muted"}>{count}</span>
             </button>
           );
