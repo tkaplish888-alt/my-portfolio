@@ -116,34 +116,31 @@ body {
 @keyframes rise { from { opacity: 0; transform: translateY(6px); } to { opacity: 1; transform: none; } }
 .rise { animation: rise 320ms ease-out both; }
 
-/* ── Pip, the mascot ─────────────────────────────────────────── */
-.pip * { transform-box: fill-box; }
-.pip-body { animation: pip-bob 3.2s ease-in-out infinite; transform-origin: 50% 100%; }
-.pip-eyes ellipse, .pip-eyes circle { transform-origin: center; animation: pip-blink 4.5s infinite; }
-.pip-ear { transition: transform 260ms cubic-bezier(.3,1.6,.5,1); }
-.pip-ear--l { transform-origin: 100% 100%; }
-.pip-ear--r { transform-origin: 0% 100%; }
-.pip-steam { opacity: 0; }
-.pip-lid { transform-origin: 50% 100%; }
-.pip-cheek { transition: opacity 200ms; opacity: .55; }
+/* ── Pip, the pixel portrait ─────────────────────────────────────
+   Frames snap (steps) like real pixel animation. Face only, no body motion. */
+.pxa-g { opacity: 0; }
+.pxa .pxa-mi, .pxa .pxa-bn { opacity: 1; }
+.pxa--idle .pxa-eo, .pxa--thinking .pxa-eo, .pxa--talking .pxa-eo { opacity: 1; }
+.pxa--idle .pxa-eo { animation: pxa-eo 7s steps(1) infinite; }
+.pxa--idle .pxa-es { animation: pxa-es 7s steps(1) infinite; }
+.pxa--idle .pxa-iris { animation: pxa-side 9s steps(1) infinite; }
+.pxa--idle .pxa-bR { animation: pxa-raise 9s steps(1) infinite; }
+.pxa--listening .pxa-ew, .pxa--listening .pxa-bu { opacity: 1; }
+.pxa--listening .pxa-bn { opacity: 0; }
+.pxa--thinking .pxa-iris { transform: translate(1px, -1px); }
+.pxa--thinking .pxa-td { opacity: 1; }
+.pxa--thinking .pxa-td rect { animation: pxa-dt 1.4s steps(1) infinite; }
+.pxa--thinking .pxa-td rect:nth-child(2) { animation-delay: .35s; }
+.pxa--thinking .pxa-td rect:nth-child(3) { animation-delay: .7s; }
+.pxa--talking .pxa-mo { animation: pxa-mo .36s steps(1) infinite; }
+.pxa--happy .pxa-eh, .pxa--happy .pxa-mc, .pxa--happy .pxa-bl { opacity: 1; }
 
-.pip--listening .pip-ear--l { transform: rotate(14deg) translateY(-2px); }
-.pip--listening .pip-ear--r { transform: rotate(-14deg) translateY(-2px); }
-.pip--thinking .pip-steam { opacity: 1; }
-.pip--thinking .pip-steam circle { animation: pip-steam 1.4s ease-out infinite; }
-.pip--thinking .pip-steam circle:nth-child(2) { animation-delay: .25s; }
-.pip--thinking .pip-steam circle:nth-child(3) { animation-delay: .5s; }
-.pip--talking .pip-lid { animation: pip-lid .5s ease-in-out infinite; }
-.pip--talking .pip-mouth { animation: pip-talk .32s ease-in-out infinite; transform-origin: center; }
-.pip--happy .pip-cheek { opacity: .9; }
-.pip--happy .pip-body { animation: pip-hop .6s ease-out 1; }
-
-@keyframes pip-bob { 0%,100% { transform: translateY(0); } 50% { transform: translateY(-1.5px); } }
-@keyframes pip-blink { 0%,94%,100% { transform: scaleY(1); } 97% { transform: scaleY(.1); } }
-@keyframes pip-steam { from { transform: translate(-6px, 10px) scale(.4); opacity: 0; } 30% { opacity: 1; } to { transform: translate(0, -4px) scale(1.1); opacity: 0; } }
-@keyframes pip-lid { 0%,100% { transform: translateY(0) rotate(0); } 50% { transform: translateY(-3px) rotate(-4deg); } }
-@keyframes pip-talk { 0%,100% { transform: scaleY(1); } 50% { transform: scaleY(1.9); } }
-@keyframes pip-hop { 0% { transform: translateY(0); } 40% { transform: translateY(-6px); } 100% { transform: translateY(0); } }
+@keyframes pxa-eo { 0% { opacity: 1; } 40% { opacity: 0; } 42% { opacity: 1; } }
+@keyframes pxa-es { 0% { opacity: 0; } 40% { opacity: 1; } 42% { opacity: 0; } }
+@keyframes pxa-side { 0% { transform: none; } 28% { transform: translate(-1px, 0); } 46% { transform: none; } 52% { transform: translate(1px, 0); } 70% { transform: none; } }
+@keyframes pxa-raise { 0% { transform: none; } 54% { transform: translate(0, -1px); } 70% { transform: none; } }
+@keyframes pxa-dt { 0% { opacity: 1; } 50% { opacity: .15; } }
+@keyframes pxa-mo { 0% { opacity: 1; } 50% { opacity: 0; } }
 
 @media (prefers-reduced-motion: reduce) {
   *, *::before, *::after { animation: none !important; transition: none !important; }

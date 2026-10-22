@@ -122,7 +122,7 @@ export default function AskPip({ projectId, visitor, onOpenProject, onGo }) {
       setMood("happy");
       happyTimer.current = setTimeout(() => setMood("idle"), 1400);
     } catch {
-      setMessages(m => [...m.slice(0, -1), { role: "assistant", content: `Pip can't reach its kettle right now. You can email Tonishqa at ${site.email}. [[link:email]]` }]);
+      setMessages(m => [...m.slice(0, -1), { role: "assistant", content: `Pip can't connect right now. You can email Tonishqa at ${site.email}. [[link:email]]` }]);
       setMood("idle");
     } finally {
       setBusy(false);
@@ -180,10 +180,10 @@ export default function AskPip({ projectId, visitor, onOpenProject, onGo }) {
         <section role="dialog" aria-label="Chat with Pip"
           className="rise fixed z-50 inset-x-2 bottom-2 md:inset-x-auto md:right-5 md:bottom-5 md:w-[400px] h-[min(620px,calc(100dvh-5rem))] flex flex-col rounded-[12px] border-[1.5px] border-edge bg-card shadow-hard-lg overflow-hidden">
           <header className="flex items-center gap-3 pl-3 pr-2 py-2 border-b-[1.5px] border-edge bg-marigold text-on-accent">
-            <Pip mood={typingMood || mood} size={52} title={`Pip is ${typingMood || mood}`} />
+            <Pip mood={typingMood || mood} size={52} title={`Pip is ${typingMood || mood}`} className="border-[1.5px] border-edge" />
             <div className="flex-1 leading-tight">
               <div className="display text-lg font-bold">Pip</div>
-              <div className="text-[12.5px]">{busy ? (mood === "thinking" ? "Steeping on it…" : "Answering…") : "Knows everything on this site. Nothing else."}</div>
+              <div className="text-[12.5px]">{busy ? (mood === "thinking" ? "Thinking…" : "Answering…") : "Knows everything on this site. Nothing else."}</div>
             </div>
             <button onClick={() => setOpen(false)} aria-label="Minimize Pip" className="p-1.5 rounded-md hover:bg-black/10 cursor-pointer"><Minus size={18} /></button>
           </header>

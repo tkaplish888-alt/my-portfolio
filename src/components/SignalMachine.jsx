@@ -51,7 +51,7 @@ export default function SignalMachine({ onOpen }) {
         <span className="w-2.5 h-2.5 rounded-full border-[1.5px] border-edge bg-card" aria-hidden />
         <span className="w-2.5 h-2.5 rounded-full border-[1.5px] border-edge bg-card" aria-hidden />
         <span className="ml-1 text-[13px] font-semibold flex-1">Pick a source. See the tool I built for it.</span>
-        <Pip mood={running ? "thinking" : "idle"} size={38} />
+        <Pip mood={running ? "thinking" : "idle"} size={34} className="border-[1.5px] border-edge" />
       </div>
 
       <div className="grid md:grid-cols-[1fr_auto_1.25fr]">

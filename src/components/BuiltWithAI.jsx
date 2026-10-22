@@ -7,7 +7,7 @@ const STACK = [
   "Lucide Icons · Bricolage Grotesque + IBM Plex Sans fonts",
   "Component architecture, prerendered to static HTML",
   "Interactive hero, visitor switch, dark/light themes",
-  "Pip, an on-page guide running on Claude Haiku 5.5",
+  "Pip, a pixel-art guide running on Claude Haiku 5.5",
   "Content extracted and restructured via AI prompts",
   "Warm, accessible design system with full dark mode",
 ];
@@ -37,7 +37,7 @@ export default function BuiltWithAI() {
             className="rise relative w-full max-w-lg rounded-[10px] border-[1.5px] border-edge bg-card shadow-hard-lg p-6 md:p-8 outline-none">
             <button onClick={() => setOpen(false)} aria-label="Close" className="absolute top-4 right-4 p-1 rounded-md text-muted hover:text-ink cursor-pointer"><X size={18} /></button>
             <div className="flex items-center gap-3 mb-4">
-              <Pip mood="happy" size={44} />
+              <Pip mood="happy" size={44} className="border-[1.5px] border-edge" />
               <h3 id="bwai-title" className="display text-2xl font-bold">This portfolio wrote itself</h3>
             </div>
             <p className="text-[15px] leading-relaxed text-ink-2 mb-4">

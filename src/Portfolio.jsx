@@ -295,7 +295,7 @@ function WavingPip() {
     <button onClick={beam} onMouseEnter={() => mood === "idle" && setMood("listening")} onMouseLeave={() => mood === "listening" && setMood("idle")}
       onFocus={() => setMood("listening")} onBlur={() => setMood("idle")}
       aria-label="Say hi to Pip" className="hidden md:block absolute right-8 bottom-6 cursor-pointer rounded-full">
-      <Pip mood={mood} size={150} />
+      <Pip mood={mood} size={140} className="border-[1.5px] border-edge shadow-hard" />
     </button>
   );
 }
