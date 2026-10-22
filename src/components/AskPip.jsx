@@ -12,6 +12,14 @@ const LINKS = {
   resume: ["Resume", RESUME_URL], email: ["Email Tonishqa", `mailto:${site.email}`], calendly: ["Book a coffee chat", site.links.calendly],
   github: ["GitHub", site.links.github], linkedin: ["LinkedIn", site.links.linkedin],
 };
+const SLEEP_KEY = "pip-asleep-until";
+const readSleep = () => { try { const t = Number(localStorage.getItem(SLEEP_KEY)); return t > Date.now() ? t : 0; } catch { return 0; } };
+const saveSleep = t => { try { t ? localStorage.setItem(SLEEP_KEY, String(t)) : localStorage.removeItem(SLEEP_KEY); } catch { /* storage off: nap still works this visit */ } };
+const wakeLabel = t => {
+  const mins = Math.ceil((t - Date.now()) / 60000);
+  return mins <= 15 ? "Power nap. Back in a few minutes" : "Asleep for the night. Back tomorrow";
+};
+
 const TAG = /\[\[(open|go|link):([a-z0-9-]+)\]\]/g;
 
 // Split Pip's raw reply into readable text and action buttons.
@@ -48,6 +56,16 @@ export default function AskPip({ projectId, visitor, onOpenProject, onGo }) {
   const scroller = useRef(null);
   const inputRef = useRef(null);
   const happyTimer = useRef(null);
+  const [asleepUntil, setAsleepUntil] = useState(0); // Pip naps when she hits a rate limit
+
+  /* Remember a nap across reloads, and wake up on time. */
+  useEffect(() => { setAsleepUntil(readSleep()); }, []);
+  useEffect(() => {
+    if (!asleepUntil) return;
+    const t = setTimeout(() => { setAsleepUntil(0); saveSleep(0); }, Math.max(0, asleepUntil - Date.now()));
+    return () => clearTimeout(t);
+  }, [asleepUntil]);
+  const asleep = asleepUntil > 0;
 
   /* Only show Pip once the server confirms it's switched on. */
   useEffect(() => {
@@ -101,7 +119,7 @@ export default function AskPip({ projectId, visitor, onOpenProject, onGo }) {
 
   const send = useCallback(async content => {
     const q = content.trim();
-    if (!q || busy) return;
+    if (!q || busy || asleep) return;
     const history = [...messages, { role: "user", content: q }];
     setMessages([...history, { role: "assistant", content: "" }]);
     setInput("");
@@ -113,6 +131,13 @@ export default function AskPip({ projectId, visitor, onOpenProject, onGo }) {
         headers: { "content-type": "application/json" },
         body: JSON.stringify({ messages: history, context: { section, projectId, visitor } }),
       });
+      if (res.status === 429) {
+        const nap = await res.text();
+        const until = Number(res.headers.get("x-pip-wake")) || Date.now() + 10 * 60 * 1000;
+        setMessages(m => [...m.slice(0, -1), { role: "assistant", content: nap }]);
+        setAsleepUntil(until); saveSleep(until);
+        return;
+      }
       if (!res.body) throw new Error("no body");
       const reader = res.body.getReader();
       const decoder = new TextDecoder();
@@ -133,7 +158,7 @@ export default function AskPip({ projectId, visitor, onOpenProject, onGo }) {
     } finally {
       setBusy(false);
     }
-  }, [busy, messages, section, projectId, visitor]);
+  }, [busy, asleep, messages, section, projectId, visitor]);
 
   const askAbout = text => {
     setSelection(null);
@@ -154,14 +179,15 @@ export default function AskPip({ projectId, visitor, onOpenProject, onGo }) {
     if (a.kind === "go") { onGo(a.id); if (window.innerWidth < 768) setOpen(false); }
   };
 
-  const typingMood = !busy && input.trim() ? "listening" : null;
+  const typingMood = !busy && !asleep && input.trim() ? "listening" : null;
+  const faceMood = asleep ? "sleeping" : typingMood || mood;
 
   if (!enabled) return null;
 
   return (
     <div data-pip>
       {/* Ask-about-selection button */}
-      {selection && !busy && (
+      {selection && !busy && !asleep && (
         <button onMouseDown={e => e.preventDefault()} onClick={() => askAbout(selection.text)}
           style={{ left: selection.x, top: selection.y }}
           className="fixed z-[65] -translate-x-1/2 inline-flex items-center gap-1.5 rounded-full border-[1.5px] border-edge bg-card pl-1 pr-3 py-1 text-[13px] font-semibold shadow-hard cursor-pointer rise">
@@ -172,13 +198,19 @@ export default function AskPip({ projectId, visitor, onOpenProject, onGo }) {
       {/* Docked pill */}
       {!open && (
         <button onClick={() => setOpen(true)} onMouseEnter={() => setPillHover(true)} onMouseLeave={() => setPillHover(false)}
-          aria-label="Ask Pip, the site's AI assistant"
+          aria-label={asleep ? "Pip is asleep. Open to see when she's back" : "Ask Pip, the site's AI assistant"}
           className="fixed z-50 bottom-4 right-4 md:right-auto md:left-1/2 md:-translate-x-1/2 inline-flex items-center gap-2 rounded-full border-[1.5px] border-edge bg-card pl-1.5 pr-4 py-1 shadow-hard-lg hover:bg-marigold-soft cursor-pointer max-w-[min(520px,calc(100vw-2rem))]">
-          <Pip mood={pillHover ? "listening" : "idle"} size={38} />
-          <span className="md:hidden text-[14px] font-semibold">Ask Pip</span>
-          <span key={pillPrompt} className="hidden md:inline text-[14px] font-medium truncate rise">
-            <span className="font-semibold">Ask Pip:</span> {pillPrompt}
-          </span>
+          <Pip mood={asleep ? "sleeping" : pillHover ? "listening" : "idle"} size={38} />
+          <span className="md:hidden text-[14px] font-semibold">{asleep ? "Pip is napping" : "Ask Pip"}</span>
+          {asleep ? (
+            <span className="hidden md:inline text-[14px] font-medium truncate rise">
+              <span className="font-semibold">Shh, Pip is napping.</span> {wakeLabel(asleepUntil)}
+            </span>
+          ) : (
+            <span key={pillPrompt} className="hidden md:inline text-[14px] font-medium truncate rise">
+              <span className="font-semibold">Ask Pip:</span> {pillPrompt}
+            </span>
+          )}
           <kbd className="hidden md:inline ml-1 text-[11px] font-semibold text-muted border border-rule rounded px-1.5 py-0.5">⌘K</kbd>
         </button>
       )}
@@ -188,10 +220,10 @@ export default function AskPip({ projectId, visitor, onOpenProject, onGo }) {
         <section role="dialog" aria-label="Chat with Pip"
           className="rise fixed z-50 inset-x-2 bottom-2 md:inset-x-auto md:right-5 md:bottom-5 md:w-[400px] h-[min(620px,calc(100dvh-5rem))] flex flex-col rounded-[12px] border-[1.5px] border-edge bg-card shadow-hard-lg overflow-hidden">
           <header className="flex items-center gap-3 pl-3 pr-2 py-2 border-b-[1.5px] border-edge bg-marigold text-on-accent">
-            <Pip mood={typingMood || mood} size={52} title={`Pip is ${typingMood || mood}`} className="border-[1.5px] border-edge" />
+            <Pip mood={faceMood} size={52} title={`Pip is ${faceMood}`} className="border-[1.5px] border-edge" />
             <div className="flex-1 leading-tight">
               <div className="display text-lg font-bold">Pip</div>
-              <div className="text-[12.5px]">{busy ? (mood === "thinking" ? "Thinking…" : "Answering…") : "Knows everything on this site. Nothing else."}</div>
+              <div className="text-[12.5px]">{asleep ? `Zzz… ${wakeLabel(asleepUntil)}` : busy ? (mood === "thinking" ? "Ooh, thinking…" : "Answering…") : "Knows everything on this site. Nothing else!"}</div>
             </div>
             <button onClick={() => setOpen(false)} aria-label="Minimize Pip" className="p-1.5 rounded-md hover:bg-black/10 cursor-pointer"><Minus size={18} /></button>
           </header>
@@ -199,7 +231,7 @@ export default function AskPip({ projectId, visitor, onOpenProject, onGo }) {
           <div ref={scroller} className="flex-1 overflow-y-auto px-4 py-4 space-y-4 text-[14.5px] leading-relaxed" aria-live="polite">
             {messages.length === 0 && (
               <div className="rise">
-                <p className="text-ink-2">Hi, I'm Pip. I've read every page here so you don't have to. What do you want to know about Tonishqa's work?</p>
+                <p className="text-ink-2">Hi, I'm Pip! I've read every page here (several times, happily) so you don't have to. What do you want to know about Tonishqa's work?</p>
               </div>
             )}
             {messages.map((m, i) => {
@@ -237,7 +269,7 @@ export default function AskPip({ projectId, visitor, onOpenProject, onGo }) {
             })}
           </div>
 
-          {!busy && (messages.length === 0 || messages.at(-1)?.role === "assistant") && (
+          {!busy && !asleep && (messages.length === 0 || messages.at(-1)?.role === "assistant") && (
             <div className="px-4 pb-2 flex flex-wrap gap-1.5">
               {prompts.map(p => (
                 <button key={p} onClick={() => send(p)}
@@ -252,9 +284,10 @@ export default function AskPip({ projectId, visitor, onOpenProject, onGo }) {
             <div className="flex items-end gap-2 rounded-[10px] border-[1.5px] border-rule focus-within:border-edge bg-paper pl-3 pr-1.5 py-1.5">
               <textarea ref={inputRef} value={input} onChange={e => setInput(e.target.value)} rows={1} maxLength={800}
                 onKeyDown={e => { if (e.key === "Enter" && !e.shiftKey) { e.preventDefault(); send(input); } }}
-                placeholder="Ask about her work…" aria-label="Your question for Pip"
+                disabled={asleep}
+                placeholder={asleep ? "Shh… Pip is sleeping" : "Ask about her work…"} aria-label="Your question for Pip"
                 className="flex-1 resize-none bg-transparent outline-none text-[14.5px] py-1 max-h-28 placeholder:text-muted" />
-              <button type="submit" disabled={!input.trim() || busy} aria-label="Send"
+              <button type="submit" disabled={!input.trim() || busy || asleep} aria-label="Send"
                 className="grid place-items-center w-8 h-8 rounded-md border-[1.5px] border-edge bg-marigold text-on-accent disabled:opacity-40 cursor-pointer disabled:cursor-default">
                 <ArrowUp size={16} />
               </button>

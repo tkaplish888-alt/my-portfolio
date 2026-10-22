@@ -134,12 +134,17 @@ body {
 .pxa--thinking .pxa-td rect:nth-child(3) { animation-delay: .7s; }
 .pxa--talking .pxa-mo { animation: pxa-mo .36s steps(1) infinite; }
 .pxa--happy .pxa-eh, .pxa--happy .pxa-mc, .pxa--happy .pxa-bl { opacity: 1; }
+.pxa--sleeping .pxa-es, .pxa--sleeping .pxa-zz, .pxa--sleeping .pxa-ms, .pxa--sleeping .pxa-bl { opacity: 1; }
+.pxa--sleeping .pxa-mi { opacity: 0; }
+.pxa--sleeping .pxa-z1 { animation: pxa-zz 3s steps(6) infinite; }
+.pxa--sleeping .pxa-z2 { animation: pxa-zz 3s steps(6) infinite 1.5s; }
 
 @keyframes pxa-eo { 0% { opacity: 1; } 40% { opacity: 0; } 42% { opacity: 1; } }
 @keyframes pxa-es { 0% { opacity: 0; } 40% { opacity: 1; } 42% { opacity: 0; } }
 @keyframes pxa-side { 0% { transform: none; } 28% { transform: translate(-1px, 0); } 46% { transform: none; } 52% { transform: translate(1px, 0); } 70% { transform: none; } }
 @keyframes pxa-raise { 0% { transform: none; } 54% { transform: translate(0, -1px); } 70% { transform: none; } }
 @keyframes pxa-dt { 0% { opacity: 1; } 50% { opacity: .15; } }
+@keyframes pxa-zz { 0% { transform: translate(0, 2px); opacity: 0; } 20% { opacity: 1; } 80% { opacity: 1; } 100% { transform: translate(1px, -3px); opacity: 0; } }
 @keyframes pxa-mo { 0% { opacity: 1; } 50% { opacity: 0; } }
 
 @media (prefers-reduced-motion: reduce) {

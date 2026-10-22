@@ -12,7 +12,7 @@
 import Anthropic from "@anthropic-ai/sdk";
 import { site, projects, aiProjects, timeline, education, certifications, references, contentItems, changelog } from "../src/data.js";
 import { persona, availability, personalNotes, projectNotes } from "../src/bot/persona.js";
-import { checkLimits } from "./_ratelimit.js";
+import { checkLimits, LIMITS } from "./_ratelimit.js";
 
 const MODEL = "claude-haiku-5-5";
 const MAX_TURNS = 12;          // most recent messages sent to the model
@@ -71,10 +71,29 @@ const SECTION_NAMES = { systems: "AI builds", work: "Experience", "case-studies"
 const VISITORS = { hiring: "someone hiring", founder: "a founder", builder: "an engineer or builder" };
 const allIds = new Set([...projects, ...aiProjects].map(p => p.id));
 
-const LIMIT_REPLIES = {
-  burst: "Pip needs a short breather (pixels overheat). Try again in a few minutes, or email Tonishqa directly: ",
-  visitorDaily: "That's Pip's limit for today. Tonishqa reads email herself, though: ",
-  siteDaily: "Pip has talked to a lot of people today and is clocked out until tomorrow. Email works anytime: ",
+// Bedtime lines for when Pip hits a limit. One is picked at random so repeat
+// visitors don't see the same thing twice. The page shows Pip asleep too.
+const SLEEPY = {
+  burst: [
+    "Whew, that was a lot of questions in a row! My pixels are getting heavy, so I'm taking a quick power nap. Back in a few minutes. Tonishqa's inbox never sleeps, though!",
+    "Okay, tiny nap time. Even a 48x48 portrait needs to recharge after a chat this good. Give me a few minutes, or email Tonishqa in the meantime!",
+    "*yawns in low resolution* I'll be back in a few minutes, promise. If it can't wait, Tonishqa reads her email herself!",
+  ],
+  visitorDaily: [
+    "We've talked so much today that I'm officially tucked in for the night! Come say hi tomorrow, or reach Tonishqa directly. She's way more awake than I am.",
+    "That's all the chatting I've got in me today. Pajamas on, lights out. See you tomorrow! Tonishqa's email works anytime.",
+  ],
+  siteDaily: [
+    "So many visitors today! I've talked myself into a deep sleep and I'll be back tomorrow. Tonishqa's inbox is wide awake, though!",
+    "Pip has clocked out for the day after chatting with a whole crowd of lovely people. Back tomorrow, fully recharged! Tonishqa reads her email herself in the meantime.",
+  ],
+};
+const pick = arr => arr[Math.floor(Math.random() * arr.length)];
+
+// When the visitor can try again, so the page knows how long Pip naps.
+const wakeAt = reason => {
+  if (reason === "burst") return Date.now() + LIMITS.burst.windowSec * 1000;
+  const d = new Date(); d.setUTCHours(24, 0, 0, 0); return d.getTime(); // next midnight UTC
 };
 
 const text = (body, status = 200) => new Response(body, { status, headers: { "content-type": "text/plain; charset=utf-8" } });
@@ -90,7 +109,12 @@ export async function POST(request) {
 
   const ip = (request.headers.get("x-forwarded-for") || "anon").split(",")[0].trim();
   const hit = await checkLimits(ip);
-  if (hit) return text(LIMIT_REPLIES[hit] + site.email, 429);
+  if (hit) {
+    return new Response(`${pick(SLEEPY[hit])}\n[[link:email]]`, {
+      status: 429,
+      headers: { "content-type": "text/plain; charset=utf-8", "cache-control": "no-store", "x-pip-sleep": hit, "x-pip-wake": String(wakeAt(hit)) },
+    });
+  }
 
   let body;
   try { body = await request.json(); } catch { return text("Bad request", 400); }
